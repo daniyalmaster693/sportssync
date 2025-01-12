@@ -17,7 +17,7 @@ export default function scoresAndSchedule() {
   // Fetch NBA Articles
 
   const [currentLeague, displaySelectLeague] = useState("NBA Articles");
-  const { isLoading: nbaArticlesStatus, data: nbaArticlesData } = useFetch(
+  const { isLoading: nbaArticlesStatus, data: nbaArticlesData } = useFetch<ArticlesResponse>(
     "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news",
   );
 
@@ -49,7 +49,7 @@ export default function scoresAndSchedule() {
 
   // Fetch WNBA Articles
 
-  const { isLoading: wnbaArticlesStatus, data: wnbaArticlesData } = useFetch(
+  const { isLoading: wnbaArticlesStatus, data: wnbaArticlesData } = useFetch<ArticlesResponse>(
     "https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/news",
   );
 
