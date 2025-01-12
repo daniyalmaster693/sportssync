@@ -2,6 +2,17 @@ import { Detail, List, Action, ActionPanel } from "@raycast/api";
 import { useFetch } from "@raycast/utils";
 import { useState } from "react";
 
+interface Article {
+  headline: string;
+  published: string;
+  images: { url: string }[];
+  links: { web: { href: string } };
+}
+
+interface ArticlesResponse {
+  articles: Article[];
+}
+
 export default function scoresAndSchedule() {
   // Fetch NBA Articles
 
