@@ -43,11 +43,6 @@ interface StandingsData {
   ];
 }
 
-interface FetchData {
-  isLoading: boolean;
-  data: StandingsData | undefined;
-}
-
 export default function scoresAndSchedule() {
   // Fetch Driver Standings
 

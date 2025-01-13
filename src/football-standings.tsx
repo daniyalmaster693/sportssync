@@ -41,11 +41,6 @@ interface StandingsData {
   ];
 }
 
-interface FetchData {
-  isLoading: boolean;
-  data: StandingsData | undefined;
-}
-
 export default function scoresAndSchedule() {
   const { isLoading: nflStandingsStats, data: nflStandingsData } = useFetch<StandingsData>(
     "https://site.web.api.espn.com/apis/v2/sports/football/nfl/standings",

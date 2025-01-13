@@ -16,7 +16,7 @@ interface Team {
   displayName: string;
 }
 
-interface StandingsEntry<T> {
+interface StandingsEntry {
   athlete?: Athlete;
   team?: Team;
   stats: Stats[];
@@ -27,13 +27,13 @@ interface StandingsData {
     {
       name: string;
       standings: {
-        entries: StandingsEntry<Athlete>[];
+        entries: StandingsEntry[];
       };
     },
     {
       name: string;
       standings: {
-        entries: StandingsEntry<Team>[];
+        entries: StandingsEntry[];
       };
     },
   ];

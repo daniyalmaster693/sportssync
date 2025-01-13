@@ -34,11 +34,6 @@ interface StandingsData {
   ];
 }
 
-interface FetchData {
-  isLoading: boolean;
-  data: StandingsData | null;
-}
-
 export default function scoresAndSchedule() {
   // Fetch NBA Standings
   const [currentLeague, displaySelectLeague] = useState("NBA Games");
