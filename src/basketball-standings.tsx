@@ -149,7 +149,7 @@ export default function scoresAndSchedule() {
       {currentLeague === "WNBA" && (
         <>
           <List.Section title={`${wnbaEasternStandingsTitle}`}>{wnbaEasternTeams}</List.Section>
-          <List.Section title={`${wnbaEasternStandingsTitle}`}>{wnbaWesternTeams}</List.Section>
+          <List.Section title={`${wnbaWesternStandingsTitle}`}>{wnbaWesternTeams}</List.Section>
         </>
       )}
     </List>
