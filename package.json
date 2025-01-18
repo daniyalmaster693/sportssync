@@ -2,7 +2,7 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "sportssync",
   "title": "Sportssync",
-  "description": "View scores, standings, and news across your favorite sports leagues",
+  "description": "View live scores, standings, and news across your favorite sports leagues",
   "icon": "Sportssync.png",
   "author": "daniyal_master",
   "categories": [
