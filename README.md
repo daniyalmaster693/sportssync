@@ -15,7 +15,7 @@ A raycast extension to view scores, standings, and stats across your favorite sp
 
 ## Supported Leagues:
 
-_Leagues that are fully supported, mean that they have a scores, standings, and news command_
+_Leagues that are fully supported include the following: a scores and schedule, standings, and news command_
 
 - NHL (Fully supported)
 - NBA (Fully Supported)
