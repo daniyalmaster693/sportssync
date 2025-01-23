@@ -44,6 +44,7 @@ _Leagues that are fully supported include the following: a scores and schedule, 
 
 - Live Scores Command (Menubar): View live scores and upcoming games, and click on games to set them as the menu bar title, allowing users to view scores with automatic refreshes.
 - Stats command: A command to view player stats
+- Tracker Command: A command to view injuries and transactions
 - Past Scores Command: A separate command (or something integrated into the scores and schedules command) to allow users to view scores for previous games (up to a few days)
 - Additional Leagues: Please request any leagues that you'd like me to add support for, and I'll look into seeing what I can do.
 
