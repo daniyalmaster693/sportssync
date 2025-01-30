@@ -38,7 +38,7 @@ export default function scoresAndSchedule() {
         accessories={[{ text: { value: `${accessoryTitle}` }, tooltip: accessoryToolTip }]}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Article on ESPN" url={`${nhlArticle.links.web.href}`} />
+            <Action.OpenInBrowser title="View Article on Espn" url={`${nhlArticle.links.web.href}`} />
           </ActionPanel>
         }
       />

@@ -98,7 +98,7 @@ export default function scoresAndSchedule() {
         accessories={[{ text: { value: `${accessoryTitle}`, color: accessoryColor }, tooltip: accessoryToolTip }]}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Game Details on ESPN" url={`${nflGame.links[0].href}`} />
+            <Action.OpenInBrowser title="View Game Details on Espn" url={`${nflGame.links[0].href}`} />
             <Action.OpenInBrowser
               title="View Away Team Details"
               url={`${nflGame.competitions[0].competitors[1].team.links[0].href}`}
@@ -171,7 +171,7 @@ export default function scoresAndSchedule() {
           accessories={[{ text: { value: `${accessoryTitle}`, color: accessoryColor }, tooltip: accessoryToolTip }]}
           actions={
             <ActionPanel>
-              <Action.OpenInBrowser title="View Game Details on ESPN" url={`${ncaaGame.links[0].href}`} />
+              <Action.OpenInBrowser title="View Game Details on Espn" url={`${ncaaGame.links[0].href}`} />
               <Action.OpenInBrowser
                 title="View Away Team Details"
                 url={`${ncaaGame.competitions[0].competitors[1].team.links[0].href}`}

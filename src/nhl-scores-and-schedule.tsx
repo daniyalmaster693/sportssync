@@ -81,7 +81,7 @@ export default function scoresAndSchedule() {
         accessories={[{ text: { value: `${accessoryTitle}`, color: accessoryColor }, tooltip: accessoryToolTip }]}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Game Details on ESPN" url={`${nhlGame.links[0].href}`} />
+            <Action.OpenInBrowser title="View Game Details on Espn" url={`${nhlGame.links[0].href}`} />
             <Action.OpenInBrowser
               title="View Away Team Details"
               url={`${nhlGame.competitions[0].competitors[1].team.links[0].href}`}

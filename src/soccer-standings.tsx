@@ -62,7 +62,7 @@ export default function scoresAndSchedule() {
         accessoryTitle={`${epl.stats[0].displayValue} GP | ${epl.stats[12].displayValue} | ${epl.stats[3].displayValue} pts | ${epl.stats[5].displayValue} GF | ${epl.stats[4].displayValue} GA | Dif: ${epl.stats[2].displayValue}`}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Team Details on ESPN" url={`${epl.team.links[0].href}`} />
+            <Action.OpenInBrowser title="View Team Details on Espn" url={`${epl.team.links[0].href}`} />
           </ActionPanel>
         }
       />
@@ -86,7 +86,7 @@ export default function scoresAndSchedule() {
         accessoryTitle={`${sll.stats[0].displayValue} GP | ${sll.stats[12].displayValue} | ${sll.stats[3].displayValue} pts | ${sll.stats[5].displayValue} GF | ${sll.stats[4].displayValue} GA | Dif: ${sll.stats[2].displayValue}`}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Team Details on ESPN" url={`${sll.team.links[0].href}`} />
+            <Action.OpenInBrowser title="View Team Details on Espn" url={`${sll.team.links[0].href}`} />
           </ActionPanel>
         }
       />
@@ -110,7 +110,7 @@ export default function scoresAndSchedule() {
         accessoryTitle={`${ger.stats[0].displayValue} GP | ${ger.stats[12].displayValue} | ${ger.stats[3].displayValue} pts | ${ger.stats[5].displayValue} GF | ${ger.stats[4].displayValue} GA | Dif: ${ger.stats[2].displayValue}`}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Team Details on ESPN" url={`${ger.team.links[0].href}`} />
+            <Action.OpenInBrowser title="View Team Details on Espn" url={`${ger.team.links[0].href}`} />
           </ActionPanel>
         }
       />
@@ -132,7 +132,7 @@ export default function scoresAndSchedule() {
         accessoryTitle={`${ita.stats[0].displayValue} GP | ${ita.stats[12].displayValue} | ${ita.stats[3].displayValue} pts | ${ita.stats[5].displayValue} GF | ${ita.stats[4].displayValue} GA | Dif: ${ita.stats[2].displayValue}`}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Team Details on ESPN" url={`${ita.team.links[0].href}`} />
+            <Action.OpenInBrowser title="View Team Details on Espn" url={`${ita.team.links[0].href}`} />
           </ActionPanel>
         }
       />

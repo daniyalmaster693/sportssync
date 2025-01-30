@@ -40,7 +40,7 @@ export default function scoresAndSchedule() {
         accessories={[{ text: { value: `${accessoryTitle}` }, tooltip: accessoryToolTip }]}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Article on ESPN" url={`${nflArticle.links.web.href}`} />
+            <Action.OpenInBrowser title="View Article on Espn" url={`${nflArticle.links.web.href}`} />
           </ActionPanel>
         }
       />
@@ -72,7 +72,7 @@ export default function scoresAndSchedule() {
         accessories={[{ text: { value: `${accessoryTitle}` }, tooltip: accessoryToolTip }]}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Article on ESPN" url={`${ncaaArticle.links.web.href}`} />
+            <Action.OpenInBrowser title="View Article on Espn" url={`${ncaaArticle.links.web.href}`} />
           </ActionPanel>
         }
       />

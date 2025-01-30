@@ -53,7 +53,7 @@ export default function scoresAndSchedule() {
         icon={{ source: team1.team.logos[0].href }}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Team Details on ESPN" url={`${team1.team.links[0].href}`} />
+            <Action.OpenInBrowser title="View Team Details on Espn" url={`${team1.team.links[0].href}`} />
           </ActionPanel>
         }
       />
@@ -69,7 +69,7 @@ export default function scoresAndSchedule() {
         icon={{ source: team2.team.logos[0].href }}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Team Details on ESPN" url={`${team2.team.links[0].href}`} />
+            <Action.OpenInBrowser title="View Team Details on Espn" url={`${team2.team.links[0].href}`} />
           </ActionPanel>
         }
       />
@@ -94,7 +94,7 @@ export default function scoresAndSchedule() {
         icon={{ source: team3.team.logos[0].href }}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Team Details on ESPN" url={`${team3.team.links[0].href}`} />
+            <Action.OpenInBrowser title="View Team Details on Espn" url={`${team3.team.links[0].href}`} />
           </ActionPanel>
         }
       />
@@ -110,7 +110,7 @@ export default function scoresAndSchedule() {
         icon={{ source: team4.team.logos[0].href }}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Team Details on ESPN" url={`${team4.team.links[0].href}`} />
+            <Action.OpenInBrowser title="View Team Details on Espn" url={`${team4.team.links[0].href}`} />
           </ActionPanel>
         }
       />
