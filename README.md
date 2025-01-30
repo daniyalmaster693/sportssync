@@ -1,6 +1,11 @@
-# Sportssync
+Sportssync
 
 A raycast extension to view scores, standings, and stats across your favorite sports leagues
+
+## Links
+
+- Raycast Github Repo:
+- Raycast Store:
 
 ## Commands:
 
@@ -25,6 +30,15 @@ _Leagues that are fully supported include the following: a scores and schedule, 
 - SLL (LALIGA) - (Fully Supported)
 - GER (German Bundesliga) - (Fully Supported)
 - ITA (Italian Serie A) - (Fully Supported)
+
+## Screenshots
+
+<img src="https://i.imgur.com/14z3zsa.png" alt="NHL Scores and Schedule Command">
+<img src="https://i.imgur.com/Jc8ferS.png" alt="NBA Scores and Schedule Command">
+<img src="https://i.imgur.com/uK1J7ZX.png" alt="NFL Standings Command">
+<img src="https://i.imgur.com/zYQXzqU.png" alt="Soccer Standings Command">
+<img src="https://i.imgur.com/wDzQ4q4.png" alt="F1 Driver and Constructor Standings Command">
+<img src="https://i.imgur.com/c2hyhaO.png" alt="MLB News Command">
 
 ## Roadmap:
 

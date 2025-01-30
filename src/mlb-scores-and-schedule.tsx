@@ -92,7 +92,7 @@ export default function command() {
         accessories={[{ text: { value: `${accessoryTitle}`, color: accessoryColor }, tooltip: accessoryToolTip }]}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Game Details on Espn" url={`${game.links[0].href}`} />
+            <Action.OpenInBrowser title="View Game Details on ESPN" url={`${game.links[0].href}`} />
             <Action.OpenInBrowser
               title="View Away Team Details"
               url={`${game.competitions[0].competitors[1].team.links[0].href}`}

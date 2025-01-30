@@ -96,8 +96,8 @@ export default function command() {
         ]}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Race Details on Espn" url={`${race.links[0].href}`} />
-            <Action.OpenInBrowser title="View Circuit Details on Espn" url={`${race.links[2].href}`} />
+            <Action.OpenInBrowser title="View Race Details on ESPN" url={`${race.links[0].href}`} />
+            <Action.OpenInBrowser title="View Circuit Details on ESPN" url={`${race.links[2].href}`} />
           </ActionPanel>
         }
       />,

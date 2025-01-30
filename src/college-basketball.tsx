@@ -82,7 +82,7 @@ export default function scoresAndSchedule() {
         accessories={[{ text: { value: `${accessoryTitle}`, color: accessoryColor }, tooltip: accessoryToolTip }]}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Game Details on Espn" url={`${mncaaGame.links[0].href}`} />
+            <Action.OpenInBrowser title="View Game Details on ESPN" url={`${mncaaGame.links[0].href}`} />
             <Action.OpenInBrowser
               title="View Away Team Details"
               url={`${mncaaGame.competitions[0].competitors[1].team.links[0].href}`}
@@ -139,7 +139,7 @@ export default function scoresAndSchedule() {
         accessories={[{ text: { value: `${accessoryTitle}`, color: accessoryColor }, tooltip: accessoryToolTip }]}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Game Details on Espn" url={`${wncaaGame.links[0].href}`} />
+            <Action.OpenInBrowser title="View Game Details on ESPN" url={`${wncaaGame.links[0].href}`} />
             <Action.OpenInBrowser
               title="View Away Team Details"
               url={`${wncaaGame.competitions[0].competitors[1].team.links[0].href}`}
