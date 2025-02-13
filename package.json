@@ -2,7 +2,7 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "sportssync",
   "title": "Sportssync",
-  "description": "View scores, standings, and news across your favorite sports leagues",
+  "description": "View live scores, standings, and news across your favorite sports leagues",
   "icon": "Sportssync.png",
   "author": "daniyal_master",
   "categories": [
@@ -54,14 +54,16 @@
       "title": "College Basketball Scores and Schedule",
       "subtitle": "NCAA Men's & Women's",
       "description": "View scores and upcoming games across the NCAA Men's and Women's League",
-      "mode": "view"
+      "mode": "view",
+      "disabledByDefault": true
     },
     {
       "name": "college-basketball-news",
       "title": "College Basketball News",
       "subtitle": "NCAA Men's & Women's",
       "description": "View news articles across the NCAA Men's and Women's League",
-      "mode": "view"
+      "mode": "view",
+      "disabledByDefault": true
     },
     {
       "name": "football-scores-and-schedule",
@@ -138,13 +140,6 @@
       "title": "F1 News",
       "description": "View news articles across the F1",
       "mode": "view"
-    },
-    {
-      "name": "live-scores",
-      "title": "Live Scores",
-      "description": "View live scores from the NHL, NBA, WNBA, NCAA Basketball, NFL, NCAA Football, MLB, F1, and UFC directly from your menu bar",
-      "mode": "menu-bar",
-      "interval": "20s"
     }
   ],
   "dependencies": {
