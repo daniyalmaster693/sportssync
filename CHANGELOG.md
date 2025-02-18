@@ -1,11 +1,15 @@
 # Sportssync Changelog
 
+<<<<<<< HEAD
 ## [Implemented past and future scores] - {PR_MERGE_DATE}
 
 - Updated the NHL Standings command to use divisions instead of conferences
 - Updated each scores and schedule command to now show the scores for the past 3 days, and the games for the next 5 days
 
 ## [Added a bunch of new feedback] - 2025-02-13
+=======
+## [Added a bunch of new feedback] - 2025-02-14
+>>>>>>> 04bad10 (Pull contributions)
 
 - Added a new league: Champions League
 - Fixed an issue causing the record in nhl standings command to show up as undefined
