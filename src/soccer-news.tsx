@@ -1,6 +1,5 @@
 import { Detail, List, Action, ActionPanel, Color, Icon } from "@raycast/api";
 import { useFetch } from "@raycast/utils";
-import { useState } from "react";
 
 interface Article {
   headline: string;
