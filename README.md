@@ -27,6 +27,7 @@ _Leagues that are fully supported include the following: a scores and schedule, 
 - MLB (Fully Supported)
 - F1 (Fully Supported)
 - EPL (English Premier League) - (Fully Supported)
+- UEFA (Champions League) - (Fully Supported)
 - SLL (LALIGA) - (Fully Supported)
 - GER (German Bundesliga) - (Fully Supported)
 - ITA (Italian Serie A) - (Fully Supported)
