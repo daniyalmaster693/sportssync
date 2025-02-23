@@ -98,7 +98,7 @@ export default function scoresAndSchedule() {
           title={`${team1.team.displayName}`}
           accessories={[
             {
-              text: `${team1.stats[16].displayValue} | Pct: ${(Number(team1.stats[10].displayValue) * 100).toFixed(1)}% | PF: ${team1.stats[7].displayValue} | PA: ${team1.stats[6].displayValue} | Dif: ${team1.stats[5].displayValue}`,
+              text: `${team1.stats[16].displayValue ?? "0-0"} | Pct: ${(Number(team1.stats[10].displayValue) * 100).toFixed(1) ?? "0"}% | PF: ${team1.stats[7].displayValue ?? "0"} | PA: ${team1.stats[6].displayValue ?? "0"} | Dif: ${team1.stats[5].displayValue ?? "0"}`,
             },
             { tag: { value: team1.stats[4].displayValue, color: tagColor }, icon: tagIcon, tooltip: tagTooltip },
           ]}
@@ -151,7 +151,7 @@ export default function scoresAndSchedule() {
           title={`${team2.team.displayName}`}
           accessories={[
             {
-              text: `${team2.stats[16].displayValue} | Pct: ${(Number(team2.stats[10].displayValue) * 100).toFixed(1)}% | PF: ${team2.stats[7].displayValue} | PA: ${team2.stats[6].displayValue} | Dif: ${team2.stats[5].displayValue}`,
+              text: `${team2.stats[16].displayValue ?? "0-0"} | Pct: ${(Number(team2.stats[10].displayValue) * 100).toFixed(1) ?? "0"}% | PF: ${team2.stats[7].displayValue ?? "0"} | PA: ${team2.stats[6].displayValue ?? "0"} | Dif: ${team2.stats[5].displayValue ?? "0"}`,
             },
             { tag: { value: team2.stats[4].displayValue, color: tagColor }, icon: tagIcon, tooltip: tagTooltip },
           ]}

@@ -114,7 +114,7 @@ export default function command() {
         icon={{ source: team1.team.logos[0].href }}
         accessories={[
           {
-            text: `${team1.stats[3].displayValue} GP | ${team1.stats[21].summary} | ${team1.stats[7].displayValue} pts | ROW ${team1.stats[16].displayValue} | GF ${team1.stats[9].displayValue} | GA ${team1.stats[8].displayValue} | Dif ${team1.stats[6].displayValue}`,
+            text: `${team1.stats[3].displayValue ?? "0"} GP | ${team1.stats[21].summary ?? "0-0-0"} | ${team1.stats[7].displayValue ?? "0"} pts | ROW ${team1.stats[16].displayValue ?? "0"} | GF ${team1.stats[9].displayValue ?? "0"} | GA ${team1.stats[8].displayValue ?? "0"} | Dif ${team1.stats[6].displayValue ?? "0"}`,
           },
           { tag: { value: team1.stats[5].displayValue, color: tagColor }, icon: tagIcon, tooltip: tagTooltip },
         ]}
@@ -160,7 +160,7 @@ export default function command() {
         title={`${team2.team.displayName}`}
         accessories={[
           {
-            text: `${team2.stats[3].displayValue} GP | ${team2.stats[21].summary} | ${team2.stats[7].displayValue} pts | ROW ${team2.stats[16].displayValue} | GF ${team2.stats[9].displayValue} | GA ${team2.stats[8].displayValue} | Dif ${team2.stats[6].displayValue}`,
+            text: `${team2.stats[3].displayValue ?? "0"} GP | ${team2.stats[21].summary ?? "0-0-0"} | ${team2.stats[7].displayValue ?? "0"} pts | ROW ${team2.stats[16].displayValue ?? "0"} | GF ${team2.stats[9].displayValue ?? "0"} | GA ${team2.stats[8].displayValue ?? "0"} | Dif ${team2.stats[6].displayValue ?? "0"}`,
           },
           { tag: { value: team2.stats[5].displayValue, color: tagColor }, icon: tagIcon, tooltip: tagTooltip },
         ]}
@@ -207,7 +207,7 @@ export default function command() {
         title={`${team3.team.displayName}`}
         accessories={[
           {
-            text: `${team3.stats[3].displayValue} GP | ${team3.stats[21].summary} | ${team3.stats[7].displayValue} pts | ROW ${team3.stats[16].displayValue} | GF ${team3.stats[9].displayValue} | GA ${team3.stats[8].displayValue} | Dif ${team3.stats[6].displayValue}`,
+            text: `${team3.stats[3].displayValue ?? "0"} GP | ${team3.stats[21].summary ?? "0-0-0"} | ${team3.stats[7].displayValue ?? "0"} pts | ROW ${team3.stats[16].displayValue ?? "0"} | GF ${team3.stats[9].displayValue ?? "0"} | GA ${team3.stats[8].displayValue ?? "0"} | Dif ${team3.stats[6].displayValue ?? "0"}`,
           },
           { tag: { value: team3.stats[5].displayValue, color: tagColor }, icon: tagIcon, tooltip: tagTooltip },
         ]}
@@ -254,7 +254,7 @@ export default function command() {
         title={`${team4.team.displayName}`}
         accessories={[
           {
-            text: `${team4.stats[3].displayValue} GP | ${team4.stats[21].summary} | ${team4.stats[7].displayValue} pts | ROW ${team4.stats[16].displayValue} | GF ${team4.stats[9].displayValue} | GA ${team4.stats[8].displayValue} | Dif ${team4.stats[6].displayValue}`,
+            text: `${team4.stats[3].displayValue ?? "0"} GP | ${team4.stats[21].summary ?? "0-0-0"} | ${team4.stats[7].displayValue ?? "0"} pts | ROW ${team4.stats[16].displayValue ?? "0"} | GF ${team4.stats[9].displayValue ?? "0"} | GA ${team4.stats[8].displayValue ?? "0"} | Dif ${team4.stats[6].displayValue ?? "0"}`,
           },
           { tag: { value: team4.stats[5].displayValue, color: tagColor }, icon: tagIcon, tooltip: tagTooltip },
         ]}

@@ -80,7 +80,7 @@ export default function scoresAndSchedule() {
         icon={{ source: epl.team.logos[0].href }}
         accessories={[
           {
-            text: `${epl.stats[0].displayValue} GP | ${epl.stats[12].displayValue} | ${epl.stats[3].displayValue} pts | ${epl.stats[5].displayValue} GF | ${epl.stats[4].displayValue} GA | Dif: ${epl.stats[2].displayValue}`,
+            text: `${epl.stats[0].displayValue ?? "0"} GP | ${epl.stats[12].displayValue ?? "0-0-0"} | ${epl.stats[3].displayValue ?? "0"} pts | ${epl.stats[5].displayValue ?? "0"} GF | ${epl.stats[4].displayValue ?? "0"} GA | Dif: ${epl.stats[2].displayValue ?? "0"}`,
           },
           { tag: { value: epl.stats[10].displayValue, color: tagColor }, icon: tagIcon },
         ]}
@@ -123,7 +123,7 @@ export default function scoresAndSchedule() {
         icon={{ source: uefa.team.logos[0].href }}
         accessories={[
           {
-            text: `${uefa.stats[0].displayValue} GP | ${uefa.stats[12].displayValue} | ${uefa.stats[3].displayValue} pts | ${uefa.stats[5].displayValue} GF | ${uefa.stats[4].displayValue} GA | Dif: ${uefa.stats[2].displayValue}`,
+            text: `${uefa.stats[0].displayValue ?? "0"} GP | ${uefa.stats[12].displayValue ?? "0-0-0"} | ${uefa.stats[3].displayValue ?? "0"} pts | ${uefa.stats[5].displayValue ?? "0"} GF | ${uefa.stats[4].displayValue ?? "0"} GA | Dif: ${uefa.stats[2].displayValue ?? "0"}`,
           },
           { tag: { value: uefa.stats[10].displayValue, color: tagColor }, icon: tagIcon },
         ]}
@@ -165,7 +165,7 @@ export default function scoresAndSchedule() {
         icon={{ source: sll.team.logos[0].href }}
         accessories={[
           {
-            text: `${sll.stats[0].displayValue} GP | ${sll.stats[12].displayValue} | ${sll.stats[3].displayValue} pts | ${sll.stats[5].displayValue} GF | ${sll.stats[4].displayValue} GA | Dif: ${sll.stats[2].displayValue}`,
+            text: `${sll.stats[0].displayValue ?? "0"} GP | ${sll.stats[12].displayValue ?? "0-0-0"} | ${sll.stats[3].displayValue ?? "0"} pts | ${sll.stats[5].displayValue ?? "0"} GF | ${sll.stats[4].displayValue ?? "0"} GA | Dif: ${sll.stats[2].displayValue ?? "0"}`,
           },
           { tag: { value: sll.stats[10].displayValue, color: tagColor }, icon: tagIcon },
         ]}
@@ -207,7 +207,7 @@ export default function scoresAndSchedule() {
         icon={{ source: ger.team.logos[0].href }}
         accessories={[
           {
-            text: `${ger.stats[0].displayValue} GP | ${ger.stats[12].displayValue} | ${ger.stats[3].displayValue} pts | ${ger.stats[5].displayValue} GF | ${ger.stats[4].displayValue} GA | Dif: ${ger.stats[2].displayValue}`,
+            text: `${ger.stats[0].displayValue ?? "0"} GP | ${ger.stats[12].displayValue ?? "0-0-0"} | ${ger.stats[3].displayValue ?? "0"} pts | ${ger.stats[5].displayValue ?? "0"} GF | ${ger.stats[4].displayValue ?? "0"} GA | Dif: ${ger.stats[2].displayValue ?? "0"}`,
           },
           { tag: { value: ger.stats[10].displayValue, color: tagColor }, icon: tagIcon },
         ]}
@@ -250,7 +250,7 @@ export default function scoresAndSchedule() {
         icon={{ source: ita.team.logos[0].href }}
         accessories={[
           {
-            text: `${ita.stats[0].displayValue} GP | ${ita.stats[12].displayValue} | ${ita.stats[3].displayValue} pts | ${ita.stats[5].displayValue} GF | ${ita.stats[4].displayValue} GA | Dif: ${ita.stats[2].displayValue}`,
+            text: `${ita.stats[0].displayValue ?? "0"} GP | ${ita.stats[12].displayValue ?? "0-0-0"} | ${ita.stats[3].displayValue ?? "0"} pts | ${ita.stats[5].displayValue ?? "0"} GF | ${ita.stats[4].displayValue ?? "0"} GA | Dif: ${ita.stats[2].displayValue ?? "0"}`,
           },
           { tag: { value: ita.stats[10].displayValue, color: tagColor }, icon: tagIcon },
         ]}

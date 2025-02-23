@@ -73,7 +73,7 @@ export default function scoresAndSchedule() {
         icon={{ source: flagSrc }}
         accessories={[
           {
-            text: `${driver.stats[1].displayValue} pts`,
+            text: `${driver.stats[1].displayValue ?? "0"} pts`,
           },
           { tag: { value: driver.stats[0].displayValue, color: tagColor }, icon: tagIcon },
         ]}
@@ -110,7 +110,7 @@ export default function scoresAndSchedule() {
         title={`${constructor?.team?.displayName}`}
         accessories={[
           {
-            text: `${constructor.stats[1].displayValue} pts`,
+            text: `${constructor.stats[1].displayValue ?? "0"} pts`,
           },
           { tag: { value: constructor.stats[0].displayValue, color: tagColor }, icon: tagIcon },
         ]}
