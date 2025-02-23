@@ -87,7 +87,6 @@ export default function scoresAndSchedule() {
         actions={
           <ActionPanel>
             <Action.OpenInBrowser title="View Team Details on ESPN" url={`${epl.team.links[0].href}`} />
-            <Action.OpenInBrowser title="View Standings on ESPN" url={`${eplData?.links[0].href}`} />
           </ActionPanel>
         }
       />
@@ -131,7 +130,6 @@ export default function scoresAndSchedule() {
         actions={
           <ActionPanel>
             <Action.OpenInBrowser title="View Team Details on ESPN" url={`${uefa.team.links[0].href}`} />
-            <Action.OpenInBrowser title="View Standings on ESPN" url={`${uefaData?.links[0].href}`} />
           </ActionPanel>
         }
       />
@@ -174,7 +172,6 @@ export default function scoresAndSchedule() {
         actions={
           <ActionPanel>
             <Action.OpenInBrowser title="View Team Details on ESPN" url={`${sll.team.links[0].href}`} />
-            <Action.OpenInBrowser title="View Standings on ESPN" url={`${sllData?.links[0].href}`} />
           </ActionPanel>
         }
       />
@@ -217,7 +214,6 @@ export default function scoresAndSchedule() {
         actions={
           <ActionPanel>
             <Action.OpenInBrowser title="View Team Details on ESPN" url={`${ger.team.links[0].href}`} />
-            <Action.OpenInBrowser title="View Standings on ESPN" url={`${gerData?.links[0].href}`} />
           </ActionPanel>
         }
       />
@@ -261,7 +257,6 @@ export default function scoresAndSchedule() {
         actions={
           <ActionPanel>
             <Action.OpenInBrowser title="View Team Details on ESPN" url={`${ita.team.links[0].href}`} />
-            <Action.OpenInBrowser title="View Standings on ESPN" url={`${itaData?.links[0].href}`} />
           </ActionPanel>
         }
       />

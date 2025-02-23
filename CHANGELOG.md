@@ -7,7 +7,6 @@
 - Fixed an MLB Standings Bug causing the data to fail to display when there have been 0 GP
 - Changed the MLB Scores and Schedule command to now show a short detail instead of the display clock (for more relevant information)
 - Added checkmark, calendar, and x mark icons to the scores and schedule commands that change based on the game state
-- Added a new open in browser action to open the entire standings in espn for each standings command
 - Added a calendar icon to the news commands
 - Added a new tag to the news commands for the article type
 - Changed the F1 Results and Schedule command to show the schedule for the entire year
