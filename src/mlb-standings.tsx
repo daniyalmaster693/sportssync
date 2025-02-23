@@ -85,7 +85,7 @@ export default function scoresAndSchedule() {
         title={`${team1.team.displayName}`}
         accessories={[
           {
-            text: `${team1.stats[7].displayValue} GP | ${team1.stats[32]?.displayValue ?? "0-0-0"} | Pct: ${(Number(team1.stats[8].displayValue) * 100).toFixed(1)}% | PF: ${team1.stats[14].displayValue} | PA: ${team1.stats[13].displayValue} | Dif: ${team1.stats[11].displayValue}`,
+            text: `${team1.stats[7].displayValue ?? "O GP"} GP | ${team1.stats[32]?.displayValue ?? "0-0-0"} | Pct: ${(Number(team1.stats[8].displayValue) * 100).toFixed(1) ?? "Pct: 0%"}% | PF: ${team1.stats[14].displayValue ?? "PF: 0"} | PA: ${team1.stats[13].displayValue ?? "PA: 0"} | Dif: ${team1.stats[11].displayValue ?? "Dif: 0"}`,
           },
           { tag: { value: team1.stats[10].displayValue, color: tagColor }, icon: tagIcon, tooltip: tagTooltip },
         ]}
@@ -93,7 +93,6 @@ export default function scoresAndSchedule() {
         actions={
           <ActionPanel>
             <Action.OpenInBrowser title="View Team Details on ESPN" url={`${team1.team.links[0].href}`} />
-            <Action.OpenInBrowser title="View Standings on ESPN" url={`${mlbStandingsData?.links[0].href}`} />
           </ActionPanel>
         }
       />
@@ -133,7 +132,7 @@ export default function scoresAndSchedule() {
         title={`${team2.team.displayName}`}
         accessories={[
           {
-            text: `${team2.stats[7].displayValue} GP | ${team2.stats[32]?.displayValue ?? "0-0-0"} | Pct: ${(Number(team2.stats[8].displayValue) * 100).toFixed(1)}% | PF: ${team2.stats[14].displayValue} | PA: ${team2.stats[13].displayValue} | Dif: ${team2.stats[11].displayValue}`,
+            text: `${team2.stats[7].displayValue ?? "0 GP"} GP | ${team2.stats[32]?.displayValue ?? "0-0-0"} | Pct: ${(Number(team2.stats[8].displayValue) * 100).toFixed(1) ?? "Pct: 0%"}% | PF: ${team2.stats[14].displayValue ?? "PF: 0"} | PA: ${team2.stats[13].displayValue ?? "PA: 0"} | Dif: ${team2.stats[11].displayValue ?? "PA: 0"}`,
           },
           { tag: { value: team2.stats[10].displayValue, color: tagColor }, icon: tagIcon, tooltip: tagTooltip },
         ]}
@@ -141,7 +140,6 @@ export default function scoresAndSchedule() {
         actions={
           <ActionPanel>
             <Action.OpenInBrowser title="View Team Details on ESPN" url={`${team2.team.links[0].href}`} />
-            <Action.OpenInBrowser title="View Standings on ESPN" url={`${mlbStandingsData?.links[0].href}`} />
           </ActionPanel>
         }
       />
