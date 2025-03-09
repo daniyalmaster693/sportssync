@@ -48,10 +48,10 @@ export default function scoresAndSchedule() {
   );
 
   const driverItems = driverData?.children?.[0]?.standings?.entries || [];
-  const drivers = driverItems.map((driver, index) => {
+  const drivers = driverItems?.map((driver, index) => {
     const flagSrc = driver?.athlete?.flag.href ?? `${driver?.athlete?.flag?.href}`;
 
-    const driverPosition = Number(driver.stats[0].displayValue);
+    const driverPosition = Number(driver.stats[0].displayValue ?? "0");
 
     let tagColor;
     let tagIcon;
@@ -73,9 +73,9 @@ export default function scoresAndSchedule() {
         icon={{ source: flagSrc }}
         accessories={[
           {
-            text: `${driver.stats[1].displayValue ?? "0"} pts`,
+            text: `${driver?.stats[1]?.displayValue ?? "0"} pts`,
           },
-          { tag: { value: driver.stats[0].displayValue, color: tagColor }, icon: tagIcon },
+          { tag: { value: driver?.stats[0]?.displayValue ?? "0", color: tagColor }, icon: tagIcon },
         ]}
       />
     );
@@ -88,8 +88,8 @@ export default function scoresAndSchedule() {
   );
 
   const constructorItems = constructorData?.children?.[1]?.standings?.entries || [];
-  const constructorTeams = constructorItems.map((constructor, index) => {
-    const constructorPosition = Number(constructor.stats[0].displayValue);
+  const constructorTeams = constructorItems?.map((constructor, index) => {
+    const constructorPosition = Number(constructor?.stats[0].displayValue ?? "0");
 
     let tagColor;
     let tagIcon;
@@ -110,9 +110,9 @@ export default function scoresAndSchedule() {
         title={`${constructor?.team?.displayName}`}
         accessories={[
           {
-            text: `${constructor.stats[1].displayValue ?? "0"} pts`,
+            text: `${constructor?.stats[1]?.displayValue ?? "0"} pts`,
           },
-          { tag: { value: constructor.stats[0].displayValue, color: tagColor }, icon: tagIcon },
+          { tag: { value: constructor?.stats[0]?.displayValue ?? "0", color: tagColor }, icon: tagIcon },
         ]}
       />
     );
@@ -126,8 +126,8 @@ export default function scoresAndSchedule() {
     return <Detail markdown="No data found." />;
   }
 
-  const driverTitle = driverData.children[0].name;
-  const constructorTitle = constructorData.children[1].name;
+  const driverTitle = driverData?.children[0]?.name;
+  const constructorTitle = constructorData?.children[1]?.name;
 
   return (
     <List

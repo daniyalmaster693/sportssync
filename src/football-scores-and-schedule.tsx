@@ -79,6 +79,16 @@ export default function scoresAndSchedule() {
     let accessoryIcon = { source: Icon.Calendar, tintColor: Color.SecondaryText };
     let accessoryToolTip = "Scheduled";
 
+    const startingSoonInterval = 15 * 60 * 1000;
+    const currentDate = new Date();
+    const timeUntilGameStarts = gameDate.getTime() - currentDate.getTime();
+
+    if (timeUntilGameStarts <= startingSoonInterval && nflGame?.status?.type?.state === "pre") {
+      accessoryColor = Color.Yellow;
+      accessoryIcon = { source: Icon.Warning, tintColor: Color.Yellow };
+      accessoryToolTip = "Starting Soon";
+    }
+
     if (nflGame.status.type.state === "in") {
       accessoryTitle = `${nflGame.competitions[0].competitors[1].team.abbreviation} ${nflGame.competitions[0].competitors[1].score} - ${nflGame.competitions[0].competitors[0].team.abbreviation} ${nflGame.competitions[0].competitors[0].score}     Q${nflGame.status.period} ${nflGame.status.displayClock}`;
       accessoryColor = Color.Green;
@@ -166,7 +176,7 @@ export default function scoresAndSchedule() {
     const currentDate = new Date();
     const timeUntilGameStarts = gameDate.getTime() - currentDate.getTime();
 
-    if (timeUntilGameStarts <= startingSoonInterval && ncaaGame.status.type.state !== "in") {
+    if (timeUntilGameStarts <= startingSoonInterval && ncaaGame?.status?.type?.state === "pre") {
       accessoryColor = Color.Yellow;
       accessoryIcon = { source: Icon.Warning, tintColor: Color.Yellow };
       accessoryToolTip = "Starting Soon";

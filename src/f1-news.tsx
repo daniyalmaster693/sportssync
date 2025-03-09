@@ -21,8 +21,8 @@ export default function scoresAndSchedule() {
   );
 
   const f1Articles = f1ArticlesData?.articles || [];
-  const f1Items = f1Articles.map((f1Article, index) => {
-    const articleDate = new Date(f1Article.published).toLocaleDateString([], {
+  const f1Items = f1Articles?.map((f1Article, index) => {
+    const articleDate = new Date(f1Article?.published).toLocaleDateString([], {
       day: "2-digit",
       month: "short",
       year: "numeric",
@@ -30,7 +30,7 @@ export default function scoresAndSchedule() {
 
     const accessoryTitle = articleDate;
     const accessoryToolTip = "Date Published";
-    let articleType = f1Article.type;
+    let articleType = f1Article?.type;
 
     if (articleType === "HeadlineNews") {
       articleType = "Headline";
@@ -39,16 +39,19 @@ export default function scoresAndSchedule() {
     return (
       <List.Item
         key={index}
-        title={`${f1Article.headline}`}
-        icon={{ source: f1Article.images[0].url }}
+        title={`${f1Article?.headline ?? "No Headline Found"}`}
+        icon={{ source: f1Article?.images[0]?.url }}
         accessories={[
           { tag: { value: articleType, color: Color.Green }, icon: Icon.Megaphone },
-          { text: { value: `${accessoryTitle}` }, tooltip: accessoryToolTip },
+          { text: { value: `${accessoryTitle ?? "No Date Found"}` }, tooltip: accessoryToolTip ?? "Unknown" },
           { icon: Icon.Calendar },
         ]}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Article on ESPN" url={`${f1Article.links.web.href}`} />
+            <Action.OpenInBrowser
+              title="View Article on ESPN"
+              url={`${f1Article?.links?.web?.href ?? "https://www.espn.com"}`}
+            />
           </ActionPanel>
         }
       />
@@ -61,7 +64,9 @@ export default function scoresAndSchedule() {
 
   return (
     <List searchBarPlaceholder="Search for an article" isLoading={f1ArticlesStatus}>
-      <List.Section title={`${f1Articles.length} Article${f1Articles.length !== 1 ? "s" : ""}`}>{f1Items}</List.Section>
+      <List.Section title={`${f1Articles?.length} Article${f1Articles?.length !== 1 ? "s" : ""}`}>
+        {f1Items}
+      </List.Section>
     </List>
   );
 }
