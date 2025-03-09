@@ -42,7 +42,7 @@ export default function scoresAndSchedule() {
         title={`${nhlArticle?.headline ?? "No Headline Found"}`}
         icon={{ source: nhlArticle?.images[0]?.url }}
         accessories={[
-          { tag: { value: articleType, color: Color.Green }, icon: Icon.Megaphone },
+          { tag: { value: articleType ?? "Unknown", color: Color.Green }, icon: Icon.Megaphone },
           { text: { value: `${accessoryTitle ?? "No Date Found"}` }, tooltip: accessoryToolTip ?? "Unknown" },
           { icon: Icon.Calendar },
         ]}

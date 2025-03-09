@@ -16,6 +16,7 @@
 - Added a new tag in the standings commands to show whether a team is in the playoffs, or their current position in the league (varies based on the league). Includes different colors and icons that update dynamically
 - Fixed a bug in the MLB Standings command causing incorrect data to display
 - Added a "scheduled" tooltip for scheduled games
+- Added a starting soon indicator that will display the game time in yellow and a hazard icon when a game is starting in the next 15 minutes, and until the game status becomes "live".
 
 <<<<<<< HEAD
 ## [Added a bunch of new feedback] - 2025-02-13

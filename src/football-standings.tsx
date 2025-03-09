@@ -90,6 +90,8 @@ export default function scoresAndSchedule() {
         tagTooltip = "Last in Conference";
       } else {
         tagColor = Color.SecondaryText;
+        tagIcon = null;
+        tagTooltip = "Unknown";
       }
 
       return (
