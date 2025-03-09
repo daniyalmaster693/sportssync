@@ -177,6 +177,7 @@ export default function scoresAndSchedule() {
     function getSoccerHalfWithSuffix(half: number) {
       if (half === 1) return `${half}st Half`;
       if (half === 2) return `${half}nd Half`;
+      if (half === 3) return `${half}rd Half`;
       return `${half}th Half`;
     }
 
@@ -269,6 +270,7 @@ export default function scoresAndSchedule() {
     function getSoccerHalfWithSuffix(half: number) {
       if (half === 1) return `${half}st Half`;
       if (half === 2) return `${half}nd Half`;
+      if (half === 3) return `${half}rd Half`;
       return `${half}th Half`;
     }
 
@@ -361,6 +363,7 @@ export default function scoresAndSchedule() {
     function getSoccerHalfWithSuffix(half: number) {
       if (half === 1) return `${half}st Half`;
       if (half === 2) return `${half}nd Half`;
+      if (half === 3) return `${half}rd Half`;
       return `${half}th Half`;
     }
 
@@ -453,6 +456,7 @@ export default function scoresAndSchedule() {
     function getSoccerHalfWithSuffix(half: number) {
       if (half === 1) return `${half}st Half`;
       if (half === 2) return `${half}nd Half`;
+      if (half === 3) return `${half}rd Half`;
       return `${half}th Half`;
     }
 
