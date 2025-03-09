@@ -77,6 +77,7 @@ export default function command() {
 
   const atlanticItems = data.children[0]?.children[0]?.standings?.entries;
   const metroItems = data.children[0]?.children[1]?.standings?.entries;
+
   const centralItems = data.children[1]?.children[0]?.standings?.entries;
   const pacificItems = data.children[1]?.children[1]?.standings?.entries;
 
