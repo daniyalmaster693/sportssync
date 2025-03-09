@@ -19,6 +19,7 @@
 - Added a starting soon indicator that will display the game time in yellow and a hazard icon when a game is starting in the next 15 minutes, and until the game status becomes "live".
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## [Added a bunch of new feedback] - 2025-02-13
 =======
 ## [Added a bunch of new feedback] - 2025-02-14
@@ -26,6 +27,9 @@
 =======
 ## [Implemented new feedback] - 2025-02-13
 >>>>>>> 3d39d6b (Updated CHANGELOG)
+=======
+## [Implemented new feedback] - 2025-02-13
+>>>>>>> df17b6d0ef751b433f7f9256346c3b042539c728
 
 - Added a new league: Champions League
 - Fixed an issue causing the record in nhl standings command to show up as undefined
