@@ -23,8 +23,8 @@ export default function scoresAndSchedule() {
   );
 
   const nflArticles = nflArticlesData?.articles || [];
-  const nflItems = nflArticles.map((nflArticle, index) => {
-    const articleDate = new Date(nflArticle.published).toLocaleDateString([], {
+  const nflItems = nflArticles?.map((nflArticle, index) => {
+    const articleDate = new Date(nflArticle?.published).toLocaleDateString([], {
       day: "2-digit",
       month: "short",
       year: "numeric",
@@ -32,7 +32,7 @@ export default function scoresAndSchedule() {
 
     const accessoryTitle = articleDate;
     const accessoryToolTip = "Date Published";
-    let articleType = nflArticle.type;
+    let articleType = nflArticle?.type;
 
     if (articleType === "HeadlineNews") {
       articleType = "Headline";
@@ -41,16 +41,19 @@ export default function scoresAndSchedule() {
     return (
       <List.Item
         key={index}
-        title={`${nflArticle.headline}`}
-        icon={{ source: nflArticle.images[0].url }}
+        title={`${nflArticle?.headline ?? "No Headline Found"}`}
+        icon={{ source: nflArticle?.images[0]?.url }}
         accessories={[
           { tag: { value: articleType, color: Color.Green }, icon: Icon.Megaphone },
-          { text: { value: `${accessoryTitle}` }, tooltip: accessoryToolTip },
+          { text: { value: `${accessoryTitle ?? "No Date Found"}` }, tooltip: accessoryToolTip ?? "Unknown" },
           { icon: Icon.Calendar },
         ]}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Article on ESPN" url={`${nflArticle.links.web.href}`} />
+            <Action.OpenInBrowser
+              title="View Article on ESPN"
+              url={`${nflArticle?.links?.web?.href ?? "https://www.espn.com"}`}
+            />
           </ActionPanel>
         }
       />
@@ -64,8 +67,8 @@ export default function scoresAndSchedule() {
   );
 
   const ncaaArticles = ncaaArticlesData?.articles || [];
-  const ncaaItems = ncaaArticles.map((ncaaArticle, index) => {
-    const articleDate = new Date(ncaaArticle.published).toLocaleDateString([], {
+  const ncaaItems = ncaaArticles?.map((ncaaArticle, index) => {
+    const articleDate = new Date(ncaaArticle?.published).toLocaleDateString([], {
       day: "2-digit",
       month: "short",
       year: "numeric",
@@ -73,7 +76,7 @@ export default function scoresAndSchedule() {
 
     const accessoryTitle = articleDate;
     const accessoryToolTip = "Date Published";
-    let articleType = ncaaArticle.type;
+    let articleType = ncaaArticle?.type;
 
     if (articleType === "HeadlineNews") {
       articleType = "Headline";
@@ -82,16 +85,19 @@ export default function scoresAndSchedule() {
     return (
       <List.Item
         key={index}
-        title={`${ncaaArticle.headline}`}
-        icon={{ source: ncaaArticle.images[0].url }}
+        title={`${ncaaArticle?.headline ?? "No Headline Found"}`}
+        icon={{ source: ncaaArticle?.images[0]?.url }}
         accessories={[
           { tag: { value: articleType, color: Color.Green }, icon: Icon.Megaphone },
-          { text: { value: `${accessoryTitle}` }, tooltip: accessoryToolTip },
+          { text: { value: `${accessoryTitle ?? "No Date Found"}` }, tooltip: accessoryToolTip ?? "Unknown" },
           { icon: Icon.Calendar },
         ]}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Article on ESPN" url={`${ncaaArticle.links.web.href}`} />
+            <Action.OpenInBrowser
+              title="View Article on ESPN"
+              url={`${ncaaArticle?.links?.web?.href ?? "https://www.espn.com"}`}
+            />
           </ActionPanel>
         }
       />
@@ -115,7 +121,7 @@ export default function scoresAndSchedule() {
     >
       {currentLeague === "NFL" && (
         <>
-          <List.Section title={`${nflArticles.length} Article${nflArticles.length !== 1 ? "s" : ""}`}>
+          <List.Section title={`${nflArticles?.length} Article${nflArticles.length !== 1 ? "s" : ""}`}>
             {nflItems}
           </List.Section>
         </>
@@ -123,7 +129,7 @@ export default function scoresAndSchedule() {
 
       {currentLeague === "NCAA" && (
         <>
-          <List.Section title={`${ncaaArticles.length} Article${ncaaArticles.length !== 1 ? "s" : ""}`}>
+          <List.Section title={`${ncaaArticles?.length} Article${ncaaArticles.length !== 1 ? "s" : ""}`}>
             {ncaaItems}
           </List.Section>
         </>
