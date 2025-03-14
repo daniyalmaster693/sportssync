@@ -568,6 +568,254 @@
         {
           "title": "Washington Mystics",
           "value": "16"
+        },
+        {
+          "title": "Arizona Cardinals",
+          "value": "22"
+        },
+        {
+          "title": "Atlanta Falcons",
+          "value": "1"
+        },
+        {
+          "title": "Baltimore Ravens",
+          "value": "33"
+        },
+        {
+          "title": "Buffalo Bills",
+          "value": "2"
+        },
+        {
+          "title": "Carolina Panthers",
+          "value": "29"
+        },
+        {
+          "title": "Chicago Bears",
+          "value": "3"
+        },
+        {
+          "title": "Cincinnati Bengals",
+          "value": "4"
+        },
+        {
+          "title": "Cleveland Browns",
+          "value": "5"
+        },
+        {
+          "title": "Dallas Cowboys",
+          "value": "6"
+        },
+        {
+          "title": "Denver Broncos",
+          "value": "7"
+        },
+        {
+          "title": "Detroit Lions",
+          "value": "8"
+        },
+        {
+          "title": "Green Bay Packers",
+          "value": "9"
+        },
+        {
+          "title": "Houston Texans",
+          "value": "34"
+        },
+        {
+          "title": "Indianapolis Colts",
+          "value": "11"
+        },
+        {
+          "title": "Jacksonville Jaguars",
+          "value": "30"
+        },
+        {
+          "title": "Kansas City Chiefs",
+          "value": "12"
+        },
+        {
+          "title": "Las Vegas Raiders",
+          "value": "13"
+        },
+        {
+          "title": "Los Angeles Chargers",
+          "value": "24"
+        },
+        {
+          "title": "Los Angeles Rams",
+          "value": "14"
+        },
+        {
+          "title": "Miami Dolphins",
+          "value": "15"
+        },
+        {
+          "title": "Minnesota Vikings",
+          "value": "16"
+        },
+        {
+          "title": "New England Patriots",
+          "value": "17"
+        },
+        {
+          "title": "New Orleans Saints",
+          "value": "18"
+        },
+        {
+          "title": "New York Giants",
+          "value": "19"
+        },
+        {
+          "title": "New York Jets",
+          "value": "20"
+        },
+        {
+          "title": "Philadelphia Eagles",
+          "value": "21"
+        },
+        {
+          "title": "Pittsburgh Steelers",
+          "value": "23"
+        },
+        {
+          "title": "San Francisco 49ers",
+          "value": "25"
+        },
+        {
+          "title": "Seattle Seahawks",
+          "value": "26"
+        },
+        {
+          "title": "Tampa Bay Buccaneers",
+          "value": "27"
+        },
+        {
+          "title": "Tennessee Titans",
+          "value": "10"
+        },
+        {
+          "title": "Washington Commanders",
+          "value": "28"
+        },
+        {
+          "title": "Arizona Diamondbacks",
+          "value": "29"
+        },
+        {
+          "title": "Athletics",
+          "value": "11"
+        },
+        {
+          "title": "Atlanta Braves",
+          "value": "15"
+        },
+        {
+          "title": "Baltimore Orioles",
+          "value": "1"
+        },
+        {
+          "title": "Boston Red Sox",
+          "value": "2"
+        },
+        {
+          "title": "Chicago Cubs",
+          "value": "16"
+        },
+        {
+          "title": "Chicago White Sox",
+          "value": "4"
+        },
+        {
+          "title": "Cincinnati Reds",
+          "value": "17"
+        },
+        {
+          "title": "Cleveland Guardians",
+          "value": "5"
+        },
+        {
+          "title": "Colorado Rockies",
+          "value": "27"
+        },
+        {
+          "title": "Detroit Tigers",
+          "value": "6"
+        },
+        {
+          "title": "Houston Astros",
+          "value": "18"
+        },
+        {
+          "title": "Kansas City Royals",
+          "value": "7"
+        },
+        {
+          "title": "Los Angeles Angels",
+          "value": "3"
+        },
+        {
+          "title": "Los Angeles Dodgers",
+          "value": "19"
+        },
+        {
+          "title": "Miami Marlins",
+          "value": "28"
+        },
+        {
+          "title": "Milwaukee Brewers",
+          "value": "8"
+        },
+        {
+          "title": "Minnesota Twins",
+          "value": "9"
+        },
+        {
+          "title": "New York Mets",
+          "value": "21"
+        },
+        {
+          "title": "New York Yankees",
+          "value": "10"
+        },
+        {
+          "title": "Philadelphia Phillies",
+          "value": "22"
+        },
+        {
+          "title": "Pittsburgh Pirates",
+          "value": "23"
+        },
+        {
+          "title": "San Diego Padres",
+          "value": "25"
+        },
+        {
+          "title": "San Francisco Giants",
+          "value": "26"
+        },
+        {
+          "title": "Seattle Mariners",
+          "value": "12"
+        },
+        {
+          "title": "St. Louis Cardinals",
+          "value": "24"
+        },
+        {
+          "title": "Tampa Bay Rays",
+          "value": "30"
+        },
+        {
+          "title": "Texas Rangers",
+          "value": "13"
+        },
+        {
+          "title": "Toronto Blue Jays",
+          "value": "14"
+        },
+        {
+          "title": "Washington Nationals",
+          "value": "20"
         }
       ]
     }
