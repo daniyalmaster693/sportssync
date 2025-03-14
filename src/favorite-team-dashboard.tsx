@@ -17,7 +17,7 @@ const favoriteLeague = preferences.league;
 const favoriteSport = preferences.sport;
 
 const Command = () => {
-  const [currentType, displaySelectType] = useState("NBA Games");
+  const [currentType, displaySelectType] = useState("Scheduled Games");
   useEffect(() => {
     async function loadStoredDropdown() {
       const storedValue = await LocalStorage.getItem("selectedDropdown");
