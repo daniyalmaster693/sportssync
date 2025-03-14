@@ -39,6 +39,8 @@ const displaySchedule = () => {
         >
           <List.Dropdown.Item title="NBA" value="nba" />
           <List.Dropdown.Item title="WNBA" value="wnba" />
+          <List.Dropdown.Item title="NCAA M" value="mens-college-basketball" />
+          <List.Dropdown.Item title="NCAA W" value="womens-college-basketball" />
         </List.Dropdown>
       }
       isLoading={scheduleLoading}
