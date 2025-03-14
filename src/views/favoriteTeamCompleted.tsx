@@ -237,6 +237,10 @@ export default function CompletedGames() {
     subTitleText = "Race";
   }
 
+  if (completedLoading) {
+    return <Detail isLoading={true} />;
+  }
+
   return (
     <>
       {gameItems?.map((sportGameDay, index) => (

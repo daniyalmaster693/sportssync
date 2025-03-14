@@ -77,6 +77,10 @@ export default function DisplayInjuries() {
     );
   });
 
+  if (injuryLoading) {
+    return <Detail isLoading={true} />;
+  }
+
   return (
     <>
       <List.Section title="Injury Status">{playerInjuryItems}</List.Section>

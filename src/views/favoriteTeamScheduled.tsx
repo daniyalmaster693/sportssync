@@ -263,6 +263,10 @@ export default function ScheduledGames() {
     return <Detail markdown="No data found." />;
   }
 
+  if (scheduleLoading) {
+    return <Detail isLoading={true} />;
+  }
+
   return (
     <>
       {gameItems?.map((sportGameDay, index) => (

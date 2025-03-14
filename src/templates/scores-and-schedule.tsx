@@ -204,6 +204,10 @@ export default function DisplayScoresAndSchedule() {
     subTitleText = "Race";
   }
 
+  if (scheduleLoading) {
+    return <Detail isLoading={true} />;
+  }
+
   return (
     <>
       {gameItems?.map((sportGameDay, index) => (

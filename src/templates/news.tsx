@@ -70,6 +70,10 @@ export default function DisplayNews() {
     );
   });
 
+  if (articleLoading) {
+    return <Detail isLoading={true} />;
+  }
+
   return (
     <>
       {articleDayItems.map((dayItem, index) => (

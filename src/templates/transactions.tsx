@@ -58,6 +58,10 @@ export default function DisplayTransactions() {
     );
   });
 
+  if (transactionLoading) {
+    return <Detail isLoading={true} />;
+  }
+
   return (
     <>
       {transactionDayItems.map((dayItem, index) => (
