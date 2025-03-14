@@ -74,6 +74,10 @@ export default function DisplayNews() {
     return <Detail isLoading={true} />;
   }
 
+  if (!articleData || articleDayItems.length === 0) {
+    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
+  }
+
   return (
     <>
       {articleDayItems.map((dayItem, index) => (

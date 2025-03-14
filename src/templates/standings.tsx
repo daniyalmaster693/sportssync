@@ -419,6 +419,10 @@ export default function DisplayTeamStandings() {
     return <Detail isLoading={true} />;
   }
 
+  if (!standingsData || conference1.length === 0 || conference2.length === 0) {
+    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
+  }
+
   if (currentLeague === "nba") {
     conference1.reverse();
     conference2.reverse();

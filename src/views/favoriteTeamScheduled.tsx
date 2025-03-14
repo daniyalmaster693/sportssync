@@ -259,12 +259,12 @@ export default function ScheduledGames() {
       );
   });
 
-  if (!scheduleData) {
-    return <Detail markdown="No data found." />;
-  }
-
   if (scheduleLoading) {
     return <Detail isLoading={true} />;
+  }
+
+  if (!scheduleData || gameItems.length === 0) {
+    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
   }
 
   return (

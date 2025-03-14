@@ -530,12 +530,20 @@ export default function TeamInjuries() {
   const state = franchise?.venue?.address.state ?? "Unknown";
   const address = `${city}, ${state}, ${country}`;
 
-  if (!data || !injuryData || !transactionsData || !franchiseData) {
-    return <Detail markdown="No data found." />;
-  }
-
   if (isLoading || injuryLoading || transactionLoading || franchiseLoading || articleLoading) {
     return <Detail isLoading={true} />;
+  }
+
+  if (
+    !data ||
+    !injuryData ||
+    !transactionsData ||
+    !franchiseData ||
+    injuryArray.length === 0 ||
+    articleDayItems.length === 0 ||
+    transactionDayItems.length === 0
+  ) {
+    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
   }
 
   return (

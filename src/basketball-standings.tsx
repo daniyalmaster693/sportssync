@@ -1,4 +1,4 @@
-import { LocalStorage, List } from "@raycast/api";
+import { LocalStorage, List, Detail } from "@raycast/api";
 import { useEffect, useState } from "react";
 import sportInfo from "./utils/getSportInfo";
 import getTeamStandings from "./utils/getStandings";
@@ -21,8 +21,16 @@ const displaySchedule = () => {
     loadStoredDropdown();
   }, []);
 
-  const { standingsLoading } = getTeamStandings();
+  const { standingsLoading, standingsData } = getTeamStandings();
   sportInfo.setSportAndLeague("basketball", `${currentLeague}`);
+
+  if (standingsLoading) {
+    return <Detail isLoading={true} />;
+  }
+
+  if (!standingsData) {
+    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
+  }
 
   return (
     <List

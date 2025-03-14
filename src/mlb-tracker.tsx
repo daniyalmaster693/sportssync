@@ -1,4 +1,4 @@
-import { LocalStorage, List } from "@raycast/api";
+import { LocalStorage, List, Detail } from "@raycast/api";
 import { useEffect, useState } from "react";
 import sportInfo from "./utils/getSportInfo";
 import getArticles from "./utils/getArticles";
@@ -25,11 +25,19 @@ const displayTrackerInformation = () => {
     loadStoredDropdown();
   }, []);
 
-  const { articleLoading } = getArticles();
-  const { injuryLoading } = getInjuries();
-  const { transactionLoading } = getTransactions();
+  const { articleLoading, articleData } = getArticles();
+  const { injuryLoading, injuryData } = getInjuries();
+  const { transactionLoading, transactionData } = getTransactions();
 
   sportInfo.setSportAndLeague("baseball", `mlb`);
+
+  if (articleLoading || injuryLoading || transactionLoading) {
+    return <Detail isLoading={true} />;
+  }
+
+  if (!articleData || !injuryData || !transactionData) {
+    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
+  }
 
   return (
     <List

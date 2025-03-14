@@ -62,6 +62,10 @@ export default function DisplayTransactions() {
     return <Detail isLoading={true} />;
   }
 
+  if (!transactionData || transactionDayItems.length === 0) {
+    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
+  }
+
   return (
     <>
       {transactionDayItems.map((dayItem, index) => (

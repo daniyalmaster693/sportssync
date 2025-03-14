@@ -188,10 +188,6 @@ export default function DisplayScoresAndSchedule() {
     return <Detail isLoading={true} />;
   }
 
-  if (!scheduleData) {
-    return <Detail markdown="No data found." />;
-  }
-
   gameItems.sort((a, b) => {
     const dateA = new Date(a.title);
     const dateB = new Date(b.title);
@@ -206,6 +202,10 @@ export default function DisplayScoresAndSchedule() {
 
   if (scheduleLoading) {
     return <Detail isLoading={true} />;
+  }
+
+  if (!scheduleData || games.length === 0) {
+    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
   }
 
   return (

@@ -6,7 +6,11 @@ import DisplayNews from "./templates/news";
 sportInfo.setSportAndLeague("soccer", "ENG.1");
 
 const displaySchedule = () => {
-  const { articleLoading } = getArticles();
+  const { articleLoading, articleData } = getArticles();
+
+  if (!articleData) {
+    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
+  }
 
   return (
     <List isLoading={articleLoading}>

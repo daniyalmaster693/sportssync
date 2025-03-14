@@ -32,12 +32,16 @@ const Command = () => {
     loadStoredDropdown();
   }, []);
 
-  const { isLoading: nhlScheduleStats, data: nhlScoresAndSchedule } = useFetch<Response>(
+  const { isLoading: scheduleLoading, data: scheduleData } = useFetch<Response>(
     `https://site.api.espn.com/apis/site/v2/sports/${favoriteSport}/${favoriteLeague}/teams/${favoriteTeam}/schedule`,
   );
 
-  if (!nhlScoresAndSchedule) {
-    return <Detail markdown="No data found." />;
+  if (scheduleLoading) {
+    return <Detail isLoading={true} />;
+  }
+
+  if (!scheduleData) {
+    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
   }
 
   return (
@@ -58,7 +62,7 @@ const Command = () => {
           <List.Dropdown.Item title="Tracker" value="Tracker" />
         </List.Dropdown>
       }
-      isLoading={nhlScheduleStats}
+      isLoading={scheduleLoading}
     >
       {currentType === "Scheduled Games" && (
         <>
