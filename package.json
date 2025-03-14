@@ -142,8 +142,8 @@
       "mode": "view"
     },
     {
-      "name": "game-center",
-      "title": "Game Center",
+      "name": "favorite-team-dashboard",
+      "title": "Favorite Team Dashboard",
       "description": "Follow your favorite teams using one command to track scheduled games, completed games, articles, standings, injuries, and transactions",
       "mode": "view"
     }
