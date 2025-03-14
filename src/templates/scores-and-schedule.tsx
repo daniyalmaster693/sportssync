@@ -81,14 +81,23 @@ export default function DisplayScoresAndSchedule() {
       accessoryToolTip = "Starting Soon";
     }
 
-    if (game?.status?.type?.state === "in") {
-      accessoryTitle = `${game?.competitions[0]?.competitors[1]?.team.abbreviation} ${game?.competitions[0]?.competitors[1]?.score} - ${game?.competitions[0]?.competitors[0]?.team?.abbreviation} ${game?.competitions[0]?.competitors[0]?.score}     ${period}${periodNumber} ${timeDisplay}`;
-      accessoryColor = Color.Green;
-      accessoryIcon = { source: Icon.Livestream, tintColor: Color.Green };
-      accessoryToolTip = "In Progress";
+    if (currentLeague !== "f1") {
+      if (game?.status?.type?.state === "in") {
+        accessoryTitle = `${game?.competitions[0]?.competitors[1]?.team.abbreviation} ${game?.competitions[0]?.competitors[1]?.score} - ${game?.competitions[0]?.competitors[0]?.team?.abbreviation} ${game?.competitions[0]?.competitors[0]?.score}     ${period}${periodNumber} ${timeDisplay}`;
+        accessoryColor = Color.Green;
+        accessoryIcon = { source: Icon.Livestream, tintColor: Color.Green };
+        accessoryToolTip = "In Progress";
+      } else {
+        if (game.status.type.state === "in") {
+          accessoryTitle = `${game.competitions[4].competitors[0].athlete.shortName}     L${game.competitions[4].status.period} ${game.status.displayClock}`;
+          accessoryColor = Color.Green;
+          accessoryIcon = { source: Icon.Livestream, tintColor: Color.Green };
+          accessoryToolTip = "Current Leader & Lap";
+        }
+      }
     }
 
-    if (currentSport !== "racing") {
+    if (currentLeague !== "f1") {
       if (game?.status?.type?.state === "post") {
         accessoryTitle = `${game?.competitions[0]?.competitors[1]?.team?.abbreviation} ${game?.competitions[0]?.competitors[1]?.score} - ${game?.competitions[0]?.competitors[0]?.team?.abbreviation} ${game?.competitions[0]?.competitors[0]?.score}`;
         accessoryColor = Color.SecondaryText;
@@ -111,27 +120,40 @@ export default function DisplayScoresAndSchedule() {
     }
 
     let gameTitle = game?.name ?? "Unknown";
+    let subtitle;
 
     if (currentSport === "hockey") {
       gameTitle = game?.name?.replace(" at ", " vs ");
+    }
+
+    if (currentLeague === "f1") {
+      subtitle = `${game?.circuit?.address?.city}, ${game?.circuit?.address?.country}`;
     }
 
     sportGameDay?.games.push(
       <List.Item
         key={index}
         title={gameTitle}
+        subtitle={subtitle}
         icon={{
           source:
             game?.competitions?.[0]?.competitors?.[1]?.team?.logo ??
             `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${currentLeague}.png&w=100&h=100&transparent=true`,
         }}
-        accessories={[
-          {
-            text: { value: `${accessoryTitle ?? "No Date Found"}`, color: accessoryColor },
-            tooltip: accessoryToolTip ?? "Unknown",
-          },
-          { icon: accessoryIcon },
-        ]}
+        accessories={
+          currentLeague !== "f1"
+            ? [
+                {
+                  text: { value: `${accessoryTitle ?? "No Date Found"}`, color: accessoryColor },
+                  tooltip: accessoryToolTip ?? "Unknown",
+                },
+                { icon: accessoryIcon },
+                ...(currentLeague === "f1"
+                  ? [{ tag: { value: (index + 1).toString(), color: Color.Green }, icon: Icon.Flag }]
+                  : []),
+              ]
+            : undefined
+        }
         actions={
           <ActionPanel>
             <Action
@@ -140,13 +162,14 @@ export default function DisplayScoresAndSchedule() {
               onAction={scheduleRevalidate}
               shortcut={{ modifiers: ["cmd"], key: "r" }}
             />
-            <Action.OpenInBrowser
-              title="View Game Details on ESPN"
-              url={`${`https://www.espn.com/${currentLeague}`}`}
-            />
 
-            {currentSport !== "racing" ? (
+            {currentLeague !== "f1" ? (
               <>
+                <Action.OpenInBrowser
+                  title="View Game Details on ESPN"
+                  url={`${game?.links?.[0]?.href ?? `https://www.espn.com/${currentLeague}`}`}
+                />
+
                 {game?.competitions?.[0]?.competitors?.[1]?.team.links?.length > 0 && (
                   <Action.OpenInBrowser
                     title={`View ${game?.competitions?.[0]?.competitors?.[1]?.team?.displayName ?? "Away"} Team Details`}
@@ -156,6 +179,7 @@ export default function DisplayScoresAndSchedule() {
                     }
                   />
                 )}
+
                 {game.competitions?.[0]?.competitors?.[0]?.team?.links?.length > 0 && (
                   <Action.OpenInBrowser
                     title={`View ${game?.competitions?.[0]?.competitors?.[0]?.team?.displayName ?? "Home"} Team Details`}
@@ -183,10 +207,6 @@ export default function DisplayScoresAndSchedule() {
       />,
     );
   });
-
-  if (scheduleLoading) {
-    return <Detail isLoading={true} />;
-  }
 
   gameItems.sort((a, b) => {
     const dateA = new Date(a.title);

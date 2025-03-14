@@ -46,14 +46,6 @@ const Command = () => {
     searchBarPlaceholder = "Search for an article, player, or transaction";
   }
 
-  if (scheduleLoading) {
-    return <Detail isLoading={true} />;
-  }
-
-  if (!scheduleData) {
-    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
-  }
-
   return (
     <List
       searchBarPlaceholder={searchBarPlaceholder}

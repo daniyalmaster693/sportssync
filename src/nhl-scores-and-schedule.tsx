@@ -6,15 +6,7 @@ import DisplayScoresAndSchedule from "./templates/scores-and-schedule";
 sportInfo.setSportAndLeague("hockey", "nhl");
 
 const displaySchedule = () => {
-  const { scheduleLoading, scheduleData } = getScoresAndSchedule();
-
-  if (scheduleLoading) {
-    return <Detail isLoading={true} />;
-  }
-
-  if (!scheduleData) {
-    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
-  }
+  const { scheduleLoading } = getScoresAndSchedule();
 
   return (
     <List searchBarPlaceholder="Search for a game or team" isLoading={scheduleLoading}>

@@ -185,13 +185,14 @@ export default function CompletedGames() {
                 onAction={completeRevalidate}
                 shortcut={{ modifiers: ["cmd"], key: "r" }}
               />
-              <Action.OpenInBrowser
-                title="View Game Details on ESPN"
-                url={`${`https://www.espn.com/${favoriteLeague}`}`}
-              />
 
               {favoriteSport !== "racing" ? (
                 <>
+                  <Action.OpenInBrowser
+                    title="View Game Details on ESPN"
+                    url={`${game?.links?.[0]?.href ?? `https://www.espn.com/${favoriteLeague}`}`}
+                  />
+
                   {game?.competitions?.[0]?.competitors?.[1]?.team.links?.length > 0 && (
                     <Action.OpenInBrowser
                       title={`View ${game?.competitions?.[0]?.competitors?.[1]?.team?.displayName ?? "Away"} Team Details`}
@@ -201,6 +202,7 @@ export default function CompletedGames() {
                       }
                     />
                   )}
+
                   {game.competitions?.[0]?.competitors?.[0]?.team?.links?.length > 0 && (
                     <Action.OpenInBrowser
                       title={`View ${game?.competitions?.[0]?.competitors?.[0]?.team?.displayName ?? "Home"} Team Details`}

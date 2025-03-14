@@ -32,6 +32,7 @@ interface Status {
 interface Competition {
   competitors: Competitor[];
   type: { id: number };
+  status: Status;
   venue: {
     fullName: string;
     indoor: boolean;
@@ -58,6 +59,12 @@ interface Game {
   shortName: string;
   date: string;
   status: Status;
+  circuit: {
+    address: {
+      city: string;
+      country: string;
+    };
+  };
   competitions: Competition[];
   links: { href: string }[];
   season: {
@@ -70,6 +77,7 @@ interface Game {
 interface Response {
   events: Game[];
   day: { date: string };
+  leagues: { logos: { href: string }[] }[];
 }
 
 export default function getScoresAndSchedule() {

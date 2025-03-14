@@ -25,9 +25,9 @@ const displayTrackerInformation = () => {
     loadStoredDropdown();
   }, []);
 
-  const { articleLoading, articleData } = getArticles();
-  const { injuryLoading, injuryData } = getInjuries();
-  const { transactionLoading, transactionData } = getTransactions();
+  const { articleLoading } = getArticles();
+  const { injuryLoading } = getInjuries();
+  const { transactionLoading } = getTransactions();
 
   sportInfo.setSportAndLeague("baseball", `mlb`);
 
@@ -39,14 +39,6 @@ const displayTrackerInformation = () => {
 
   if (currentLeague === "Injuries" || currentLeague === "Transactions") {
     searchBarPlaceholder = "Search for a player, or team";
-  }
-
-  if (articleLoading || injuryLoading || transactionLoading) {
-    return <Detail isLoading={true} />;
-  }
-
-  if (!articleData || !injuryData || !transactionData) {
-    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
   }
 
   return (

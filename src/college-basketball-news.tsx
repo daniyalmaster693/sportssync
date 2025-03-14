@@ -104,10 +104,6 @@ export default function scoresAndSchedule() {
     );
   });
 
-  if (mncaaArticlesStatus || wncaaArticlesStatus) {
-    return <Detail isLoading={true} />;
-  }
-
   return (
     <List
       searchBarPlaceholder="Search for an article"

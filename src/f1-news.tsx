@@ -6,11 +6,7 @@ import DisplayNews from "./templates/news";
 sportInfo.setSportAndLeague("racing", "f1");
 
 const displaySchedule = () => {
-  const { articleLoading, articleData } = getArticles();
-
-  if (!articleData) {
-    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
-  }
+  const { articleLoading } = getArticles();
 
   return (
     <List isLoading={articleLoading} searchBarPlaceholder="Search for an article">

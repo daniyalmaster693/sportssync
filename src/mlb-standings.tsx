@@ -6,15 +6,7 @@ import DisplayTeamStandings from "./templates/standings";
 sportInfo.setSportAndLeague("baseball", "mlb");
 
 const displaySchedule = () => {
-  const { standingsLoading, standingsData } = getTeamStandings();
-
-  if (standingsLoading) {
-    return <Detail isLoading={true} />;
-  }
-
-  if (!standingsData) {
-    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
-  }
+  const { standingsLoading } = getTeamStandings();
 
   return (
     <List searchBarPlaceholder="Search for a team" isLoading={standingsLoading}>

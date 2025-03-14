@@ -49,9 +49,9 @@ interface Response {
   day: { date: string };
   leagues: { logos: { href: string }[] }[];
 }
+
 export default function command() {
   // Fetch F1 Races
-
   const currentYear = new Date().getFullYear();
 
   const { isLoading, data } = useFetch<Response>(
@@ -67,7 +67,7 @@ export default function command() {
   }
 
   const f1DayItems: DayItems[] = [];
-  const f1Races = data?.events || [];
+  const f1Races = data?.events ?? [];
 
   f1Races.forEach((race, index) => {
     const gameDate = new Date(race.date);
@@ -104,21 +104,21 @@ export default function command() {
       accessoryToolTip = "Starting Soon";
     }
 
-    if (race.status.type.state === "in") {
-      accessoryTitle = `${race.competitions[4].competitors[0].athlete.shortName}     L${race.competitions[4].status.period} ${race.status.displayClock}`;
+    if (race?.status?.type?.state === "in") {
+      accessoryTitle = `${race?.competitions?.[4]?.competitors?.[0]?.athlete?.shortName ?? "Unknown"}     L${race?.competitions?.[4]?.status?.period ?? "N/A"} ${race?.status?.displayClock ?? "Unknown"}`;
       accessoryColor = Color.Green;
       accessoryIcon = { source: Icon.Livestream, tintColor: Color.Green };
       accessoryToolTip = "Current Leader & Lap";
     }
 
-    if (race.status.type.state === "post") {
-      accessoryTitle = `${race.competitions[4].competitors[0].athlete.shortName}`;
+    if (race?.status?.type?.state === "post") {
+      accessoryTitle = `${race?.competitions?.[4]?.competitors?.[0]?.athlete?.shortName ?? "Unknown"}`;
       accessoryColor = Color.SecondaryText;
       accessoryIcon = { source: Icon.CheckCircle, tintColor: Color.SecondaryText };
       accessoryToolTip = "Winner";
     }
 
-    if (race.status.type.state === "post" && race.status.type.completed === false) {
+    if (race?.status?.type?.state === "post" && race?.status?.type?.completed === false) {
       accessoryTitle = `Postponed`;
       accessoryIcon = { source: Icon.XMarkCircle, tintColor: Color.Orange };
       accessoryColor = Color.Orange;
@@ -127,9 +127,9 @@ export default function command() {
     f1Day?.races.push(
       <List.Item
         key={index}
-        title={`${race.name}`}
-        subtitle={`${race.circuit.address.city}, ${race.circuit.address.country}`}
-        icon={{ source: data.leagues[0].logos[0].href }}
+        title={`${race?.name ?? "Unnamed Race"}`}
+        subtitle={`${race?.circuit?.address?.city ?? "Unknown City"}, ${race?.circuit?.address?.country ?? "Unknown Country"}`}
+        icon={{ source: data?.leagues?.[0]?.logos?.[0]?.href ?? "" }}
         accessories={[
           { tag: { value: (index + 1).toString(), color: Color.Green }, icon: Icon.Flag },
           {
@@ -140,8 +140,14 @@ export default function command() {
         ]}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser title="View Race Details on ESPN" url={`${race.links[0].href}`} />
-            <Action.OpenInBrowser title="View Circuit Details on ESPN" url={`${race.links[2].href}`} />
+            <Action.OpenInBrowser
+              title="View Race Details on ESPN"
+              url={`${race?.links?.[0]?.href ?? "https://www.espn.com/f1"}`}
+            />
+            <Action.OpenInBrowser
+              title="View Circuit Details on ESPN"
+              url={`${race?.links?.[2]?.href ?? "https://www.espn.com/f1"}`}
+            />
           </ActionPanel>
         }
       />,
@@ -154,15 +160,23 @@ export default function command() {
     return dateA.getTime() - dateB.getTime();
   });
 
+  if (isLoading) {
+    return <Detail isLoading={true} />;
+  }
+
+  if (!data) {
+    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
+  }
+
   return (
     <List searchBarPlaceholder="Search for a race or circuit" isLoading={isLoading}>
       {f1DayItems.map((f1Day, index) => (
         <List.Section
           key={index}
-          title={`${f1Day.title}`}
-          subtitle={`${f1Day.races.length} Race${f1Day.races.length !== 1 ? "s" : ""}`}
+          title={`${f1Day?.title ?? "Unknown Date"}`}
+          subtitle={`${f1Day?.races?.length ?? 0} Race${f1Day?.races?.length !== 1 ? "s" : ""}`}
         >
-          {f1Day.races}
+          {f1Day?.races}
         </List.Section>
       ))}
     </List>

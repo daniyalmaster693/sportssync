@@ -21,16 +21,8 @@ const displaySchedule = () => {
     loadStoredDropdown();
   }, []);
 
-  const { scheduleLoading, scheduleData } = getScoresAndSchedule();
+  const { scheduleLoading } = getScoresAndSchedule();
   sportInfo.setSportAndLeague("football", `${currentLeague}`);
-
-  if (scheduleLoading) {
-    return <Detail isLoading={true} />;
-  }
-
-  if (!scheduleData) {
-    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
-  }
 
   return (
     <List

@@ -217,7 +217,7 @@ export default function ScheduledGames() {
               />
               <Action.OpenInBrowser
                 title="View Game Details on ESPN"
-                url={`${`https://www.espn.com/${favoriteLeague}`}`}
+                url={`${game?.links?.[0]?.href ?? `https://www.espn.com/${favoriteLeague}`}`}
               />
 
               {favoriteSport !== "racing" ? (

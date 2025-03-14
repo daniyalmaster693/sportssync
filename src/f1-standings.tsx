@@ -128,14 +128,6 @@ export default function scoresAndSchedule() {
     searchBarPlaceholder = "Search for a team";
   }
 
-  if (driverStats || constructorStats) {
-    return <Detail isLoading={true} />;
-  }
-
-  if (!driverData || !constructorData) {
-    return <Detail markdown="No data found." />;
-  }
-
   const driverTitle = driverData?.children[0]?.name ?? "Driver Standings";
   const constructorTitle = constructorData?.children[1]?.name ?? "Constructor Standings";
 
