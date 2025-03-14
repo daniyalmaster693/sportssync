@@ -32,6 +32,7 @@ interface Status {
   type: {
     state: string;
     completed?: boolean;
+    detail?: string;
   };
   period?: number;
   displayClock?: string;
@@ -90,36 +91,36 @@ export default function ScheduledGames() {
   // Fetch NHL Stats
 
   const {
-    isLoading: nhlScheduleStats,
-    data: nhlScoresAndSchedule,
-    revalidate,
+    isLoading: scheduleLoading,
+    data: scheduleData,
+    revalidate: scheduleRevalidate,
   } = useFetch<Response>(
     `https://site.api.espn.com/apis/site/v2/sports/${favoriteSport}/${favoriteLeague}/teams/${favoriteTeam}/schedule`,
   );
 
-  if (nhlScheduleStats) {
+  if (scheduleLoading) {
     return <Detail isLoading={true} />;
   }
 
-  const nhlDayItems: DayItems[] = [];
-  const nhlGames = nhlScoresAndSchedule?.events || [];
+  const gameItems: DayItems[] = [];
+  const games = scheduleData?.events || [];
 
-  nhlGames?.forEach((nhlGame, index) => {
-    const gameDate = new Date(nhlGame?.date);
-    const nhlGameDay = gameDate?.toLocaleDateString([], {
+  games?.forEach((game, index) => {
+    const gameDate = new Date(game?.date);
+    const gameDay = gameDate?.toLocaleDateString([], {
       dateStyle: "medium",
     });
 
-    if (!nhlDayItems?.find((nhlDay) => nhlDay?.title === nhlGameDay)) {
-      nhlDayItems?.push({
-        title: nhlGameDay,
+    if (!gameItems?.find((sportGameDay) => sportGameDay?.title === gameDay)) {
+      gameItems?.push({
+        title: gameDay,
         games: [],
       });
     }
 
-    const nhlDay = nhlDayItems?.find((nhlDay) => nhlDay?.title === nhlGameDay);
+    const sportGameDay = gameItems?.find((sportGameDay) => sportGameDay?.title === gameDay);
 
-    const gameTime = new Date(nhlGame?.date).toLocaleTimeString([], {
+    const gameTime = new Date(game?.date).toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
     });
@@ -128,30 +129,77 @@ export default function ScheduledGames() {
     let accessoryColor = Color.SecondaryText;
     let accessoryIcon = { source: Icon.Calendar, tintColor: Color.SecondaryText };
     let accessoryToolTip = "Scheduled";
+    let period;
+    let periodNumber = `${game?.status?.period}`;
+    let timeDisplay = game?.status?.displayClock;
+
+    if (favoriteSport === "hockey") {
+      period = "P";
+    }
+
+    if (favoriteSport === "basketball") {
+      period = "Q";
+    }
+
+    if (favoriteSport === "football") {
+      period = "Q";
+    }
+
+    if (favoriteSport === "baseball") {
+      timeDisplay = game?.status?.type?.detail ?? "Unknown";
+      period = "";
+      periodNumber = "";
+    }
+
+    if (favoriteSport === "soccer") {
+      timeDisplay = game?.status?.type?.detail ?? "Unknown";
+      period = "";
+      periodNumber = "";
+    }
+
+    if (favoriteSport === "racing") {
+      period = "L";
+    }
 
     const startingSoonInterval = 15 * 60 * 1000;
     const currentDate = new Date();
     const timeUntilGameStarts = gameDate.getTime() - currentDate.getTime();
 
-    if (timeUntilGameStarts <= startingSoonInterval && nhlGame?.status?.type?.state === "pre") {
+    if (timeUntilGameStarts <= startingSoonInterval && game?.status?.type?.state === "pre") {
       accessoryColor = Color.Yellow;
       accessoryIcon = { source: Icon.Warning, tintColor: Color.Yellow };
       accessoryToolTip = "Starting Soon";
     }
 
-    if (nhlGame?.competitions[0]?.status?.type?.state === "in") {
-      accessoryTitle = `${nhlGame?.competitions[0]?.competitors[1]?.team.abbreviation} ${nhlGame?.competitions[0]?.competitors[1]?.score} - ${nhlGame?.competitions[0]?.competitors[0]?.team?.abbreviation} ${nhlGame?.competitions[0]?.competitors[0]?.score.displayValue}     P${nhlGame?.competitions[0]?.status?.period} ${nhlGame?.competitions[0]?.status?.displayClock}`;
+    if (game?.competitions[0]?.status?.type?.state === "in") {
+      accessoryTitle = `${game?.competitions[0]?.competitors[1]?.team.abbreviation} ${game?.competitions[0]?.competitors[1]?.score} - ${game?.competitions[0]?.competitors[0]?.team?.abbreviation} ${game?.competitions[0]?.competitors[0]?.score.displayValue}    ${period}${periodNumber} ${timeDisplay}`;
       accessoryColor = Color.Green;
       accessoryIcon = { source: Icon.Livestream, tintColor: Color.Green };
       accessoryToolTip = "In Progress";
     }
 
-    if (nhlGame.competitions[0].status.type.completed === false)
-      nhlDay?.games.push(
+    if (game?.status?.type?.state === "post" && game?.status?.type?.completed === false) {
+      accessoryTitle = `Postponed`;
+      accessoryIcon = { source: Icon.XMarkCircle, tintColor: Color.Orange };
+      accessoryColor = Color.Orange;
+    }
+
+    let gameTitle = game?.name ?? "Unknown";
+
+    if (favoriteSport === "hockey") {
+      gameTitle = game?.name?.replace(" at ", " vs ");
+    }
+
+    if (game.competitions[0].status.type.completed === false)
+      sportGameDay?.games.push(
         <List.Item
           key={index}
-          title={nhlGame?.name?.replace(" at ", " vs ")}
-          icon={{ source: nhlGame?.competitions[0]?.competitors[1]?.team?.logos[0].href }}
+          title={gameTitle}
+          icon={{
+            source:
+              game?.competitions[0]?.competitors[1]?.team?.logos[0].href ??
+              `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${favoriteLeague}.png&w=100&h=100&transparent=true`,
+          }}
           accessories={[
             {
               text: { value: `${accessoryTitle ?? "No Date Found"}`, color: accessoryColor },
@@ -164,26 +212,46 @@ export default function ScheduledGames() {
               <Action
                 title="Refresh"
                 icon={Icon.ArrowClockwise}
-                onAction={revalidate}
+                onAction={scheduleRevalidate}
                 shortcut={{ modifiers: ["cmd"], key: "r" }}
-              ></Action>
+              />
               <Action.OpenInBrowser
                 title="View Game Details on ESPN"
-                url={`${nhlGame?.links[0]?.href ?? "https://www.espn.com/nhl"}`}
+                url={`${`https://www.espn.com/${favoriteLeague}`}`}
               />
 
-              {nhlGame?.competitions[0]?.competitors[1]?.team.links?.length > 0 && (
-                <Action.OpenInBrowser
-                  title="View Away Team Details"
-                  url={nhlGame?.competitions[0]?.competitors[1]?.team?.links[0]?.href ?? "https://www.espn.com/nhl"}
-                />
-              )}
-
-              {nhlGame.competitions[0]?.competitors[0]?.team?.links?.length > 0 && (
-                <Action.OpenInBrowser
-                  title="View Home Team Details"
-                  url={nhlGame?.competitions[0]?.competitors[0]?.team?.links[0]?.href ?? "https://www.espn.com/nhl"}
-                />
+              {favoriteSport !== "racing" ? (
+                <>
+                  {game?.competitions?.[0]?.competitors?.[1]?.team.links?.length > 0 && (
+                    <Action.OpenInBrowser
+                      title={`View ${game?.competitions?.[0]?.competitors?.[1]?.team?.displayName ?? "Away"} Team Details`}
+                      url={
+                        game?.competitions?.[0]?.competitors?.[1]?.team?.links?.[0]?.href ??
+                        `https://www.espn.com/${favoriteLeague}`
+                      }
+                    />
+                  )}
+                  {game.competitions?.[0]?.competitors?.[0]?.team?.links?.length > 0 && (
+                    <Action.OpenInBrowser
+                      title={`View ${game?.competitions?.[0]?.competitors?.[0]?.team?.displayName ?? "Home"} Team Details`}
+                      url={
+                        game?.competitions?.[0]?.competitors?.[0]?.team?.links?.[0]?.href ??
+                        `https://www.espn.com/${favoriteLeague}`
+                      }
+                    />
+                  )}
+                </>
+              ) : (
+                <>
+                  <Action.OpenInBrowser
+                    title="View Race Details on ESPN"
+                    url={`${game?.links?.[0].href ?? `https://www.espn.com/${favoriteLeague}`}`}
+                  />
+                  <Action.OpenInBrowser
+                    title="View Circuit Details on ESPN"
+                    url={`${game?.links?.[2].href ?? `https://www.espn.com/${favoriteLeague}`}`}
+                  />
+                </>
               )}
             </ActionPanel>
           }
@@ -191,19 +259,19 @@ export default function ScheduledGames() {
       );
   });
 
-  if (!nhlScoresAndSchedule) {
+  if (!scheduleData) {
     return <Detail markdown="No data found." />;
   }
 
   return (
     <>
-      {nhlDayItems?.map((nhlDay, index) => (
+      {gameItems?.map((sportGameDay, index) => (
         <List.Section
           key={index}
-          title={`${nhlDay?.title}`}
-          subtitle={`${nhlDay?.games?.length} Game${nhlDay?.games?.length !== 1 ? "s" : ""}`}
+          title={`${sportGameDay?.title}`}
+          subtitle={`${sportGameDay?.games?.length} Game${sportGameDay?.games?.length !== 1 ? "s" : ""}`}
         >
-          {nhlDay?.games}
+          {sportGameDay?.games}
         </List.Section>
       ))}
     </>

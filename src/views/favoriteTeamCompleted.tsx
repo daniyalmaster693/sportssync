@@ -13,7 +13,12 @@ const favoriteTeam = getPreferenceValues().team as string;
 const favoriteLeague = getPreferenceValues().league as string;
 const favoriteSport = getPreferenceValues().sport as string;
 
+interface Athlete {
+  shortName: string;
+}
+
 interface Competitor {
+  athlete: Athlete;
   team: {
     logos: any;
     abbreviation: string;
@@ -90,55 +95,81 @@ export default function CompletedGames() {
   // Fetch NHL Stats
 
   const {
-    isLoading: nhlScheduleStats,
-    data: nhlScoresAndSchedule,
-    revalidate,
+    isLoading: completedLoading,
+    data: completedData,
+    revalidate: completeRevalidate,
   } = useFetch<Response>(
     `https://site.api.espn.com/apis/site/v2/sports/${favoriteSport}/${favoriteLeague}/teams/${favoriteTeam}/schedule`,
   );
 
-  if (nhlScheduleStats) {
+  if (completedLoading) {
     return <Detail isLoading={true} />;
   }
 
-  const nhlDayItems: DayItems[] = [];
-  const nhlGames = nhlScoresAndSchedule?.events || [];
+  const gameItems: DayItems[] = [];
+  const games = completedData?.events || [];
 
-  nhlGames?.forEach((nhlGame, index) => {
-    const gameDate = new Date(nhlGame?.date);
-    const nhlGameDay = gameDate?.toLocaleDateString([], {
+  games?.forEach((game, index) => {
+    const gameDate = new Date(game?.date);
+    const gameDay = gameDate?.toLocaleDateString([], {
       dateStyle: "medium",
     });
 
-    if (!nhlDayItems?.find((nhlDay) => nhlDay?.title === nhlGameDay)) {
-      nhlDayItems?.push({
-        title: nhlGameDay,
+    if (!gameItems?.find((sportGameDay) => sportGameDay?.title === gameDay)) {
+      gameItems?.push({
+        title: gameDay,
         games: [],
       });
     }
 
-    const nhlDay = nhlDayItems?.find((nhlDay) => nhlDay?.title === nhlGameDay);
+    const sportGameDay = gameItems?.find((sportGameDay) => sportGameDay?.title === gameDay);
 
-    let accessoryTitle = `${nhlGame?.competitions[0]?.competitors[1]?.team?.abbreviation} ${nhlGame?.competitions?.[0]?.competitors[1]?.score?.displayValue} - ${nhlGame?.competitions[0]?.competitors[0]?.team?.abbreviation} ${nhlGame?.competitions?.[0]?.competitors[0]?.score?.displayValue}`;
+    let accessoryTitle = `${game?.competitions?.[0]?.competitors?.[1]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[1]?.score?.displayValue} - ${game?.competitions?.[0]?.competitors?.[0]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[0]?.score?.displayValue}`;
     let accessoryColor = Color.SecondaryText;
     let accessoryIcon = { source: Icon.CheckCircle, tintColor: Color.SecondaryText };
     let accessoryToolTip = "Final";
 
+    if (favoriteSport !== "racing") {
+      if (game?.status?.type?.state === "post") {
+        accessoryTitle = `${game?.competitions?.[0]?.competitors?.[1]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[1]?.score} - ${game?.competitions?.[0]?.competitors?.[0]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[0]?.score}`;
+        accessoryColor = Color.SecondaryText;
+        accessoryIcon = { source: Icon.CheckCircle, tintColor: Color.SecondaryText };
+        accessoryToolTip = "Final";
+      }
+    } else {
+      if (game?.status?.type?.state === "post") {
+        accessoryTitle = `${game?.competitions?.[4]?.competitors?.[0]?.athlete?.shortName}`;
+        accessoryColor = Color.SecondaryText;
+        accessoryIcon = { source: Icon.CheckCircle, tintColor: Color.SecondaryText };
+        accessoryToolTip = "Winner";
+      }
+    }
+
     if (
-      nhlGame?.competitions[0]?.status?.type?.state === "post" &&
-      nhlGame?.competitions[0]?.status?.type?.completed === false
+      game?.competitions[0]?.status?.type?.state === "post" &&
+      game?.competitions[0]?.status?.type?.completed === false
     ) {
       accessoryTitle = `Postponed`;
       accessoryIcon = { source: Icon.XMarkCircle, tintColor: Color.Orange };
       accessoryColor = Color.Orange;
     }
 
-    if (nhlGame?.competitions?.[0]?.status?.type?.completed === true)
-      nhlDay?.games.push(
+    let gameTitle = game?.name ?? "Unknown";
+
+    if (favoriteSport === "hockey") {
+      gameTitle = game?.name?.replace(" at ", " vs ");
+    }
+
+    if (game?.competitions?.[0]?.status?.type?.completed === true)
+      sportGameDay?.games.push(
         <List.Item
           key={index}
-          title={nhlGame?.name?.replace(" at ", " vs ")}
-          icon={{ source: nhlGame?.competitions[0]?.competitors[1]?.team?.logos[0].href }}
+          title={gameTitle}
+          icon={{
+            source:
+              game?.competitions[0]?.competitors[1]?.team?.logos[0].href ??
+              `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${favoriteLeague}.png&w=100&h=100&transparent=true`,
+          }}
           accessories={[
             {
               text: { value: `${accessoryTitle ?? "No Date Found"}`, color: accessoryColor },
@@ -151,26 +182,46 @@ export default function CompletedGames() {
               <Action
                 title="Refresh"
                 icon={Icon.ArrowClockwise}
-                onAction={revalidate}
+                onAction={completeRevalidate}
                 shortcut={{ modifiers: ["cmd"], key: "r" }}
-              ></Action>
+              />
               <Action.OpenInBrowser
                 title="View Game Details on ESPN"
-                url={`${nhlGame?.links[0]?.href ?? "https://www.espn.com/nhl"}`}
+                url={`${`https://www.espn.com/${favoriteLeague}`}`}
               />
 
-              {nhlGame?.competitions[0]?.competitors[1]?.team.links?.length > 0 && (
-                <Action.OpenInBrowser
-                  title="View Away Team Details"
-                  url={nhlGame?.competitions[0]?.competitors[1]?.team?.links[0]?.href ?? "https://www.espn.com/nhl"}
-                />
-              )}
-
-              {nhlGame.competitions[0]?.competitors[0]?.team?.links?.length > 0 && (
-                <Action.OpenInBrowser
-                  title="View Home Team Details"
-                  url={nhlGame?.competitions[0]?.competitors[0]?.team?.links[0]?.href ?? "https://www.espn.com/nhl"}
-                />
+              {favoriteSport !== "racing" ? (
+                <>
+                  {game?.competitions?.[0]?.competitors?.[1]?.team.links?.length > 0 && (
+                    <Action.OpenInBrowser
+                      title={`View ${game?.competitions?.[0]?.competitors?.[1]?.team?.displayName ?? "Away"} Team Details`}
+                      url={
+                        game?.competitions?.[0]?.competitors?.[1]?.team?.links?.[0]?.href ??
+                        `https://www.espn.com/${favoriteLeague}`
+                      }
+                    />
+                  )}
+                  {game.competitions?.[0]?.competitors?.[0]?.team?.links?.length > 0 && (
+                    <Action.OpenInBrowser
+                      title={`View ${game?.competitions?.[0]?.competitors?.[0]?.team?.displayName ?? "Home"} Team Details`}
+                      url={
+                        game?.competitions?.[0]?.competitors?.[0]?.team?.links?.[0]?.href ??
+                        `https://www.espn.com/${favoriteLeague}`
+                      }
+                    />
+                  )}
+                </>
+              ) : (
+                <>
+                  <Action.OpenInBrowser
+                    title="View Race Details on ESPN"
+                    url={`${game?.links?.[0].href ?? `https://www.espn.com/${favoriteLeague}`}`}
+                  />
+                  <Action.OpenInBrowser
+                    title="View Circuit Details on ESPN"
+                    url={`${game?.links?.[2].href ?? `https://www.espn.com/${favoriteLeague}`}`}
+                  />
+                </>
               )}
             </ActionPanel>
           }
@@ -178,17 +229,23 @@ export default function CompletedGames() {
       );
   });
 
-  nhlDayItems.reverse();
+  gameItems.reverse();
+
+  let subTitleText = "Game";
+
+  if (favoriteSport === "racing") {
+    subTitleText = "Race";
+  }
 
   return (
     <>
-      {nhlDayItems?.map((nhlDay, index) => (
+      {gameItems?.map((sportGameDay, index) => (
         <List.Section
           key={index}
-          title={nhlDay?.title}
-          subtitle={`${nhlDay?.games?.length} Game${nhlDay?.games?.length !== 1 ? "s" : ""}`}
+          title={sportGameDay?.title ?? "Unknown"}
+          subtitle={`${sportGameDay?.games?.length} ${subTitleText} ${sportGameDay?.games?.length !== 1 ? "s" : ""}`}
         >
-          {nhlDay?.games}
+          {sportGameDay?.games}
         </List.Section>
       ))}
     </>

@@ -88,7 +88,7 @@ interface Response {
   injuries: Injury[];
 }
 
-interface NHLTransaction {
+interface Transaction {
   date: string;
   description: string;
   team: Team;
@@ -100,7 +100,7 @@ interface TransactionDayItems {
 }
 
 interface Response {
-  transactions: NHLTransaction[];
+  transactions: Transaction[];
 }
 
 async function getFavoriteTeamID() {
@@ -114,13 +114,13 @@ const favoriteSport = getPreferenceValues().sport as string;
 export default function TeamInjuries() {
   // Fetch Team Information
 
-  const { isLoading: franchiseStats, data: franchiseData } = useFetch<Franchise>(
+  const { isLoading: franchiseLoading, data: franchiseData } = useFetch<Franchise>(
     `https://site.api.espn.com/apis/site/v2/sports/${favoriteSport}/${favoriteLeague}/teams/${favoriteTeam}`,
   );
 
   const franchise = franchiseData?.team?.franchise;
 
-  const { isLoading, data } = useFetch<StandingsData>(
+  const { isLoading, data, revalidate } = useFetch<StandingsData>(
     `https://site.web.api.espn.com/apis/v2/sports/${favoriteSport}/${favoriteLeague}/standings?level=1`,
   );
 
@@ -295,8 +295,12 @@ export default function TeamInjuries() {
       return (
         <List.Item
           key={index}
-          title={`${team1?.team?.displayName}`}
-          icon={{ source: team1?.team?.logos[0]?.href }}
+          title={`${team1?.team?.displayName ?? "Unknown"}`}
+          icon={{
+            source:
+              team1?.team?.logos[0]?.href ??
+              `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${favoriteLeague}.png&w=100&h=100&transparent=true`,
+          }}
           accessories={[
             {
               text: `${stat1} | ${stat2} | ${stat3} | ${stat4} | ${stat5}`,
@@ -310,9 +314,15 @@ export default function TeamInjuries() {
           actions={
             <ActionPanel>
               <Action.OpenInBrowser
-                title="View Team Details on ESPN"
-                url={`${team1?.team?.links[0]?.href ?? "https://www.espn.com"}`}
+                title={`View ${team1?.team?.displayName} Details on ESPN`}
+                url={`${team1?.team?.links[0]?.href ?? `https://www.espn.com/${favoriteLeague}`}`}
               />
+              <Action
+                title="Refresh"
+                icon={Icon.ArrowClockwise}
+                onAction={revalidate}
+                shortcut={{ modifiers: ["cmd"], key: "r" }}
+              ></Action>
             </ActionPanel>
           }
         />
@@ -360,7 +370,7 @@ export default function TeamInjuries() {
           title={`${articleHeadline}`}
           icon={{
             source:
-              article?.images[0]?.url ??
+              article?.images?.[0]?.url ??
               `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${favoriteLeague}.png&w=100&h=100&transparent=true`,
           }}
           accessories={[
@@ -390,14 +400,14 @@ export default function TeamInjuries() {
   });
 
   const {
-    isLoading: nhlInjuryStatus,
-    data: nhlInjuryData,
+    isLoading: injuryLoading,
+    data: injuryData,
     revalidate: injuryRevalidate,
   } = useFetch<Response>(`https://site.api.espn.com/apis/site/v2/sports/${favoriteSport}/${favoriteLeague}/injuries`);
 
-  const nhlInjuryItems = nhlInjuryData?.injuries.flatMap((injuryItem) => injuryItem.injuries) || [];
-  const nhlInjuryArray = nhlInjuryItems?.map((nhlInjury, index) => {
-    const articleDate = nhlInjury?.details?.returnDate ?? "";
+  const injuryItems = injuryData?.injuries.flatMap((injuryItem) => injuryItem.injuries) || [];
+  const injuryArray = injuryItems?.map((injury, index) => {
+    const articleDate = injury?.details?.returnDate ?? "";
 
     if (!articleDate) {
       return null;
@@ -406,36 +416,36 @@ export default function TeamInjuries() {
     let tagColor = Color.SecondaryText;
     let accessoryIcon = { source: Icon.MedicalSupport, tintColor: Color.SecondaryText };
 
-    if (nhlInjury.status === "Day-To-Day") {
+    if (injury.status === "Day-To-Day") {
       tagColor = Color.Yellow;
       accessoryIcon = { source: Icon.MedicalSupport, tintColor: Color.Yellow };
     }
 
-    if (nhlInjury.status === "Out") {
+    if (injury.status === "Out") {
       tagColor = Color.Orange;
       accessoryIcon = { source: Icon.MedicalSupport, tintColor: Color.Orange };
     }
 
-    if (nhlInjury.status === "Injured Reserve" || nhlInjury.status === "Questionable") {
+    if (injury.status === "Injured Reserve" || injury.status === "Questionable") {
       tagColor = Color.Red;
       accessoryIcon = { source: Icon.MedicalSupport, tintColor: Color.Red };
     }
 
-    if (nhlInjury.status === "Suspension") {
+    if (injury.status === "Suspension") {
       tagColor = Color.Orange;
       accessoryIcon = { source: Icon.Warning, tintColor: Color.Orange };
     }
 
-    if (nhlInjury.athlete.team.id === `${favoriteTeam}`)
+    if (injury.athlete.team.id === `${favoriteTeam}`)
       return (
         <List.Item
           key={index}
-          title={`${nhlInjury.athlete.displayName}`}
-          subtitle={`${nhlInjury.athlete.position.displayName}`}
-          icon={{ source: nhlInjury.athlete.team.logos[0].href }}
+          title={`${injury.athlete.displayName}`}
+          subtitle={`${injury.athlete.position.displayName}`}
+          icon={{ source: injury.athlete.team.logos[0].href }}
           accessories={[
             {
-              tag: { value: nhlInjury.status.replace(/-/g, " "), color: tagColor },
+              tag: { value: injury.status.replace(/-/g, " "), color: tagColor },
               tooltip: "Status",
             },
             { text: articleDate, tooltip: "Est. Return Date" },
@@ -444,12 +454,12 @@ export default function TeamInjuries() {
           actions={
             <ActionPanel>
               <Action.OpenInBrowser
-                title="View Player Details on ESPN"
-                url={`${nhlInjury.athlete.links[0]?.href ?? "https://www.espn.com"}`}
+                title={`View ${injury.athlete.displayName} Details on ESPN`}
+                url={`${injury.athlete.links[0]?.href ?? "https://www.espn.com"}`}
               />
               <Action.OpenInBrowser
-                title="View Team Details on ESPN"
-                url={`${nhlInjury.athlete.team.links[0]?.href ?? "https://www.espn.com"}`}
+                title={`View ${injury.athlete.team.displayName} Details on ESPN`}
+                url={`${injury.athlete.team.links[0]?.href ?? "https://www.espn.com"}`}
               />
               <Action
                 title="Refresh"
@@ -464,44 +474,44 @@ export default function TeamInjuries() {
   });
 
   const {
-    isLoading: nhlTransactionStatus,
-    data: nhlTransactionsData,
+    isLoading: transactionLoading,
+    data: transactionsData,
     revalidate: transactionRevalidate,
   } = useFetch<Response>(
     `https://site.api.espn.com/apis/site/v2/sports/${favoriteSport}/${favoriteLeague}/transactions?limit=200`,
   );
 
-  const nhlTransactionDayItems: TransactionDayItems[] = [];
-  const nhlTransactions = nhlTransactionsData?.transactions || [];
+  const transactionDayItems: TransactionDayItems[] = [];
+  const transactions = transactionsData?.transactions || [];
 
-  const nhlTransactionItems = nhlTransactions?.map((nhlTransaction, index) => {
-    const transactionDate = new Date(nhlTransaction.date ?? "Unknown").toLocaleDateString([], {
+  const transactionItems = transactions?.map((transaction, index) => {
+    const transactionDate = new Date(transaction.date ?? "Unknown").toLocaleDateString([], {
       day: "2-digit",
       month: "short",
       year: "numeric",
     });
 
-    const nhlGameDay = transactionDate;
+    const transactionDay = transactionDate;
 
-    let transactionDayItem = nhlTransactionDayItems.find((item) => item.title === nhlGameDay);
+    let transactionDayItem = transactionDayItems.find((item) => item.title === transactionDay);
 
     if (!transactionDayItem) {
-      transactionDayItem = { title: nhlGameDay, transactions: [] };
-      nhlTransactionDayItems.push(transactionDayItem);
+      transactionDayItem = { title: transactionDay, transactions: [] };
+      transactionDayItems.push(transactionDayItem);
     }
 
-    if (nhlTransaction.team.id === `${favoriteTeam}`)
+    if (transaction.team.id === `${favoriteTeam}`)
       transactionDayItem?.transactions.push(
         <List.Item
           key={index}
-          title={`${nhlTransaction?.description ?? "Unknown"}`}
-          icon={{ source: nhlTransaction?.team.logos[0]?.href }}
+          title={`${transaction?.description ?? "Unknown"}`}
+          icon={{ source: transaction?.team.logos[0]?.href }}
           accessories={[{ icon: Icon.Switch }]}
           actions={
             <ActionPanel>
               <Action.OpenInBrowser
-                title="View Team Details on ESPN"
-                url={`${nhlTransaction?.team.links[0]?.href ?? "https://www.espn.com"}`}
+                title={`View ${transaction?.team?.displayName ?? "Team"} Details on ESPN`}
+                url={`${transaction?.team.links[0]?.href ?? "https://www.espn.com"}`}
               />
               <Action
                 title="Refresh"
@@ -515,16 +525,16 @@ export default function TeamInjuries() {
       );
   });
 
-  const city = franchise?.venue?.address.city;
-  const country = franchise?.venue?.address.country;
-  const state = franchise?.venue?.address.state;
+  const city = franchise?.venue?.address.city ?? "Unknown";
+  const country = franchise?.venue?.address.country ?? "Unknown";
+  const state = franchise?.venue?.address.state ?? "Unknown";
   const address = `${city}, ${state}, ${country}`;
 
-  if (!data || !nhlInjuryData || !nhlTransactionsData || !franchiseData) {
+  if (!data || !injuryData || !transactionsData || !franchiseData) {
     return <Detail markdown="No data found." />;
   }
 
-  if (isLoading || nhlInjuryStatus || nhlTransactionStatus || franchiseStats || articleLoading) {
+  if (isLoading || injuryLoading || transactionLoading || franchiseLoading || articleLoading) {
     return <Detail isLoading={true} />;
   }
 
@@ -532,8 +542,12 @@ export default function TeamInjuries() {
     <>
       <List.Section title="Team Information">
         <List.Item
-          title={`${franchise?.displayName} (${franchise?.abbreviation})`}
-          icon={{ source: franchiseData?.team?.logos?.[0]?.href }}
+          title={`${franchise?.displayName ?? "Unknown"} (${franchise?.abbreviation ?? "Unknown"})`}
+          icon={{
+            source:
+              franchiseData?.team?.logos?.[0]?.href ??
+              `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${favoriteLeague}.png&w=100&h=100&transparent=true`,
+          }}
           accessories={[
             {
               tag: { value: address, color: Color.Yellow },
@@ -541,7 +555,7 @@ export default function TeamInjuries() {
               tooltip: "Location",
             },
             {
-              tag: { value: franchise?.venue?.fullName, color: Color.Yellow },
+              tag: { value: franchise?.venue?.fullName ?? "Unknown", color: Color.Yellow },
               icon: Icon.Building,
               tooltip: "Venue",
             },
@@ -549,34 +563,40 @@ export default function TeamInjuries() {
           actions={
             <ActionPanel>
               <Action.OpenInBrowser
-                title="View Team Details on ESPN"
-                url={`${franchiseData.team.links[0].href ?? "https://www.espn.com"}`}
+                title={`View ${franchiseData?.team?.displayName ?? "Team"} Details on ESPN`}
+                url={`${franchiseData?.team?.links?.[0]?.href ?? `https://www.espn.com/${favoriteLeague}`}`}
               />
+              <Action
+                title="Refresh"
+                icon={Icon.ArrowClockwise}
+                onAction={revalidate}
+                shortcut={{ modifiers: ["cmd"], key: "r" }}
+              ></Action>
             </ActionPanel>
           }
         />
         {teamPosition}
       </List.Section>
 
-      <List.Section title="Injury Status">{nhlInjuryArray}</List.Section>
+      <List.Section title="Injury Status">{injuryArray}</List.Section>
 
       {articleDayItems.map((articleDayItem, index) => (
         <List.Section
           key={index}
-          title={`Article${articleDayItem.articles.length !== 1 ? "s" : ""}`}
+          title={`Article${articleDayItem?.articles?.length !== 1 ? "s" : ""}`}
           subtitle={`${articleDayItem?.title ?? "Articles"}`}
         >
           {articleDayItem?.articles}
         </List.Section>
       ))}
 
-      {nhlTransactionDayItems.map((transactionDayItem, index) => (
+      {transactionDayItems.map((transactionDayItem, index) => (
         <List.Section
           key={index}
-          title={`Transaction${transactionDayItem.transactions.length !== 1 ? "s" : ""}`}
+          title={`Transaction${transactionDayItem?.transactions?.length !== 1 ? "s" : ""}`}
           subtitle={`${transactionDayItem.title}`}
         >
-          {transactionDayItem.transactions}
+          {transactionDayItem?.transactions}
         </List.Section>
       ))}
     </>

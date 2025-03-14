@@ -97,7 +97,7 @@ export default function DisplayScoresAndSchedule() {
       }
     } else {
       if (game?.status?.type?.state === "post") {
-        accessoryTitle = `${game.competitions[4].competitors[0].athlete.shortName}`;
+        accessoryTitle = `${game?.competitions?.[4]?.competitors[0]?.athlete?.shortName}`;
         accessoryColor = Color.SecondaryText;
         accessoryIcon = { source: Icon.CheckCircle, tintColor: Color.SecondaryText };
         accessoryToolTip = "Winner";

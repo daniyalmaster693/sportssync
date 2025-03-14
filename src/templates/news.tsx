@@ -41,7 +41,7 @@ export default function DisplayNews() {
         title={`${articleHeadline}`}
         icon={{
           source:
-            article?.images[0]?.url ??
+            article?.images?.[0]?.url ??
             `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${currentLeague}.png&w=100&h=100&transparent=true`,
         }}
         accessories={[
