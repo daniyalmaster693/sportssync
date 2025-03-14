@@ -1,7 +1,6 @@
 import { Detail, List, Color, Icon, Action, ActionPanel } from "@raycast/api";
 import getScoresAndSchedule from "../utils/getSchedule";
 import sportInfo from "../utils/getSportInfo";
-import Plays from "../views/playbyplay";
 
 interface DayItems {
   title: string;
@@ -135,7 +134,6 @@ export default function DisplayScoresAndSchedule() {
         ]}
         actions={
           <ActionPanel>
-            <Action.Push title="View Play by Play" icon={Icon.Sidebar} target={<Plays gameId={game.id} />} />
             <Action
               title="Refresh"
               icon={Icon.ArrowClockwise}
