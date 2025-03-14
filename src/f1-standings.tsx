@@ -118,6 +118,16 @@ export default function scoresAndSchedule() {
     );
   });
 
+  let searchBarPlaceholder = "Search for a game";
+
+  if (currentLeague === "Driver Standings") {
+    searchBarPlaceholder = "Search a";
+  }
+
+  if (currentLeague === "Constructor Standings") {
+    searchBarPlaceholder = "Search for a team";
+  }
+
   if (driverStats || constructorStats) {
     return <Detail isLoading={true} />;
   }
@@ -126,12 +136,12 @@ export default function scoresAndSchedule() {
     return <Detail markdown="No data found." />;
   }
 
-  const driverTitle = driverData?.children[0]?.name;
-  const constructorTitle = constructorData?.children[1]?.name;
+  const driverTitle = driverData?.children[0]?.name ?? "Driver Standings";
+  const constructorTitle = constructorData?.children[1]?.name ?? "Constructor Standings";
 
   return (
     <List
-      searchBarPlaceholder="Search for your favorite team"
+      searchBarPlaceholder={searchBarPlaceholder}
       searchBarAccessory={
         <List.Dropdown tooltip="Sort by" onChange={displaySelectStandingsType} defaultValue="Driver Standings">
           <List.Dropdown.Item title={driverTitle} value="Driver Standings" />

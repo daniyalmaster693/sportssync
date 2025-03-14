@@ -36,6 +36,16 @@ const Command = () => {
     `https://site.api.espn.com/apis/site/v2/sports/${favoriteSport}/${favoriteLeague}/teams/${favoriteTeam}/schedule`,
   );
 
+  let searchBarPlaceholder = "Search for a game";
+
+  if (currentType === "Scheduled Games" || currentType === "Completed Games") {
+    searchBarPlaceholder = "Search for a game or team";
+  }
+
+  if (currentType === "Tracker") {
+    searchBarPlaceholder = "Search for an article, player, or transaction";
+  }
+
   if (scheduleLoading) {
     return <Detail isLoading={true} />;
   }
@@ -46,7 +56,7 @@ const Command = () => {
 
   return (
     <List
-      searchBarPlaceholder={`Search for a game`}
+      searchBarPlaceholder={searchBarPlaceholder}
       searchBarAccessory={
         <List.Dropdown
           tooltip="Sort by"

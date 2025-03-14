@@ -155,7 +155,7 @@ export default function command() {
   });
 
   return (
-    <List searchBarPlaceholder="Search for an upcoming race" isLoading={isLoading}>
+    <List searchBarPlaceholder="Search for a race or circuit" isLoading={isLoading}>
       {f1DayItems.map((f1Day, index) => (
         <List.Section
           key={index}

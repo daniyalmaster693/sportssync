@@ -31,6 +31,16 @@ const displayTrackerInformation = () => {
 
   sportInfo.setSportAndLeague("baseball", `mlb`);
 
+  let searchBarPlaceholder = "Search for a game";
+
+  if (currentLeague === "Articles") {
+    searchBarPlaceholder = "Search for an article";
+  }
+
+  if (currentLeague === "Injuries" || currentLeague === "Transactions") {
+    searchBarPlaceholder = "Search for a player, or team";
+  }
+
   if (articleLoading || injuryLoading || transactionLoading) {
     return <Detail isLoading={true} />;
   }
@@ -41,7 +51,7 @@ const displayTrackerInformation = () => {
 
   return (
     <List
-      searchBarPlaceholder="Search a headline, player, or transaction"
+      searchBarPlaceholder={searchBarPlaceholder}
       searchBarAccessory={
         <List.Dropdown
           tooltip="Sort by"

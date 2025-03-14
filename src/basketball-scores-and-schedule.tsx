@@ -34,7 +34,7 @@ const displaySchedule = () => {
 
   return (
     <List
-      searchBarPlaceholder="Search for a team or game"
+      searchBarPlaceholder="Search for a game or team"
       searchBarAccessory={
         <List.Dropdown
           tooltip="Sort by"

@@ -13,7 +13,7 @@ const displaySchedule = () => {
   }
 
   return (
-    <List isLoading={articleLoading}>
+    <List isLoading={articleLoading} searchBarPlaceholder="Search for an article">
       <DisplayNews />
     </List>
   );
