@@ -23,9 +23,9 @@
       "mode": "view"
     },
     {
-      "name": "nhl-news",
-      "title": "NHL News",
-      "description": "View news articles across the NHL",
+      "name": "nhl-tracker",
+      "title": "NHL Tracker",
+      "description": "View injuries, transactions, and news articles across the NHL",
       "mode": "view"
     },
     {
@@ -99,9 +99,9 @@
       "mode": "view"
     },
     {
-      "name": "mlb-news",
-      "title": "MLB News",
-      "description": "View news articles across the MLB",
+      "name": "mlb-tracker",
+      "title": "MLB Tracker",
+      "description": "View injuries, transactions, and news articles across the MLB",
       "mode": "view"
     },
     {

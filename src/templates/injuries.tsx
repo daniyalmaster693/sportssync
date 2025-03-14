@@ -8,9 +8,9 @@ export default function DisplayInjuries() {
 
   const injuryItems = injuryData?.injuries.flatMap((injuryItem) => injuryItem?.injuries) || [];
   const playerInjuryItems = injuryItems?.map((injury, index) => {
-    const articleDate = injury?.details?.returnDate ?? "Unknown";
+    const injuryDate = injury?.details?.returnDate ?? "Unknown";
 
-    if (!articleDate) {
+    if (!injuryDate) {
       return null;
     }
 
@@ -52,7 +52,7 @@ export default function DisplayInjuries() {
             tag: { value: injury?.status?.replace(/-/g, " "), color: tagColor },
             tooltip: "Status",
           },
-          { text: articleDate, tooltip: "Est. Return Date" },
+          { text: injuryDate, tooltip: "Est. Return Date" },
           { icon: accessoryIcon },
         ]}
         actions={

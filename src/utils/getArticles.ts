@@ -23,7 +23,9 @@ export default function getArticles() {
     isLoading: articleLoading,
     data: articleData,
     revalidate: articleRevalidate,
-  } = useFetch<ArticlesResponse>(`https://site.api.espn.com/apis/site/v2/sports/${currentSport}/${currentLeague}/news`);
+  } = useFetch<ArticlesResponse>(
+    `https://site.api.espn.com/apis/site/v2/sports/${currentSport}/${currentLeague}/news?limit=50`,
+  );
 
   return { articleData, articleLoading, articleRevalidate };
 }
