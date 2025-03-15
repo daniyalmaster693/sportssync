@@ -6,6 +6,11 @@ interface Stats {
   summary: string;
 }
 
+interface Athlete {
+  displayName: string;
+  flag: { href: string };
+}
+
 interface Team {
   displayName: string;
   logos: { href: string }[];
@@ -13,6 +18,7 @@ interface Team {
 }
 
 interface StandingsEntry {
+  athlete?: Athlete;
   team: Team;
   stats: Stats[];
 }

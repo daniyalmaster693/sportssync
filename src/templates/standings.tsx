@@ -1,7 +1,6 @@
 import { Detail, List, Color, Icon, Action, ActionPanel } from "@raycast/api";
 import getTeamStandings from "../utils/getStandings";
 import sportInfo from "../utils/getSportInfo";
-// import Plays from "../views/roster";
 
 export default function DisplayTeamStandings() {
   const { standingsLoading, standingsData, standingsRevalidate } = getTeamStandings();
@@ -25,55 +24,66 @@ export default function DisplayTeamStandings() {
     let stat5;
 
     if (currentLeague === "nhl") {
-      stat1 = `${team1?.stats[3]?.displayValue ?? "0"} GP`;
-      stat2 = `${team1?.stats[21]?.summary ?? "0-0-0"}`;
-      stat3 = `${team1?.stats[7]?.displayValue ?? "0"} pts`;
-      stat4 = `GF: ${team1?.stats[9]?.displayValue ?? "0"}`;
+      stat1 = `${team1?.stats[3]?.displayValue ?? "0"} GP |`;
+      stat2 = `${team1?.stats[21]?.summary ?? "0-0-0"} |`;
+      stat3 = `${team1?.stats[7]?.displayValue ?? "0"} pts |`;
+      stat4 = `GF: ${team1?.stats[9]?.displayValue ?? "0"} |`;
       stat5 = `GA: ${team1?.stats[8]?.displayValue ?? "0"}`;
       playoffPosition = Number(team1?.stats?.[5]?.displayValue);
     }
 
     if (currentLeague === "nba") {
-      stat1 = team1?.stats?.[15]?.displayValue ?? "0-0";
-      stat2 = `Pct: ${(Number(team1?.stats?.[13]?.displayValue) * 100).toFixed(1) ?? "0"}%`;
-      stat3 = `PF: ${team1?.stats?.[11]?.displayValue ?? "0"}`;
-      stat4 = `PA: ${team1?.stats?.[10]?.displayValue ?? "0"}`;
+      stat1 = `${team1?.stats?.[15]?.displayValue ?? "0-0"} |`;
+      stat2 = `Pct: ${(Number(team1?.stats?.[13]?.displayValue) * 100).toFixed(1) ?? "0"}% |`;
+      stat3 = `PF: ${team1?.stats?.[11]?.displayValue ?? "0"} |`;
+      stat4 = `PA: ${team1?.stats?.[10]?.displayValue ?? "0"} |`;
       stat5 = `Dif: ${team1?.stats?.[8]?.displayValue ?? "0"}`;
       playoffPosition = Number(team1?.stats?.[7]?.displayValue);
     }
 
     if (currentLeague === "wnba") {
-      stat1 = team1?.stats?.[16]?.displayValue ?? "0-0";
-      stat2 = `Pct: ${(Number(team1?.stats?.[14]?.displayValue) * 100).toFixed(1) ?? "0"}%`;
-      stat3 = `PF: ${team1?.stats?.[12]?.displayValue ?? "0"}`;
-      stat4 = `PA: ${team1?.stats?.[11]?.displayValue ?? "0"}`;
+      stat1 = `${team1?.stats?.[16]?.displayValue ?? "0-0"} |`;
+      stat2 = `Pct: ${(Number(team1?.stats?.[14]?.displayValue) * 100).toFixed(1) ?? "0"}% |`;
+      stat3 = `PF: ${team1?.stats?.[12]?.displayValue ?? "0"} |`;
+      stat4 = `PA: ${team1?.stats?.[11]?.displayValue ?? "0"} |`;
       stat5 = `Dif: ${team1?.stats?.[8]?.displayValue ?? "0"}`;
       playoffPosition = Number(team1?.stats?.[8]?.displayValue);
     }
 
     if (currentLeague === "nfl") {
-      stat1 = team1?.stats?.[16]?.displayValue ?? "0-0";
-      stat2 = `Pct: ${(Number(team1?.stats?.[10]?.displayValue) * 100).toFixed(1) ?? "0"}%`;
-      stat3 = `PF: ${team1?.stats?.[7]?.displayValue ?? "0"}`;
-      stat4 = `PA: ${team1?.stats?.[6]?.displayValue ?? "0"}`;
+      stat1 = `${team1?.stats?.[16]?.displayValue ?? "0-0"} |`;
+      stat2 = `Pct: ${(Number(team1?.stats?.[10]?.displayValue) * 100).toFixed(1) ?? "0"}% |`;
+      stat3 = `PF: ${team1?.stats?.[7]?.displayValue ?? "0"} |`;
+      stat4 = `PA: ${team1?.stats?.[6]?.displayValue ?? "0"} |`;
       stat5 = `Dif: ${team1?.stats?.[5]?.displayValue ?? "0"}`;
       playoffPosition = Number(team1?.stats?.[4]?.displayValue);
     }
 
     if (currentLeague === "mlb") {
-      stat1 = `${team1?.stats[7]?.displayValue ?? "0"} GP`;
-      stat2 = `${team1?.stats[32]?.displayValue ?? "0-0"}`;
-      stat3 = `Pct: ${(Number(team1?.stats[8]?.displayValue) * 100).toFixed(1) ?? "0"}%`;
-      stat4 = `PF: ${team1?.stats[14]?.displayValue ?? "0"}`;
+      stat1 = `${team1?.stats[7]?.displayValue ?? "0"} GP |`;
+      stat2 = `${team1?.stats[32]?.displayValue ?? "0-0"} |`;
+      stat3 = `Pct: ${(Number(team1?.stats[8]?.displayValue) * 100).toFixed(1) ?? "0"}% |`;
+      stat4 = `PF: ${team1?.stats[14]?.displayValue ?? "0"} |`;
       stat5 = `PA: ${team1?.stats[13]?.displayValue ?? "0"}`;
       playoffPosition = Number(team1?.stats?.[10]?.displayValue);
     }
 
+    const flagSrc = team1?.athlete?.flag.href ?? `${team1?.athlete?.flag?.href}`;
+
+    if (currentLeague === "f1") {
+      stat1 = `${team1?.stats[1]?.displayValue ?? "0"} pts`;
+      playoffPosition = Number(team1?.stats?.[0]?.displayValue ?? "0");
+      stat2 = "";
+      stat3 = "";
+      stat4 = "";
+      stat5 = "";
+    }
+
     if (currentSport === "soccer") {
-      stat1 = `${team1.stats[0].displayValue ?? "0"} GP`;
-      stat2 = `${team1.stats[12].displayValue ?? "0-0-0"}`;
-      stat3 = `${team1.stats[3].displayValue ?? "0"} pts`;
-      stat4 = `${team1.stats[5].displayValue ?? "0"} GF`;
+      stat1 = `${team1.stats[0].displayValue ?? "0"} GP |`;
+      stat2 = `${team1.stats[12].displayValue ?? "0-0-0"} |`;
+      stat3 = `${team1.stats[3].displayValue ?? "0"} pts |`;
+      stat4 = `${team1.stats[5].displayValue ?? "0"} GF |`;
       stat5 = `${team1.stats[4].displayValue ?? "0"} GA`;
       playoffPosition = Number(team1?.stats?.[10]?.displayValue);
     }
@@ -164,6 +174,21 @@ export default function DisplayTeamStandings() {
       }
     }
 
+    if (currentLeague === "f1") {
+      if (playoffPosition === 1) {
+        tagColor = Color.Yellow;
+        tagIcon = Icon.Trophy;
+        tagTooltip = "1st";
+      } else if (playoffPosition >= 2) {
+        tagColor = Color.Green;
+        tagIcon = Icon.Leaderboard;
+        tagTooltip = "";
+      } else {
+        tagColor = Color.SecondaryText;
+        tagTooltip = "";
+      }
+    }
+
     if (currentSport === "soccer") {
       if (playoffPosition === 1) {
         tagColor = Color.Yellow;
@@ -179,10 +204,10 @@ export default function DisplayTeamStandings() {
     return (
       <List.Item
         key={index}
-        title={`${team1?.team?.displayName ?? "Unknown"}`}
+        title={`${team1?.team?.displayName ?? team1?.athlete?.displayName ?? "Unknown"}`}
         accessories={[
           {
-            text: `${stat1} | ${stat2} | ${stat3} | ${stat4} | ${stat5}`,
+            text: `${stat1} ${stat2} ${stat3} ${stat4} ${stat5}`,
           },
           {
             tag: { value: `${playoffPosition}`, color: tagColor },
@@ -193,14 +218,22 @@ export default function DisplayTeamStandings() {
         icon={{
           source:
             team1?.team?.logos?.[0]?.href ??
+            flagSrc ??
             `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${currentLeague}.png&w=100&h=100&transparent=true`,
         }}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser
-              title={`View ${team1?.team?.displayName ?? "Team"} Details on ESPN`}
-              url={`${team1?.team?.links?.[0]?.href ?? `https://www.espn.com/${currentLeague}`}`}
-            />
+            {currentLeague !== "f1" && (
+              <Action.OpenInBrowser
+                title={`View ${team1?.team?.displayName ?? "Team"} Details on ESPN`}
+                url={`${team1?.team?.links?.[0]?.href ?? `https://www.espn.com/${currentLeague}`}`}
+              />
+            )}
+
+            {currentLeague === "f1" && (
+              <Action.OpenInBrowser title={`View F1 on ESPN`} url={`${`https://www.espn.com/${currentLeague}`}`} />
+            )}
+
             <Action
               title="Refresh"
               icon={Icon.ArrowClockwise}
@@ -227,55 +260,64 @@ export default function DisplayTeamStandings() {
     let stat5;
 
     if (currentLeague === "nhl") {
-      stat1 = `${team2?.stats[3]?.displayValue ?? "0"} GP`;
-      stat2 = `${team2?.stats[21]?.summary ?? "0-0-0"}`;
-      stat3 = `${team2?.stats[7]?.displayValue ?? "0"} pts`;
-      stat4 = `GF: ${team2?.stats[9]?.displayValue ?? "0"}`;
+      stat1 = `${team2?.stats[3]?.displayValue ?? "0"} GP |`;
+      stat2 = `${team2?.stats[21]?.summary ?? "0-0-0"} |`;
+      stat3 = `${team2?.stats[7]?.displayValue ?? "0"} pts |`;
+      stat4 = `GF: ${team2?.stats[9]?.displayValue ?? "0"} |`;
       stat5 = `GA: ${team2?.stats[8]?.displayValue ?? "0"}`;
       playoffPosition = Number(team2?.stats?.[5]?.displayValue);
     }
 
     if (currentLeague === "nba") {
-      stat1 = team2?.stats?.[15]?.displayValue ?? "0-0";
-      stat2 = `Pct: ${(Number(team2?.stats?.[13]?.displayValue) * 100).toFixed(1) ?? "0"}%`;
-      stat3 = `PF: ${team2?.stats?.[11]?.displayValue ?? "0"}`;
-      stat4 = `PA: ${team2?.stats?.[10]?.displayValue ?? "0"}`;
+      stat1 = `${team2?.stats?.[15]?.displayValue ?? "0-0"} |`;
+      stat2 = `Pct: ${(Number(team2?.stats?.[13]?.displayValue) * 100).toFixed(1) ?? "0"}% |`;
+      stat3 = `PF: ${team2?.stats?.[11]?.displayValue ?? "0"} |`;
+      stat4 = `PA: ${team2?.stats?.[10]?.displayValue ?? "0"} |`;
       stat5 = `Dif: ${team2?.stats?.[8]?.displayValue ?? "0"}`;
       playoffPosition = Number(team2?.stats?.[7]?.displayValue);
     }
 
     if (currentLeague === "wnba") {
-      stat1 = team2?.stats?.[16]?.displayValue ?? "0-0";
-      stat2 = `Pct: ${(Number(team2?.stats?.[14]?.displayValue) * 100).toFixed(1) ?? "0"}%`;
-      stat3 = `PF: ${team2?.stats?.[12]?.displayValue ?? "0"}`;
-      stat4 = `PA: ${team2?.stats?.[11]?.displayValue ?? "0"}`;
+      stat1 = `${team2?.stats?.[16]?.displayValue ?? "0-0"} |`;
+      stat2 = `Pct: ${(Number(team2?.stats?.[14]?.displayValue) * 100).toFixed(1) ?? "0"}% |`;
+      stat3 = `PF: ${team2?.stats?.[12]?.displayValue ?? "0"} |`;
+      stat4 = `PA: ${team2?.stats?.[11]?.displayValue ?? "0"} |`;
       stat5 = `Dif: ${team2?.stats?.[8]?.displayValue ?? "0"}`;
       playoffPosition = Number(team2?.stats?.[8]?.displayValue);
     }
 
     if (currentLeague === "nfl") {
-      stat1 = team2?.stats?.[16]?.displayValue ?? "0-0";
-      stat2 = `Pct: ${(Number(team2?.stats?.[10]?.displayValue) * 100).toFixed(1) ?? "0"}%`;
-      stat3 = `PF: ${team2?.stats?.[7]?.displayValue ?? "0"}`;
-      stat4 = `PA: ${team2?.stats?.[6]?.displayValue ?? "0"}`;
+      stat1 = `${team2?.stats?.[16]?.displayValue ?? "0-0"} |`;
+      stat2 = `Pct: ${(Number(team2?.stats?.[10]?.displayValue) * 100).toFixed(1) ?? "0"}% |`;
+      stat3 = `PF: ${team2?.stats?.[7]?.displayValue ?? "0"} |`;
+      stat4 = `PA: ${team2?.stats?.[6]?.displayValue ?? "0"} |`;
       stat5 = `Dif: ${team2?.stats?.[5]?.displayValue ?? "0"}`;
       playoffPosition = Number(team2?.stats?.[4]?.displayValue);
     }
 
     if (currentLeague === "mlb") {
-      stat1 = `${team2?.stats[7]?.displayValue ?? "0"} GP`;
-      stat2 = `${team2?.stats[32]?.displayValue ?? "0-0"}`;
-      stat3 = `Pct: ${(Number(team2?.stats[8]?.displayValue) * 100).toFixed(1) ?? "0"}%`;
-      stat4 = `PF: ${team2?.stats[14]?.displayValue ?? "0"}`;
+      stat1 = `${team2?.stats[7]?.displayValue ?? "0"} GP |`;
+      stat2 = `${team2?.stats[32]?.displayValue ?? "0-0"} |`;
+      stat3 = `Pct: ${(Number(team2?.stats[8]?.displayValue) * 100).toFixed(1) ?? "0"}% |`;
+      stat4 = `PF: ${team2?.stats[14]?.displayValue ?? "0"} |`;
       stat5 = `PA: ${team2?.stats[13]?.displayValue ?? "0"}`;
       playoffPosition = Number(team2?.stats?.[10]?.displayValue);
     }
 
+    if (currentLeague === "f1") {
+      stat1 = `${team2?.stats[1]?.displayValue ?? "0"} pts`;
+      stat2 = "";
+      stat3 = "";
+      stat4 = "";
+      stat5 = "";
+      playoffPosition = Number(team2?.stats?.[0]?.displayValue);
+    }
+
     if (currentSport === "soccer") {
-      stat1 = `${team2.stats[0].displayValue ?? "0"} GP`;
-      stat2 = `${team2.stats[12].displayValue ?? "0-0-0"}`;
-      stat3 = `${team2.stats[3].displayValue ?? "0"} pts`;
-      stat4 = `${team2.stats[5].displayValue ?? "0"} GF`;
+      stat1 = `${team2.stats[0].displayValue ?? "0"} GP |`;
+      stat2 = `${team2.stats[12].displayValue ?? "0-0-0"} |`;
+      stat3 = `${team2.stats[3].displayValue ?? "0"} pts |`;
+      stat4 = `${team2.stats[5].displayValue ?? "0"} GF |`;
       stat5 = `${team2.stats[4].displayValue ?? "0"} GA`;
       playoffPosition = Number(team2?.stats?.[10]?.displayValue);
     }
@@ -366,6 +408,21 @@ export default function DisplayTeamStandings() {
       }
     }
 
+    if (currentLeague === "f1") {
+      if (playoffPosition === 1) {
+        tagColor = Color.Yellow;
+        tagIcon = Icon.Trophy;
+        tagTooltip = "1st";
+      } else if (playoffPosition >= 2) {
+        tagColor = Color.Green;
+        tagIcon = Icon.Leaderboard;
+        tagTooltip = "";
+      } else {
+        tagColor = Color.SecondaryText;
+        tagTooltip = "";
+      }
+    }
+
     if (currentSport === "soccer") {
       if (playoffPosition === 1) {
         tagColor = Color.Yellow;
@@ -384,7 +441,7 @@ export default function DisplayTeamStandings() {
         title={`${team2?.team?.displayName ?? "Unknown"}`}
         accessories={[
           {
-            text: `${stat1} | ${stat2} | ${stat3} | ${stat4} | ${stat5}`,
+            text: `${stat1} ${stat2} ${stat3} ${stat4} ${stat5}`,
           },
           {
             tag: { value: `${playoffPosition}`, color: tagColor },
@@ -399,10 +456,17 @@ export default function DisplayTeamStandings() {
         }}
         actions={
           <ActionPanel>
-            <Action.OpenInBrowser
-              title={`View ${team2?.team?.displayName ?? "Team"} Details on ESPN`}
-              url={`${team2?.team?.links?.[0]?.href ?? `https://www.espn.com/${currentLeague}`}`}
-            />
+            {currentLeague !== "f1" && (
+              <Action.OpenInBrowser
+                title={`View ${team2?.team?.displayName ?? "Team"} Details on ESPN`}
+                url={`${team2?.team?.links?.[0]?.href ?? `https://www.espn.com/${currentLeague}`}`}
+              />
+            )}
+
+            {currentLeague === "f1" && (
+              <Action.OpenInBrowser title={`View F1 on ESPN`} url={`${`https://www.espn.com/${currentLeague}`}`} />
+            )}
+
             <Action
               title="Refresh"
               icon={Icon.ArrowClockwise}
