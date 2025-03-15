@@ -31,7 +31,7 @@ interface Status {
 
 interface Competition {
   competitors: Competitor[];
-  type: { id: number };
+  type: { id: number; abbreviation: string };
   status: Status;
   venue: {
     fullName: string;

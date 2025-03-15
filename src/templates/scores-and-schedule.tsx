@@ -1,6 +1,7 @@
 import { Detail, List, Color, Icon, Action, ActionPanel } from "@raycast/api";
 import getScoresAndSchedule from "../utils/getSchedule";
 import sportInfo from "../utils/getSportInfo";
+import getCountryCode from "../utils/getF1RaceFlag";
 
 interface DayItems {
   title: string;
@@ -105,7 +106,10 @@ export default function DisplayScoresAndSchedule() {
         accessoryToolTip = "Final";
       }
     } else {
-      if (game?.status?.type?.state === "post") {
+      if (
+        game?.competitions[4]?.type?.abbreviation === "Race" &&
+        game?.competitions[4]?.status?.type?.completed === true
+      ) {
         accessoryTitle = `${game?.competitions?.[4]?.competitors[0]?.athlete?.shortName}`;
         accessoryColor = Color.SecondaryText;
         accessoryIcon = { source: Icon.CheckCircle, tintColor: Color.SecondaryText };
@@ -130,6 +134,8 @@ export default function DisplayScoresAndSchedule() {
       subtitle = `${game?.circuit?.address?.city}, ${game?.circuit?.address?.country}`;
     }
 
+    const raceLocation = `${game?.circuit?.address?.country ?? "Unknown"}`;
+
     sportGameDay?.games.push(
       <List.Item
         key={index}
@@ -138,6 +144,7 @@ export default function DisplayScoresAndSchedule() {
         icon={{
           source:
             game?.competitions?.[0]?.competitors?.[1]?.team?.logo ??
+            `https://a.espncdn.com/combiner/i?img=/i/teamlogos/countries/500/${getCountryCode(raceLocation)}.png&scale=crop&cquality=40&location=origin&w=80&h=80` ??
             `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${currentLeague}.png&w=100&h=100&transparent=true`,
         }}
         accessories={
@@ -148,11 +155,15 @@ export default function DisplayScoresAndSchedule() {
                   tooltip: accessoryToolTip ?? "Unknown",
                 },
                 { icon: accessoryIcon },
-                ...(currentLeague === "f1"
-                  ? [{ tag: { value: (index + 1).toString(), color: Color.Green }, icon: Icon.Flag }]
-                  : []),
               ]
-            : undefined
+            : [
+                { tag: { value: (index + 1).toString(), color: Color.Green }, icon: Icon.Flag, tooltip: "Race #" },
+                {
+                  text: { value: `${accessoryTitle}`, color: accessoryColor },
+                  tooltip: accessoryToolTip,
+                },
+                { icon: accessoryIcon },
+              ]
         }
         actions={
           <ActionPanel>
