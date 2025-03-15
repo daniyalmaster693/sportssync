@@ -216,7 +216,18 @@ export default function Command() {
       title = `${game?.competitions?.[0]?.competitors?.[1]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[1]?.score} - ${game?.competitions?.[0]?.competitors?.[0]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[0]?.score}   (Final)`;
     }
 
-    return <MenuBarExtra.Item key={index} title={title} onAction={() => updateTitle(index)} />;
+    return (
+      <MenuBarExtra.Item
+        key={index}
+        title={title}
+        icon={
+          game?.competitions?.[0]?.competitors?.[1]?.team?.logo ??
+          `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${favoriteLeague}.png&w=100&h=100&transparent=true`
+        }
+        tooltip="Set Game as Title"
+        onAction={() => updateTitle(index)}
+      />
+    );
   });
 
   // Date and Titles
@@ -238,6 +249,8 @@ export default function Command() {
   const extraItem = (
     <MenuBarExtra.Item
       title="Clear Set Game"
+      icon={Icon.ArrowClockwise}
+      tooltip="Clears Menu Bar Title"
       onAction={() => {
         clearSetTitle();
       }}
@@ -250,7 +263,7 @@ export default function Command() {
 
   return (
     <MenuBarExtra isLoading={scheduleLoading} icon={Icon.Livestream} title={menuBarTitle}>
-      <MenuBarExtra.Submenu title={`${favoriteLeague.toUpperCase()} Games`}>
+      <MenuBarExtra.Submenu title={`${favoriteLeague.toUpperCase()} Games`} icon={Icon.GameController}>
         <MenuBarExtra.Section title={`${gamesDate}`}></MenuBarExtra.Section>
         {allGameItems}
       </MenuBarExtra.Submenu>
