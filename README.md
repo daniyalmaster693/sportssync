@@ -44,7 +44,7 @@ View changelog here: https://github.com/daniyalmaster693/sportssync/blob/main/CH
 - Roster View for Standings Command - In Progress
 - Player Profiles from Roster View - In Progress
 - Universal Player Search Command
-- Article Viewer from Tracker Command (Read Articles directly in Raycast)
+- Article Viewer for Tracker Command (Read Articles directly in Raycast)
 - Add to Calendar Action for games
 - Current Leagues Planned: (UFC, Boxing, WWE, Nascar)
 - Additional Leagues: Please request any leagues that you'd like me to add support for, and I'll look into seeing what I can do.
