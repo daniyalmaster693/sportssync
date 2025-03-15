@@ -2,7 +2,7 @@
 
 View scores, games, standings, news, injuries, and transactions across your favorite sports leagues
 
-![Sportssync](./metadata/sportssync 2025-03-15 at 16.01.13.png)
+![Sportssync](./metadata/Scores-And-Schedule.png)
 
 ## Commands:
 
