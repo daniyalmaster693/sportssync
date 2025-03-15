@@ -103,7 +103,7 @@
     {
       "name": "soccer-news",
       "title": "Soccer News",
-      "description": "View news articles across the EPL, SLL, GER, and ITA Leagues",
+      "description": "View news articles across the EPL, UEFA, SLL, GER, and ITA Leagues",
       "mode": "view"
     },
     {
@@ -128,8 +128,15 @@
     {
       "name": "favorite-team-dashboard",
       "title": "Favorite Team Dashboard",
-      "description": "Follow your favorite teams using one command to track scheduled games, completed games, articles, standings, injuries, and transactions",
+      "description": "Follow your favorite team using one command to track scheduled games, completed games, articles, standings, injuries, and transactions",
       "mode": "view"
+    },
+    {
+      "name": "live-scores-menubar",
+      "title": "Live Scores Menubar",
+      "description": "View live scores and games for your favorite league directly from your menu bar. You must set a favorite league and sport before in order to use the command!",
+      "mode": "menu-bar",
+      "interval": "15s"
     }
   ],
   "preferences": [
