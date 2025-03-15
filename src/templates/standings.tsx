@@ -1,6 +1,7 @@
 import { Detail, List, Color, Icon, Action, ActionPanel } from "@raycast/api";
 import getTeamStandings from "../utils/getStandings";
 import sportInfo from "../utils/getSportInfo";
+import getConstructorLogo from "../utils/getF1ConstructorLogo";
 
 export default function DisplayTeamStandings() {
   const { standingsLoading, standingsData, standingsRevalidate } = getTeamStandings();
@@ -435,6 +436,8 @@ export default function DisplayTeamStandings() {
       }
     }
 
+    let year = new Date().getFullYear();
+
     return (
       <List.Item
         key={index}
@@ -452,7 +455,7 @@ export default function DisplayTeamStandings() {
         icon={{
           source:
             team2?.team?.logos?.[0]?.href ??
-            `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${currentLeague}.png&w=100&h=100&transparent=true`,
+            `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${currentLeague}.png`,
         }}
         actions={
           <ActionPanel>

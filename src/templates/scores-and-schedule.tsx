@@ -144,8 +144,9 @@ export default function DisplayScoresAndSchedule() {
         icon={{
           source:
             game?.competitions?.[0]?.competitors?.[1]?.team?.logo ??
-            `https://a.espncdn.com/combiner/i?img=/i/teamlogos/countries/500/${getCountryCode(raceLocation)}.png&scale=crop&cquality=40&location=origin&w=80&h=80` ??
-            `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${currentLeague}.png&w=100&h=100&transparent=true`,
+            (currentLeague === "f1"
+              ? `https://a.espncdn.com/combiner/i?img=/i/teamlogos/countries/500/${getCountryCode(raceLocation)}.png&scale=crop&cquality=40&location=origin&w=80&h=80`
+              : `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${currentLeague}.png&w=100&h=100&transparent=true`),
         }}
         accessories={
           currentLeague !== "f1"
