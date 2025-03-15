@@ -25,7 +25,7 @@
     {
       "name": "nhl-tracker",
       "title": "NHL Tracker",
-      "description": "View injuries, transactions, and news articles across the NHL",
+      "description": "View articles, injuries, and transactions across the NHL",
       "mode": "view"
     },
     {
@@ -43,19 +43,11 @@
       "mode": "view"
     },
     {
-      "name": "basketball-news",
-      "title": "Basketball News",
-      "subtitle": "NBA & WNBA",
-      "description": "View news articles across the NBA and WNBA",
+      "name": "basketball-tracker",
+      "title": "Basketball Tracker",
+      "subtitle": "NBA & WNBA & NCAA",
+      "description": "View articles, injuries, and transactions across the NBA, WNBA, and NCAA Men's and Women's Leagues",
       "mode": "view"
-    },
-    {
-      "name": "college-basketball-news",
-      "title": "College Basketball News",
-      "subtitle": "NCAA Men's & Women's",
-      "description": "View news articles across the NCAA Men's and Women's League",
-      "mode": "view",
-      "disabledByDefault": true
     },
     {
       "name": "football-scores-and-schedule",
@@ -72,10 +64,10 @@
       "mode": "view"
     },
     {
-      "name": "football-news",
-      "title": "Football News",
+      "name": "football-tracker",
+      "title": "Football Tracker",
       "subtitle": "NFL & NCAA",
-      "description": "View news articles across the NFL and NCAA",
+      "description": "View articles, injuries, and transactions across the NFL and NCAA",
       "mode": "view"
     },
     {
@@ -93,7 +85,7 @@
     {
       "name": "mlb-tracker",
       "title": "MLB Tracker",
-      "description": "View injuries, transactions, and news articles across the MLB",
+      "description": "View articles, injuries, and transactions across the MLB",
       "mode": "view"
     },
     {
