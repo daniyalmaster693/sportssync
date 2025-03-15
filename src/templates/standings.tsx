@@ -1,7 +1,6 @@
 import { Detail, List, Color, Icon, Action, ActionPanel } from "@raycast/api";
 import getTeamStandings from "../utils/getStandings";
 import sportInfo from "../utils/getSportInfo";
-import getConstructorLogo from "../utils/getF1ConstructorLogo";
 
 export default function DisplayTeamStandings() {
   const { standingsLoading, standingsData, standingsRevalidate } = getTeamStandings();
@@ -486,10 +485,6 @@ export default function DisplayTeamStandings() {
     return <Detail isLoading={true} />;
   }
 
-  if (!standingsData || conference1.length === 0 || conference2.length === 0) {
-    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
-  }
-
   if (currentLeague === "nba") {
     conference1.reverse();
     conference2.reverse();
@@ -497,6 +492,10 @@ export default function DisplayTeamStandings() {
 
   const conferenceTitle1 = standingsData?.children[0]?.name ?? "Conference 1";
   const conferenceTitle2 = standingsData?.children[1]?.name ?? "Conference 2";
+
+  if (!standingsData || conference1.length === 0 || conference2.length === 0) {
+    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
+  }
 
   return (
     <>
