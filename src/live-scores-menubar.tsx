@@ -2,6 +2,7 @@ import { Icon, MenuBarExtra, LocalStorage } from "@raycast/api";
 import { useFetch } from "@raycast/utils";
 import { useState, useEffect } from "react";
 import { getPreferenceValues } from "@raycast/api";
+import { title } from "process";
 
 // Get User Preferences
 
@@ -153,18 +154,37 @@ export default function Command() {
       periodNumber = "";
     }
 
+    if (favoriteSport === "racing") {
+      period = "L";
+    }
+
     if (favoriteSport === "soccer") {
       timeDisplay = game?.status?.type?.detail ?? "Unknown";
       period = "";
       periodNumber = "";
     }
 
-    if (game?.status?.type?.state === "in") {
-      title = `${game?.competitions?.[0]?.competitors?.[1]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[1]?.score} - ${game?.competitions?.[0]?.competitors?.[0]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[0]?.score}   ${period}${periodNumber} ${timeDisplay}`;
+    if (favoriteLeague !== "f1") {
+      if (game?.status?.type?.state === "in") {
+        title = `${game?.competitions?.[0]?.competitors?.[1]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[1]?.score} - ${game?.competitions?.[0]?.competitors?.[0]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[0]?.score}   ${period}${periodNumber} ${timeDisplay}`;
+      } else {
+        if (game.status.type.state === "in") {
+          title = `${game.competitions[4].competitors[0].athlete.shortName}     L${game.competitions[4].status.period} ${game.status.displayClock}`;
+        }
+      }
     }
 
-    if (game?.status?.type?.state === "post") {
-      title = `${game?.competitions?.[0]?.competitors?.[1]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[1]?.score} - ${game?.competitions?.[0]?.competitors?.[0]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[0]?.score}   (Final)`;
+    if (favoriteLeague !== "f1") {
+      if (game?.status?.type?.state === "post") {
+        title = `${game?.competitions?.[0]?.competitors?.[1]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[1]?.score} - ${game?.competitions?.[0]?.competitors?.[0]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[0]?.score}   (Final)`;
+      }
+    } else {
+      if (
+        game?.competitions[4]?.type?.abbreviation === "Race" &&
+        game?.competitions[4]?.status?.type?.completed === true
+      ) {
+        title = `${game?.competitions?.[4]?.competitors[0]?.athlete?.shortName}`;
+      }
     }
 
     setMenuBarTitle(title);
@@ -202,18 +222,37 @@ export default function Command() {
       periodNumber = "";
     }
 
+    if (favoriteSport === "racing") {
+      period = "L";
+    }
+
     if (favoriteSport === "soccer") {
       timeDisplay = game?.status?.type?.detail ?? "Unknown";
       period = "";
       periodNumber = "";
     }
 
-    if (game?.status?.type?.state === "in") {
-      title = `${game?.competitions?.[0]?.competitors?.[1]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[1]?.score} - ${game?.competitions?.[0]?.competitors?.[0]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[0]?.score}   ${period}${periodNumber} ${timeDisplay}`;
+    if (favoriteLeague !== "f1") {
+      if (game?.status?.type?.state === "in") {
+        title = `${game?.competitions?.[0]?.competitors?.[1]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[1]?.score} - ${game?.competitions?.[0]?.competitors?.[0]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[0]?.score}   ${period}${periodNumber} ${timeDisplay}`;
+      } else {
+        if (game.status.type.state === "in") {
+          title = `${game.competitions[4].competitors[0].athlete.shortName}     L${game.competitions[4].status.period} ${game.status.displayClock}`;
+        }
+      }
     }
 
-    if (game?.status?.type?.state === "post") {
-      title = `${game?.competitions?.[0]?.competitors?.[1]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[1]?.score} - ${game?.competitions?.[0]?.competitors?.[0]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[0]?.score}   (Final)`;
+    if (favoriteLeague !== "f1") {
+      if (game?.status?.type?.state === "post") {
+        title = `${game?.competitions?.[0]?.competitors?.[1]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[1]?.score} - ${game?.competitions?.[0]?.competitors?.[0]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[0]?.score}   (Final)`;
+      }
+    } else {
+      if (
+        game?.competitions[4]?.type?.abbreviation === "Race" &&
+        game?.competitions[4]?.status?.type?.completed === true
+      ) {
+        title = `${game?.competitions?.[4]?.competitors[0]?.athlete?.shortName}`;
+      }
     }
 
     return (
@@ -246,11 +285,22 @@ export default function Command() {
 
   const extraItemSeparator = <MenuBarExtra.Separator />;
 
+  let titleType;
+  let titleType2;
+
+  if (favoriteLeague !== "f1") {
+    titleType = "Games";
+    titleType2 = "Game";
+  } else {
+    titleType = "Races";
+    titleType2 = "Race";
+  }
+
   const extraItem = (
     <MenuBarExtra.Item
-      title="Clear Set Game"
+      title={`Clear Set ${titleType2}`}
       icon={Icon.ArrowClockwise}
-      tooltip="Clears Menu Bar Title"
+      tooltip="Reset Menu Bar Title"
       onAction={() => {
         clearSetTitle();
       }}
@@ -263,7 +313,7 @@ export default function Command() {
 
   return (
     <MenuBarExtra isLoading={scheduleLoading} icon={Icon.Livestream} title={menuBarTitle}>
-      <MenuBarExtra.Submenu title={`${favoriteLeague.toUpperCase()} Games`} icon={Icon.GameController}>
+      <MenuBarExtra.Submenu title={`${favoriteLeague.toUpperCase()} ${titleType}`} icon={Icon.GameController}>
         <MenuBarExtra.Section title={`${gamesDate}`}></MenuBarExtra.Section>
         {allGameItems}
       </MenuBarExtra.Submenu>
