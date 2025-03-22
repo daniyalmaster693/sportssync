@@ -2,7 +2,6 @@ import { Icon, MenuBarExtra, LocalStorage } from "@raycast/api";
 import { useFetch } from "@raycast/utils";
 import { useState, useEffect } from "react";
 import { getPreferenceValues } from "@raycast/api";
-import { title } from "process";
 
 // Get User Preferences
 
@@ -96,8 +95,19 @@ interface Response {
 
 // Setting and Saving Title Logic
 
+let titleType: any;
+let titleType2: any;
+
+if (favoriteLeague !== "f1") {
+  titleType = "Games";
+  titleType2 = "Game";
+} else {
+  titleType = "Races";
+  titleType2 = "Race";
+}
+
 export default function Command() {
-  const [menuBarTitle, setMenuBarTitle] = useState("Select a game");
+  const [menuBarTitle, setMenuBarTitle] = useState(`Select a ${titleType2}`);
   const [selectedGameIndex, setSelectedGameIndex] = useState<number | null>(null);
 
   useEffect(() => {
@@ -263,7 +273,7 @@ export default function Command() {
           game?.competitions?.[0]?.competitors?.[1]?.team?.logo ??
           `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${favoriteLeague}.png&w=100&h=100&transparent=true`
         }
-        tooltip="Set Game as Title"
+        tooltip={`Set ${titleType2} as Title`}
         onAction={() => updateTitle(index)}
       />
     );
@@ -280,21 +290,10 @@ export default function Command() {
     LocalStorage.removeItem("selectedGameIndex");
     scheduleRevalidate();
     setSelectedGameIndex(null);
-    setMenuBarTitle("Select a game");
+    setMenuBarTitle(`Select a ${titleType2}`);
   }
 
   const extraItemSeparator = <MenuBarExtra.Separator />;
-
-  let titleType;
-  let titleType2;
-
-  if (favoriteLeague !== "f1") {
-    titleType = "Games";
-    titleType2 = "Game";
-  } else {
-    titleType = "Races";
-    titleType2 = "Race";
-  }
 
   const extraItem = (
     <MenuBarExtra.Item
