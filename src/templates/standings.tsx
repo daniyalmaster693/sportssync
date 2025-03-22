@@ -10,6 +10,12 @@ export default function DisplayTeamStandings() {
   const items1 = standingsData?.children?.[0]?.standings?.entries || [];
   const items2 = standingsData?.children?.[1]?.standings?.entries || [];
 
+  const findStat = (stats: { name: string; displayValue: string }[], key: string): string =>
+    stats?.find((stat) => stat.name === key)?.displayValue ?? "0";
+
+  const findRecord = (stats: { name: string; summary: string }[], key: string): string =>
+    stats?.find((stat) => stat.name === key)?.summary ?? "0-0";
+
   const conference1 = items1.map((team1, index) => {
     let playoffPosition = 0;
 
@@ -24,68 +30,68 @@ export default function DisplayTeamStandings() {
     let stat5;
 
     if (currentLeague === "nhl") {
-      stat1 = `${team1?.stats[3]?.displayValue ?? "0"} GP |`;
-      stat2 = `${team1?.stats[21]?.summary ?? "0-0-0"} |`;
-      stat3 = `${team1?.stats[7]?.displayValue ?? "0"} pts |`;
-      stat4 = `GF: ${team1?.stats[9]?.displayValue ?? "0"} |`;
-      stat5 = `GA: ${team1?.stats[8]?.displayValue ?? "0"}`;
-      playoffPosition = Number(team1?.stats?.[5]?.displayValue);
+      stat1 = `${findStat(team1?.stats, "gamesPlayed")} GP |`;
+      stat2 = `${findRecord(team1?.stats, "overall")} |`;
+      stat3 = `${findStat(team1?.stats, "points")} pts |`;
+      stat4 = `GF: ${findStat(team1?.stats, "pointsFor")} |`;
+      stat5 = `GA: ${findStat(team1?.stats, "pointsAgainst")}`;
+      playoffPosition = Number(findStat(team1?.stats, "playoffSeed"));
     }
 
     if (currentLeague === "nba") {
-      stat1 = `${team1?.stats?.[15]?.displayValue ?? "0-0"} |`;
-      stat2 = `Pct: ${(Number(team1?.stats?.[13]?.displayValue) * 100).toFixed(1) ?? "0"}% |`;
-      stat3 = `PF: ${team1?.stats?.[11]?.displayValue ?? "0"} |`;
-      stat4 = `PA: ${team1?.stats?.[10]?.displayValue ?? "0"} |`;
-      stat5 = `Dif: ${team1?.stats?.[8]?.displayValue ?? "0"}`;
-      playoffPosition = Number(team1?.stats?.[7]?.displayValue);
+      stat1 = `${findRecord(team1?.stats, "overall")} |`;
+      stat2 = `Pct: ${(Number(findStat(team1?.stats, "winPercent")) * 100).toFixed(1)}% |`;
+      stat3 = `PF: ${findStat(team1?.stats, "pointsFor")} |`;
+      stat4 = `PA: ${findStat(team1?.stats, "pointsAgainst")} |`;
+      stat5 = `Dif: ${findStat(team1?.stats, "differential")}`;
+      playoffPosition = Number(findStat(team1?.stats, "playoffSeed")) || 0;
     }
 
     if (currentLeague === "wnba") {
-      stat1 = `${team1?.stats?.[16]?.displayValue ?? "0-0"} |`;
-      stat2 = `Pct: ${(Number(team1?.stats?.[14]?.displayValue) * 100).toFixed(1) ?? "0"}% |`;
-      stat3 = `PF: ${team1?.stats?.[12]?.displayValue ?? "0"} |`;
-      stat4 = `PA: ${team1?.stats?.[11]?.displayValue ?? "0"} |`;
-      stat5 = `Dif: ${team1?.stats?.[8]?.displayValue ?? "0"}`;
-      playoffPosition = Number(team1?.stats?.[8]?.displayValue);
+      stat1 = `${findRecord(team1?.stats, "overall")} |`;
+      stat2 = `Pct: ${(Number(findStat(team1?.stats, "leagueWinPercent")) * 100).toFixed(1)}% |`;
+      stat3 = `PF: ${findStat(team1?.stats, "pointsFor")} |`;
+      stat4 = `PA: ${findStat(team1?.stats, "pointsAgainst")} |`;
+      stat5 = `Dif: ${findStat(team1?.stats, "differential")}`;
+      playoffPosition = Number(findStat(team1?.stats, "playoffSeed")) || 0;
     }
 
     if (currentLeague === "nfl") {
-      stat1 = `${team1?.stats?.[16]?.displayValue ?? "0-0"} |`;
-      stat2 = `Pct: ${(Number(team1?.stats?.[10]?.displayValue) * 100).toFixed(1) ?? "0"}% |`;
-      stat3 = `PF: ${team1?.stats?.[7]?.displayValue ?? "0"} |`;
-      stat4 = `PA: ${team1?.stats?.[6]?.displayValue ?? "0"} |`;
-      stat5 = `Dif: ${team1?.stats?.[5]?.displayValue ?? "0"}`;
-      playoffPosition = Number(team1?.stats?.[4]?.displayValue);
+      stat1 = `${findRecord(team1?.stats, "overall")} |`;
+      stat2 = `Pct: ${(Number(findStat(team1?.stats, "winPercent")) * 100).toFixed(1)}% |`;
+      stat3 = `PF: ${findStat(team1?.stats, "pointsFor")} |`;
+      stat4 = `PA: ${findStat(team1?.stats, "pointsAgainst")} |`;
+      stat5 = `Dif: ${findStat(team1?.stats, "differential")}`;
+      playoffPosition = Number(findStat(team1?.stats, "playoffSeed")) || 0;
     }
 
     if (currentLeague === "mlb") {
-      stat1 = `${team1?.stats[7]?.displayValue ?? "0"} GP |`;
-      stat2 = `${team1?.stats[32]?.displayValue ?? "0-0"} |`;
-      stat3 = `Pct: ${(Number(team1?.stats[8]?.displayValue) * 100).toFixed(1) ?? "0"}% |`;
-      stat4 = `PF: ${team1?.stats[14]?.displayValue ?? "0"} |`;
-      stat5 = `PA: ${team1?.stats[13]?.displayValue ?? "0"}`;
-      playoffPosition = Number(team1?.stats?.[10]?.displayValue);
+      stat1 = `${findStat(team1?.stats, "gamesPlayed")} GP |`;
+      stat2 = `${findRecord(team1?.stats, "overall")} |`;
+      stat3 = `Pct: ${(Number(findStat(team1?.stats, "winPercent")) * 100).toFixed(1)}% |`;
+      stat4 = `PF: ${findStat(team1?.stats, "pointsFor")} |`;
+      stat5 = `PA: ${findStat(team1?.stats, "pointsAgainst")}`;
+      playoffPosition = Number(findStat(team1?.stats, "playoffSeed")) || 0;
     }
 
     const flagSrc = team1?.athlete?.flag.href ?? `${team1?.athlete?.flag?.href}`;
 
     if (currentLeague === "f1") {
-      stat1 = `${team1?.stats[1]?.displayValue ?? "0"} pts`;
-      playoffPosition = Number(team1?.stats?.[0]?.displayValue ?? "0");
+      stat1 = `${findStat(team1?.stats, "championshipPts")} pts`;
       stat2 = "";
       stat3 = "";
       stat4 = "";
       stat5 = "";
+      playoffPosition = Number(findStat(team1?.stats, "rank")) || 0;
     }
 
     if (currentSport === "soccer") {
-      stat1 = `${team1.stats[0].displayValue ?? "0"} GP |`;
-      stat2 = `${team1.stats[12].displayValue ?? "0-0-0"} |`;
-      stat3 = `${team1.stats[3].displayValue ?? "0"} pts |`;
-      stat4 = `${team1.stats[5].displayValue ?? "0"} GF |`;
-      stat5 = `${team1.stats[4].displayValue ?? "0"} GA`;
-      playoffPosition = Number(team1?.stats?.[10]?.displayValue);
+      stat1 = `${findStat(team1?.stats, "gamesPlayed")} GP |`;
+      stat2 = `${findRecord(team1?.stats, "overall")} |`;
+      stat3 = `${findStat(team1?.stats, "points")} pts |`;
+      stat4 = `GF: ${findStat(team1?.stats, "pointsFor")} |`;
+      stat5 = `GA: ${findStat(team1?.stats, "pointsAgainst")}`;
+      playoffPosition = Number(findStat(team1?.stats, "rank"));
     }
 
     if (playoffPosition === 1) {
@@ -96,11 +102,11 @@ export default function DisplayTeamStandings() {
       tagColor = Color.Green;
       tagIcon = Icon.Leaderboard;
       tagTooltip = "Playoff Contender";
-    } else if (playoffPosition >= 9 && playoffPosition <= 15) {
+    } else if (playoffPosition >= 9 && playoffPosition <= 14) {
       tagColor = Color.Orange;
       tagIcon = Icon.XMarkCircle;
       tagTooltip = "Not in Playoffs";
-    } else if (playoffPosition === 16) {
+    } else if (playoffPosition === 15) {
       tagColor = Color.Red;
       tagIcon = Icon.Xmark;
       tagTooltip = "Last in Conference";
@@ -260,66 +266,57 @@ export default function DisplayTeamStandings() {
     let stat5;
 
     if (currentLeague === "nhl") {
-      stat1 = `${team2?.stats[3]?.displayValue ?? "0"} GP |`;
-      stat2 = `${team2?.stats[21]?.summary ?? "0-0-0"} |`;
-      stat3 = `${team2?.stats[7]?.displayValue ?? "0"} pts |`;
-      stat4 = `GF: ${team2?.stats[9]?.displayValue ?? "0"} |`;
-      stat5 = `GA: ${team2?.stats[8]?.displayValue ?? "0"}`;
-      playoffPosition = Number(team2?.stats?.[5]?.displayValue);
+      stat1 = `${findStat(team2?.stats, "gamesPlayed")} GP |`;
+      stat2 = `${findRecord(team2?.stats, "overall")} |`;
+      stat3 = `${findStat(team2?.stats, "points")} pts |`;
+      stat4 = `GF: ${findStat(team2?.stats, "pointsFor")} |`;
+      stat5 = `GA: ${findStat(team2?.stats, "pointsAgainst")}`;
+      playoffPosition = Number(findStat(team2?.stats, "playoffSeed"));
     }
 
     if (currentLeague === "nba") {
-      stat1 = `${team2?.stats?.[15]?.displayValue ?? "0-0"} |`;
-      stat2 = `Pct: ${(Number(team2?.stats?.[13]?.displayValue) * 100).toFixed(1) ?? "0"}% |`;
-      stat3 = `PF: ${team2?.stats?.[11]?.displayValue ?? "0"} |`;
-      stat4 = `PA: ${team2?.stats?.[10]?.displayValue ?? "0"} |`;
-      stat5 = `Dif: ${team2?.stats?.[8]?.displayValue ?? "0"}`;
-      playoffPosition = Number(team2?.stats?.[7]?.displayValue);
+      stat1 = `${findRecord(team2?.stats, "overall")} |`;
+      stat2 = `Pct: ${(Number(findStat(team2?.stats, "winPercent")) * 100).toFixed(1)}% |`;
+      stat3 = `PF: ${findStat(team2?.stats, "pointsFor")} |`;
+      stat4 = `PA: ${findStat(team2?.stats, "pointsAgainst")} |`;
+      stat5 = `Dif: ${findStat(team2?.stats, "differential")}`;
+      playoffPosition = Number(findStat(team2?.stats, "playoffSeed")) || 0;
     }
 
     if (currentLeague === "wnba") {
-      stat1 = `${team2?.stats?.[16]?.displayValue ?? "0-0"} |`;
-      stat2 = `Pct: ${(Number(team2?.stats?.[14]?.displayValue) * 100).toFixed(1) ?? "0"}% |`;
-      stat3 = `PF: ${team2?.stats?.[12]?.displayValue ?? "0"} |`;
-      stat4 = `PA: ${team2?.stats?.[11]?.displayValue ?? "0"} |`;
-      stat5 = `Dif: ${team2?.stats?.[8]?.displayValue ?? "0"}`;
-      playoffPosition = Number(team2?.stats?.[8]?.displayValue);
+      stat1 = `${findRecord(team2?.stats, "overall")} |`;
+      stat2 = `Pct: ${(Number(findStat(team2?.stats, "leagueWinPercent")) * 100).toFixed(1)}% |`;
+      stat3 = `PF: ${findStat(team2?.stats, "pointsFor")} |`;
+      stat4 = `PA: ${findStat(team2?.stats, "pointsAgainst")} |`;
+      stat5 = `Dif: ${findStat(team2?.stats, "differential")}`;
+      playoffPosition = Number(findStat(team2?.stats, "playoffSeed")) || 0;
     }
 
     if (currentLeague === "nfl") {
-      stat1 = `${team2?.stats?.[16]?.displayValue ?? "0-0"} |`;
-      stat2 = `Pct: ${(Number(team2?.stats?.[10]?.displayValue) * 100).toFixed(1) ?? "0"}% |`;
-      stat3 = `PF: ${team2?.stats?.[7]?.displayValue ?? "0"} |`;
-      stat4 = `PA: ${team2?.stats?.[6]?.displayValue ?? "0"} |`;
-      stat5 = `Dif: ${team2?.stats?.[5]?.displayValue ?? "0"}`;
-      playoffPosition = Number(team2?.stats?.[4]?.displayValue);
+      stat1 = `${findRecord(team2?.stats, "overall")} |`;
+      stat2 = `Pct: ${(Number(findStat(team2?.stats, "winPercent")) * 100).toFixed(1)}% |`;
+      stat3 = `PF: ${findStat(team2?.stats, "pointsFor")} |`;
+      stat4 = `PA: ${findStat(team2?.stats, "pointsAgainst")} |`;
+      stat5 = `Dif: ${findStat(team2?.stats, "differential")}`;
+      playoffPosition = Number(findStat(team2?.stats, "playoffSeed")) || 0;
     }
 
     if (currentLeague === "mlb") {
-      stat1 = `${team2?.stats[7]?.displayValue ?? "0"} GP |`;
-      stat2 = `${team2?.stats[32]?.displayValue ?? "0-0"} |`;
-      stat3 = `Pct: ${(Number(team2?.stats[8]?.displayValue) * 100).toFixed(1) ?? "0"}% |`;
-      stat4 = `PF: ${team2?.stats[14]?.displayValue ?? "0"} |`;
-      stat5 = `PA: ${team2?.stats[13]?.displayValue ?? "0"}`;
-      playoffPosition = Number(team2?.stats?.[10]?.displayValue);
+      stat1 = `${findStat(team2?.stats, "gamesPlayed")} GP |`;
+      stat2 = `${findRecord(team2?.stats, "overall")} |`;
+      stat3 = `Pct: ${(Number(findStat(team2?.stats, "winPercent")) * 100).toFixed(1)}% |`;
+      stat4 = `PF: ${findStat(team2?.stats, "pointsFor")} |`;
+      stat5 = `PA: ${findStat(team2?.stats, "pointsAgainst")}`;
+      playoffPosition = Number(findStat(team2?.stats, "playoffSeed")) || 0;
     }
 
     if (currentLeague === "f1") {
-      stat1 = `${team2?.stats[1]?.displayValue ?? "0"} pts`;
+      stat1 = `${findStat(team2?.stats, "points")} pts`;
       stat2 = "";
       stat3 = "";
       stat4 = "";
       stat5 = "";
-      playoffPosition = Number(team2?.stats?.[0]?.displayValue);
-    }
-
-    if (currentSport === "soccer") {
-      stat1 = `${team2.stats[0].displayValue ?? "0"} GP |`;
-      stat2 = `${team2.stats[12].displayValue ?? "0-0-0"} |`;
-      stat3 = `${team2.stats[3].displayValue ?? "0"} pts |`;
-      stat4 = `${team2.stats[5].displayValue ?? "0"} GF |`;
-      stat5 = `${team2.stats[4].displayValue ?? "0"} GA`;
-      playoffPosition = Number(team2?.stats?.[10]?.displayValue);
+      playoffPosition = Number(findStat(team2?.stats, "rank")) || 0;
     }
 
     if (playoffPosition === 1) {
@@ -330,11 +327,11 @@ export default function DisplayTeamStandings() {
       tagColor = Color.Green;
       tagIcon = Icon.Leaderboard;
       tagTooltip = "Playoff Contender";
-    } else if (playoffPosition >= 9 && playoffPosition <= 15) {
+    } else if (playoffPosition >= 9 && playoffPosition <= 14) {
       tagColor = Color.Orange;
       tagIcon = Icon.XMarkCircle;
       tagTooltip = "Not in Playoffs";
-    } else if (playoffPosition === 16) {
+    } else if (playoffPosition === 15) {
       tagColor = Color.Red;
       tagIcon = Icon.Xmark;
       tagTooltip = "Last in Conference";
@@ -423,20 +420,6 @@ export default function DisplayTeamStandings() {
       }
     }
 
-    if (currentSport === "soccer") {
-      if (playoffPosition === 1) {
-        tagColor = Color.Yellow;
-        tagIcon = Icon.Trophy;
-      } else if (playoffPosition >= 2) {
-        tagColor = Color.Green;
-        tagIcon = Icon.Leaderboard;
-      } else {
-        tagColor = Color.SecondaryText;
-      }
-    }
-
-    let year = new Date().getFullYear();
-
     return (
       <List.Item
         key={index}
@@ -485,15 +468,14 @@ export default function DisplayTeamStandings() {
     return <Detail isLoading={true} />;
   }
 
-  if (currentLeague === "nba") {
-    conference1.reverse();
-    conference2.reverse();
+  let conferenceTitle1 = standingsData?.children[0]?.name ?? "Conference 1";
+  let conferenceTitle2 = standingsData?.children[1]?.name ?? "Conference 2";
+
+  if (currentSport === "Soccer") {
+    conferenceTitle2 = "";
   }
 
-  const conferenceTitle1 = standingsData?.children[0]?.name ?? "Conference 1";
-  const conferenceTitle2 = standingsData?.children[1]?.name ?? "Conference 2";
-
-  if (!standingsData || conference1.length === 0 || conference2.length === 0) {
+  if (!standingsData) {
     return <List.EmptyView icon="Empty.png" title="No Results Found" />;
   }
 

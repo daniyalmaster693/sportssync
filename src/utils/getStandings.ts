@@ -2,6 +2,7 @@ import { useFetch } from "@raycast/utils";
 import sportInfo from "./getSportInfo";
 
 interface Stats {
+  name: string;
   displayValue: string;
   summary: string;
 }
@@ -55,7 +56,7 @@ export default function getTeamStandings() {
     data: standingsData,
     revalidate: standingsRevalidate,
   } = useFetch<StandingsData>(
-    `https://site.web.api.espn.com/apis/v2/sports/${currentSport}/${currentLeague}/standings`,
+    `https://site.web.api.espn.com/apis/v2/sports/${currentSport}/${currentLeague}/standings?&sort=playoffseed:asc,points:desc,gamesplayed:asc`,
   );
 
   return { standingsData, standingsLoading, standingsRevalidate };
