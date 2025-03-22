@@ -1,5 +1,5 @@
-const league = "nfl";
-const sport = "football";
+const sport = "";
+const league = "";
 
 fetch(`https://site.api.espn.com/apis/site/v2/sports/${sport}/${league}/teams`)
   .then((response) => response.json())
@@ -17,3 +17,22 @@ fetch(`https://site.api.espn.com/apis/site/v2/sports/${sport}/${league}/teams`)
   .catch((error) => {
     console.error("Error fetching data:", error);
   });
+
+// F1 Constructors
+
+// fetch(`https://site.api.espn.com/apis/v2/sports/racing/f1/standings`)
+//   .then((response) => response.json())
+//   .then((data) => {
+//     const teams = data.children?.[1]?.standings?.entries;
+//     const teamInfo = teams.map((team) => {
+//       return {
+//         title: team.team.displayName,
+//         value: team.team.id,
+//       };
+//     });
+
+//     console.log(teamInfo);
+//   })
+//   .catch((error) => {
+//     console.error("Error fetching data:", error);
+//   });

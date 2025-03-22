@@ -205,20 +205,8 @@
           "value": "wnba"
         },
         {
-          "title": "NCAA M",
-          "value": "mens-college-basketball"
-        },
-        {
-          "title": "NCAA W",
-          "value": "womens-college-basketball"
-        },
-        {
           "title": "NFL",
           "value": "nfl"
-        },
-        {
-          "title": "NCAA (College Football)",
-          "value": "college-football"
         },
         {
           "title": "MLB",
@@ -231,10 +219,6 @@
         {
           "title": "English Premier League",
           "value": "ENG.1"
-        },
-        {
-          "title": "Champions League",
-          "value": "uefa.champions"
         },
         {
           "title": "LALIGA",
@@ -809,6 +793,358 @@
         {
           "title": "Washington Nationals",
           "value": "20"
+        },
+        {
+          "title": "McLaren",
+          "value": "106892"
+        },
+        {
+          "title": "Mercedes",
+          "value": "106893"
+        },
+        {
+          "title": "Red Bull",
+          "value": "106921"
+        },
+        {
+          "title": "Ferrari",
+          "value": "106842"
+        },
+        {
+          "title": "Williams",
+          "value": "106967"
+        },
+        {
+          "title": "Aston Martin",
+          "value": "123986"
+        },
+        {
+          "title": "Sauber",
+          "value": "106925"
+        },
+        {
+          "title": "Alpine",
+          "value": "106922"
+        },
+        {
+          "title": "Racing Bulls",
+          "value": "123988"
+        },
+        {
+          "title": "Haas",
+          "value": "111427"
+        },
+        {
+          "title": "AFC Bournemouth",
+          "value": "349"
+        },
+        {
+          "title": "Arsenal",
+          "value": "359"
+        },
+        {
+          "title": "Aston Villa",
+          "value": "362"
+        },
+        {
+          "title": "Brentford",
+          "value": "337"
+        },
+        {
+          "title": "Brighton & Hove Albion",
+          "value": "331"
+        },
+        {
+          "title": "Chelsea",
+          "value": "363"
+        },
+        {
+          "title": "Crystal Palace",
+          "value": "384"
+        },
+        {
+          "title": "Everton",
+          "value": "368"
+        },
+        {
+          "title": "Fulham",
+          "value": "370"
+        },
+        {
+          "title": "Ipswich Town",
+          "value": "373"
+        },
+        {
+          "title": "Leicester City",
+          "value": "375"
+        },
+        {
+          "title": "Liverpool",
+          "value": "364"
+        },
+        {
+          "title": "Manchester City",
+          "value": "382"
+        },
+        {
+          "title": "Manchester United",
+          "value": "360"
+        },
+        {
+          "title": "Newcastle United",
+          "value": "361"
+        },
+        {
+          "title": "Nottingham Forest",
+          "value": "393"
+        },
+        {
+          "title": "Southampton",
+          "value": "376"
+        },
+        {
+          "title": "Tottenham Hotspur",
+          "value": "367"
+        },
+        {
+          "title": "West Ham United",
+          "value": "371"
+        },
+        {
+          "title": "Wolverhampton Wanderers",
+          "value": "380"
+        },
+        {
+          "title": "Alavés",
+          "value": "96"
+        },
+        {
+          "title": "Athletic Club",
+          "value": "93"
+        },
+        {
+          "title": "Atlético Madrid",
+          "value": "1068"
+        },
+        {
+          "title": "Barcelona",
+          "value": "83"
+        },
+        {
+          "title": "Celta Vigo",
+          "value": "85"
+        },
+        {
+          "title": "Espanyol",
+          "value": "88"
+        },
+        {
+          "title": "Getafe",
+          "value": "2922"
+        },
+        {
+          "title": "Girona",
+          "value": "9812"
+        },
+        {
+          "title": "Las Palmas",
+          "value": "98"
+        },
+        {
+          "title": "Leganés",
+          "value": "17534"
+        },
+        {
+          "title": "Mallorca",
+          "value": "84"
+        },
+        {
+          "title": "Osasuna",
+          "value": "97"
+        },
+        {
+          "title": "Rayo Vallecano",
+          "value": "101"
+        },
+        {
+          "title": "Real Betis",
+          "value": "244"
+        },
+        {
+          "title": "Real Madrid",
+          "value": "86"
+        },
+        {
+          "title": "Real Sociedad",
+          "value": "89"
+        },
+        {
+          "title": "Real Valladolid",
+          "value": "95"
+        },
+        {
+          "title": "Sevilla",
+          "value": "243"
+        },
+        {
+          "title": "Valencia",
+          "value": "94"
+        },
+        {
+          "title": "Villarreal",
+          "value": "102"
+        },
+        {
+          "title": "1. FC Heidenheim 1846",
+          "value": "6418"
+        },
+        {
+          "title": "1. FC Union Berlin",
+          "value": "598"
+        },
+        {
+          "title": "Bayer Leverkusen",
+          "value": "131"
+        },
+        {
+          "title": "Bayern Munich",
+          "value": "132"
+        },
+        {
+          "title": "Borussia Dortmund",
+          "value": "124"
+        },
+        {
+          "title": "Borussia Monchengladbach",
+          "value": "268"
+        },
+        {
+          "title": "Eintracht Frankfurt",
+          "value": "125"
+        },
+        {
+          "title": "FC Augsburg",
+          "value": "3841"
+        },
+        {
+          "title": "Holstein Kiel",
+          "value": "7884"
+        },
+        {
+          "title": "Mainz",
+          "value": "2950"
+        },
+        {
+          "title": "RB Leipzig",
+          "value": "11420"
+        },
+        {
+          "title": "SC Freiburg",
+          "value": "126"
+        },
+        {
+          "title": "St. Pauli",
+          "value": "270"
+        },
+        {
+          "title": "TSG Hoffenheim",
+          "value": "7911"
+        },
+        {
+          "title": "VfB Stuttgart",
+          "value": "134"
+        },
+        {
+          "title": "VfL Bochum",
+          "value": "121"
+        },
+        {
+          "title": "VfL Wolfsburg",
+          "value": "138"
+        },
+        {
+          "title": "Werder Bremen",
+          "value": "137"
+        },
+        {
+          "title": "AC Milan",
+          "value": "103"
+        },
+        {
+          "title": "AS Roma",
+          "value": "104"
+        },
+        {
+          "title": "Atalanta",
+          "value": "105"
+        },
+        {
+          "title": "Bologna",
+          "value": "107"
+        },
+        {
+          "title": "Cagliari",
+          "value": "2925"
+        },
+        {
+          "title": "Como",
+          "value": "2572"
+        },
+        {
+          "title": "Empoli",
+          "value": "2574"
+        },
+        {
+          "title": "Fiorentina",
+          "value": "109"
+        },
+        {
+          "title": "Genoa",
+          "value": "3263"
+        },
+        {
+          "title": "Hellas Verona",
+          "value": "119"
+        },
+        {
+          "title": "Internazionale",
+          "value": "110"
+        },
+        {
+          "title": "Juventus",
+          "value": "111"
+        },
+        {
+          "title": "Lazio",
+          "value": "112"
+        },
+        {
+          "title": "Lecce",
+          "value": "113"
+        },
+        {
+          "title": "Monza",
+          "value": "4007"
+        },
+        {
+          "title": "Napoli",
+          "value": "114"
+        },
+        {
+          "title": "Parma",
+          "value": "115"
+        },
+        {
+          "title": "Torino",
+          "value": "239"
+        },
+        {
+          "title": "Udinese",
+          "value": "118"
+        },
+        {
+          "title": "Venezia",
+          "value": "17530"
         }
       ]
     }
