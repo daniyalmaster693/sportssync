@@ -5,7 +5,7 @@ fetch(`https://site.api.espn.com/apis/site/v2/sports/${sport}/${league}/teams`)
   .then((response) => response.json())
   .then((data) => {
     const teams = data.sports?.[0]?.leagues[0].teams;
-    const teamInfo = teams.map((team) => {
+    const teamInfo = teams.map((team: any) => {
       return {
         title: team.team.displayName,
         value: team.team.id,
