@@ -1,4 +1,4 @@
-import { Detail, List, LocalStorage } from "@raycast/api";
+import { List, LocalStorage } from "@raycast/api";
 import { useFetch } from "@raycast/utils";
 import { useState, useEffect } from "react";
 import CompletedGames from "./views/favoriteTeamCompleted";
@@ -32,7 +32,7 @@ const Command = () => {
     loadStoredDropdown();
   }, []);
 
-  const { isLoading: scheduleLoading, data: scheduleData } = useFetch<Response>(
+  const { isLoading: scheduleLoading } = useFetch<Response>(
     `https://site.api.espn.com/apis/site/v2/sports/${favoriteSport}/${favoriteLeague}/teams/${favoriteTeam}/schedule`,
   );
 

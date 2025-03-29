@@ -8,7 +8,7 @@ const favoriteSport = getPreferenceValues().sport as string;
 
 interface Competitor {
   team: {
-    logos: any;
+    logos: { href: string }[];
     abbreviation: string;
     displayName: string;
     logo: string;

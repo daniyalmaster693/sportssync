@@ -1,11 +1,30 @@
+interface Team {
+  team: {
+    displayName: string;
+    id: string;
+  };
+}
+
+interface League {
+  teams: Team[];
+}
+
+interface Sport {
+  leagues: League[];
+}
+
+interface ResponseData {
+  sports?: Sport[];
+}
+
 const sport = "";
 const league = "";
 
 fetch(`https://site.api.espn.com/apis/site/v2/sports/${sport}/${league}/teams`)
   .then((response) => response.json())
-  .then((data) => {
+  .then((data: ResponseData) => {
     const teams = data.sports?.[0]?.leagues[0].teams;
-    const teamInfo = teams.map((team: any) => {
+    const teamInfo = teams?.map((team) => {
       return {
         title: team.team.displayName,
         value: team.team.id,

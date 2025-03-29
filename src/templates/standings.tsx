@@ -512,7 +512,7 @@ export default function DisplayTeamStandings() {
     return <Detail isLoading={true} />;
   }
 
-  let conferenceTitle1 = standingsData?.children[0]?.name ?? "Conference 1";
+  const conferenceTitle1 = standingsData?.children[0]?.name ?? "Conference 1";
   let conferenceTitle2 = standingsData?.children[1]?.name ?? "Conference 2";
 
   if (currentSport === "Soccer") {

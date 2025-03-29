@@ -69,7 +69,7 @@ interface Athlete {
 }
 
 interface Injury {
-  injuries: any;
+  injuries: Injury[];
   athlete: Athlete;
   status: string;
   details?: { returnDate: string };
@@ -114,7 +114,7 @@ export default function TeamInjuries() {
     `https://site.web.api.espn.com/apis/v2/sports/${favoriteSport}/${favoriteLeague}/standings?level=1&sort=playoffseed:asc,points:desc,gamesplayed:asc`,
   );
 
-  let teamPositionItems = data?.standings?.entries ?? [];
+  const teamPositionItems = data?.standings?.entries ?? [];
 
   const findStat = (stats: { name: string; displayValue: string }[], key: string): string =>
     stats?.find((stat) => stat.name === key)?.displayValue ?? "0";
@@ -505,7 +505,7 @@ export default function TeamInjuries() {
   const transactionDayItems: TransactionDayItems[] = [];
   const transactions = transactionsData?.transactions || [];
 
-  const transactionItems = transactions?.map((transaction, index) => {
+  transactions?.map((transaction, index) => {
     const transactionDate = new Date(transaction.date ?? "Unknown").toLocaleDateString([], {
       day: "2-digit",
       month: "short",

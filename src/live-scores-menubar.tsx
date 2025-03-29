@@ -95,8 +95,8 @@ interface Response {
 
 // Setting and Saving Title Logic
 
-let titleType: any;
-let titleType2: any;
+let titleType: string;
+let titleType2: string;
 
 if (favoriteLeague !== "f1") {
   titleType = "Games";

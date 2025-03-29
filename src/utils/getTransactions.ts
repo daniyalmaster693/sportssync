@@ -8,11 +8,17 @@ interface Athlete {
   links: { href: string }[];
 }
 
-interface Injury {
-  injuries: any;
-  athlete: Athlete;
+interface InjuryDetails {
+  id: string;
+  type: string;
+  severity: string;
   status: string;
+  athlete: Athlete;
   details?: { returnDate: string };
+}
+
+interface Injury {
+  injuries: InjuryDetails[];
 }
 
 interface Response {
@@ -30,11 +36,6 @@ interface NHLTransaction {
   date: string;
   description: string;
   team: Team;
-}
-
-interface DayItems {
-  title: string;
-  transactions: JSX.Element[];
 }
 
 interface Response {

@@ -13,7 +13,7 @@ interface Athlete {
 interface Competitor {
   athlete: Athlete;
   team: {
-    logos: any;
+    logos: { [key: string]: string }[];
     abbreviation: string;
     displayName: string;
     logo: string;
@@ -202,7 +202,7 @@ export default function CompletedGames() {
 
   gameItems.reverse();
 
-  let subTitleText = "Game";
+  const subTitleText = "Game";
 
   if (completedLoading) {
     return <Detail isLoading={true} />;
