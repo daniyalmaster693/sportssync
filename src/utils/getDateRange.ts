@@ -4,13 +4,8 @@ export default function getPastAndFutureDays(date: Date) {
   const threeDaysAgo = new Date(today);
   threeDaysAgo.setDate(today.getDate() - 3);
 
-<<<<<<< HEAD
   const threeDaysFromNow = new Date(today);
   threeDaysFromNow.setDate(today.getDate() + 5);
-=======
-  const fiveDaysFromNow = new Date(today);
-  fiveDaysFromNow.setDate(today.getDate() + 5);
->>>>>>> contributions/merge-1743277393899
 
   const formatDate = (date: Date): string => {
     const year = date.getFullYear();
@@ -19,9 +14,5 @@ export default function getPastAndFutureDays(date: Date) {
     return `${year}${month}${day}`;
   };
 
-<<<<<<< HEAD
   return `${formatDate(threeDaysAgo)}-${formatDate(threeDaysFromNow)}`;
-=======
-  return `${formatDate(threeDaysAgo)}-${formatDate(fiveDaysFromNow)}`;
->>>>>>> contributions/merge-1743277393899
 }
