@@ -1,4 +1,4 @@
-import { List, Detail } from "@raycast/api";
+import { List } from "@raycast/api";
 import sportInfo from "./utils/getSportInfo";
 import getScoresAndSchedule from "./utils/getSchedule";
 import DisplayScoresAndSchedule from "./templates/scores-and-schedule";

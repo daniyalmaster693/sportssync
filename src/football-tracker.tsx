@@ -31,11 +31,11 @@ const displayTrackerInformation = () => {
 
   let searchBarPlaceholder = "Search for a game";
 
-  if (currentLeague === "Articles") {
+  if (currentLeague.includes("Articles")) {
     searchBarPlaceholder = "Search for an article";
   }
 
-  if (currentLeague === "Injuries" || currentLeague === "Transactions") {
+  if (currentLeague.includes("Injuries") || currentLeague.includes("Transactions")) {
     searchBarPlaceholder = "Search for a player, or team";
   }
 

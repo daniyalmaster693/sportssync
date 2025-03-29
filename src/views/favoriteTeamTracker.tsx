@@ -2,11 +2,6 @@ import { Detail, List, Color, Icon, Action, ActionPanel } from "@raycast/api";
 import { useFetch } from "@raycast/utils";
 import { getPreferenceValues } from "@raycast/api";
 
-interface Preferences {
-  name: string;
-  id?: string;
-}
-
 interface Article {
   headline: string;
   published: string;
@@ -41,19 +36,14 @@ interface Team {
   id: string;
   displayName: string;
   nickname: string;
-  logos: { href: string }[];
-  links: { href: string }[];
-  franchise: Franchise;
-}
-
-interface Franchise {
-  displayName: string;
   abbreviation: string;
   venue: Venue;
-  team: Team;
+  logos: { href: string }[];
+  links: { href: string }[];
 }
 
 interface TeamStats {
+  name: string;
   displayValue: string;
   summary: string;
 }
@@ -61,6 +51,7 @@ interface TeamStats {
 interface StandingsTeam {
   team: Team;
   stats: TeamStats[];
+  athlete: Athlete[];
 }
 
 interface StandingsData {
@@ -73,11 +64,12 @@ interface Athlete {
   displayName: string;
   position: { displayName: string };
   team: Team;
+  flag: { href: string };
   links: { href: string }[];
 }
 
 interface Injury {
-  injuries: any;
+  injuries: Injury[];
   athlete: Athlete;
   status: string;
   details?: { returnDate: string };
@@ -99,12 +91,12 @@ interface TransactionDayItems {
   transactions: JSX.Element[];
 }
 
-interface Response {
-  transactions: Transaction[];
+interface Franchise {
+  team: Team;
 }
 
-async function getFavoriteTeamID() {
-  const preferences = getPreferenceValues<Preferences>();
+interface Response {
+  transactions: Transaction[];
 }
 
 const favoriteTeam = getPreferenceValues().team as string;
@@ -118,13 +110,17 @@ export default function TeamInjuries() {
     `https://site.api.espn.com/apis/site/v2/sports/${favoriteSport}/${favoriteLeague}/teams/${favoriteTeam}`,
   );
 
-  const franchise = franchiseData?.team?.franchise;
-
   const { isLoading, data, revalidate } = useFetch<StandingsData>(
-    `https://site.web.api.espn.com/apis/v2/sports/${favoriteSport}/${favoriteLeague}/standings?level=1`,
+    `https://site.web.api.espn.com/apis/v2/sports/${favoriteSport}/${favoriteLeague}/standings?level=1&sort=playoffseed:asc,points:desc,gamesplayed:asc`,
   );
 
   const teamPositionItems = data?.standings?.entries ?? [];
+
+  const findStat = (stats: { name: string; displayValue: string }[], key: string): string =>
+    stats?.find((stat) => stat.name === key)?.displayValue ?? "0";
+
+  const findRecord = (stats: { name: string; summary: string }[], key: string): string =>
+    stats?.find((stat) => stat.name === key)?.summary ?? "0-0";
 
   const teamPosition = teamPositionItems.map((team1, index) => {
     let playoffPosition = 0;
@@ -140,57 +136,59 @@ export default function TeamInjuries() {
     let stat5;
 
     if (favoriteLeague === "nhl") {
-      stat1 = `${team1?.stats[3]?.displayValue ?? "0"} GP`;
-      stat2 = `${team1?.stats[21]?.summary ?? "0-0-0"}`;
-      stat3 = `${team1?.stats[7]?.displayValue ?? "0"} pts`;
-      stat4 = `GF: ${team1?.stats[9]?.displayValue ?? "0"}`;
-      stat5 = `GA: ${team1?.stats[8]?.displayValue ?? "0"}`;
-      playoffPosition = Number(team1?.stats?.[5]?.displayValue);
+      stat1 = `${findStat(team1?.stats, "gamesPlayed")} GP |`;
+      stat2 = `${findRecord(team1?.stats, "overall")} |`;
+      stat3 = `${findStat(team1?.stats, "points")} pts |`;
+      stat4 = `GF: ${findStat(team1?.stats, "pointsFor")} |`;
+      stat5 = `GA: ${findStat(team1?.stats, "pointsAgainst")}`;
+      playoffPosition = Number(findStat(team1?.stats, "playoffSeed"));
     }
 
     if (favoriteLeague === "nba") {
-      stat1 = team1?.stats?.[15]?.displayValue ?? "0-0";
-      stat2 = `Pct: ${(Number(team1?.stats?.[13]?.displayValue) * 100).toFixed(1) ?? "0"}%`;
-      stat3 = `PF: ${team1?.stats?.[11]?.displayValue ?? "0"}`;
-      stat4 = `PA: ${team1?.stats?.[10]?.displayValue ?? "0"}`;
-      stat5 = `Dif: ${team1?.stats?.[8]?.displayValue ?? "0"}`;
-      playoffPosition = Number(team1?.stats?.[7]?.displayValue);
+      stat1 = `${findRecord(team1?.stats, "League Standings")} |`;
+      stat2 = `Pct: ${(Number(findStat(team1?.stats, "winPercent")) * 100).toFixed(1)}% |`;
+      stat3 = `PF: ${findStat(team1?.stats, "pointsFor")} |`;
+      stat4 = `PA: ${findStat(team1?.stats, "pointsAgainst")} |`;
+      stat5 = `Dif: ${findStat(team1?.stats, "differential")}`;
+      playoffPosition = Number(findStat(team1?.stats, "playoffSeed")) || 0;
     }
 
     if (favoriteLeague === "wnba") {
-      stat1 = team1?.stats?.[16]?.displayValue ?? "0-0";
-      stat2 = `Pct: ${(Number(team1?.stats?.[14]?.displayValue) * 100).toFixed(1) ?? "0"}%`;
-      stat3 = `PF: ${team1?.stats?.[12]?.displayValue ?? "0"}`;
-      stat4 = `PA: ${team1?.stats?.[11]?.displayValue ?? "0"}`;
-      stat5 = `Dif: ${team1?.stats?.[8]?.displayValue ?? "0"}`;
-      playoffPosition = Number(team1?.stats?.[8]?.displayValue);
+      stat1 = `${findRecord(team1?.stats, "League Standings")} |`;
+      stat2 = `Pct: ${(Number(findStat(team1?.stats, "leagueWinPercent")) * 100).toFixed(1)}% |`;
+      stat3 = `PF: ${findStat(team1?.stats, "pointsFor")} |`;
+      stat4 = `PA: ${findStat(team1?.stats, "pointsAgainst")} |`;
+      stat5 = `Dif: ${findStat(team1?.stats, "differential")}`;
+      playoffPosition = Number(findStat(team1?.stats, "playoffSeed")) || 0;
     }
 
     if (favoriteLeague === "nfl") {
-      stat1 = team1?.stats?.[16]?.displayValue ?? "0-0";
-      stat2 = `Pct: ${(Number(team1?.stats?.[10]?.displayValue) * 100).toFixed(1) ?? "0"}%`;
-      stat3 = `PF: ${team1?.stats?.[7]?.displayValue ?? "0"}`;
-      stat4 = `PA: ${team1?.stats?.[6]?.displayValue ?? "0"}`;
-      stat5 = `Dif: ${team1?.stats?.[5]?.displayValue ?? "0"}`;
-      playoffPosition = Number(team1?.stats?.[4]?.displayValue);
+      stat1 = `${findRecord(team1?.stats, "overall")} |`;
+      stat2 = `Pct: ${(Number(findStat(team1?.stats, "winPercent")) * 100).toFixed(1)}% |`;
+      stat3 = `PF: ${findStat(team1?.stats, "pointsFor")} |`;
+      stat4 = `PA: ${findStat(team1?.stats, "pointsAgainst")} |`;
+      stat5 = `Dif: ${findStat(team1?.stats, "differential")}`;
+      playoffPosition = Number(findStat(team1?.stats, "playoffSeed")) || 0;
     }
 
     if (favoriteLeague === "mlb") {
-      stat1 = `${team1?.stats[7]?.displayValue ?? "0"} GP`;
-      stat2 = `${team1?.stats[32]?.displayValue ?? "0-0"}`;
-      stat3 = `Pct: ${(Number(team1?.stats[8]?.displayValue) * 100).toFixed(1) ?? "0"}%`;
-      stat4 = `PF: ${team1?.stats[14]?.displayValue ?? "0"}`;
-      stat5 = `PA: ${team1?.stats[13]?.displayValue ?? "0"}`;
-      playoffPosition = Number(team1?.stats?.[10]?.displayValue);
+      stat1 = `${findStat(team1?.stats, "gamesPlayed")} GP |`;
+      stat2 = `${findRecord(team1?.stats, "overall")} |`;
+      stat3 = `Pct: ${(Number(findStat(team1?.stats, "winPercent")) * 100).toFixed(1)}% |`;
+      stat4 = `PF: ${findStat(team1?.stats, "pointsFor")} |`;
+      stat5 = `PA: ${findStat(team1?.stats, "pointsAgainst")}`;
+      playoffPosition = Number(findStat(team1?.stats, "playoffSeed")) || 0;
     }
 
-    if (favoriteLeague === "soccer") {
-      stat1 = `${team1.stats[0].displayValue ?? "0"} GP`;
-      stat2 = `${team1.stats[12].displayValue ?? "0-0-0"}`;
-      stat3 = `${team1.stats[3].displayValue ?? "0"} pts`;
-      stat4 = `${team1.stats[5].displayValue ?? "0"} GF`;
-      stat5 = `${team1.stats[4].displayValue ?? "0"} GA`;
-      playoffPosition = Number(team1?.stats?.[10]?.displayValue);
+    const flagSrc = team1?.athlete?.[0]?.flag?.href ?? `${team1?.athlete?.[0]?.flag?.href}`;
+
+    if (favoriteSport === "soccer") {
+      stat1 = `${findStat(team1?.stats, "gamesPlayed")} GP |`;
+      stat2 = `${findRecord(team1?.stats, "overall")} |`;
+      stat3 = `${findStat(team1?.stats, "points")} pts |`;
+      stat4 = `GF: ${findStat(team1?.stats, "pointsFor")} |`;
+      stat5 = `GA: ${findStat(team1?.stats, "pointsAgainst")}`;
+      playoffPosition = Number(findStat(team1?.stats, "rank"));
     }
 
     if (playoffPosition === 1) {
@@ -201,16 +199,38 @@ export default function TeamInjuries() {
       tagColor = Color.Green;
       tagIcon = Icon.Leaderboard;
       tagTooltip = "Playoff Contender";
-    } else if (playoffPosition >= 9 && playoffPosition <= 15) {
+    } else if (playoffPosition >= 9 && playoffPosition <= 14) {
       tagColor = Color.Orange;
       tagIcon = Icon.XMarkCircle;
       tagTooltip = "Not in Playoffs";
-    } else if (playoffPosition === 16) {
+    } else if (playoffPosition === 15) {
       tagColor = Color.Red;
       tagIcon = Icon.Xmark;
       tagTooltip = "Last in Conference";
     } else {
       tagColor = Color.SecondaryText;
+    }
+
+    if (favoriteLeague === "nba") {
+      if (playoffPosition === 1) {
+        tagColor = Color.Yellow;
+        tagIcon = Icon.Trophy;
+        tagTooltip = "1st in Conference";
+      } else if (playoffPosition >= 2 && playoffPosition <= 8) {
+        tagColor = Color.Green;
+        tagIcon = Icon.Leaderboard;
+        tagTooltip = "Playoff Contender";
+      } else if (playoffPosition >= 9 && playoffPosition <= 14) {
+        tagColor = Color.Orange;
+        tagIcon = Icon.XMarkCircle;
+        tagTooltip = "Not in Playoffs";
+      } else if (playoffPosition === 15) {
+        tagColor = Color.Red;
+        tagIcon = Icon.Xmark;
+        tagTooltip = "Last in Conference";
+      } else {
+        tagColor = Color.SecondaryText;
+      }
     }
 
     if (favoriteLeague === "wnba") {
@@ -298,12 +318,13 @@ export default function TeamInjuries() {
           title={`${team1?.team?.displayName ?? "Unknown"}`}
           icon={{
             source:
-              team1?.team?.logos[0]?.href ??
+              team1?.team?.logos?.[0]?.href ??
+              flagSrc ??
               `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${favoriteLeague}.png&w=100&h=100&transparent=true`,
           }}
           accessories={[
             {
-              text: `${stat1} | ${stat2} | ${stat3} | ${stat4} | ${stat5}`,
+              text: `${stat1} ${stat2} ${stat3} ${stat4} ${stat5}`,
             },
             {
               tag: { value: `${playoffPosition}`, color: tagColor },
@@ -361,7 +382,7 @@ export default function TeamInjuries() {
       articleDayItems.push(articleDayItem);
     }
 
-    const favoriteTeamName = franchiseData?.team?.nickname.toString() ?? "Unknown";
+    const favoriteTeamName = franchiseData?.team?.nickname ?? "Unknown";
 
     if (article.headline.includes(favoriteTeamName))
       articleDayItem?.articles.push(
@@ -426,7 +447,7 @@ export default function TeamInjuries() {
       accessoryIcon = { source: Icon.MedicalSupport, tintColor: Color.Orange };
     }
 
-    if (injury.status === "Injured Reserve" || injury.status === "Questionable") {
+    if (injury.status === "Injured Reserve" || injury.status === "Questionable" || injury.status.includes("Day-IL")) {
       tagColor = Color.Red;
       accessoryIcon = { source: Icon.MedicalSupport, tintColor: Color.Red };
     }
@@ -484,7 +505,7 @@ export default function TeamInjuries() {
   const transactionDayItems: TransactionDayItems[] = [];
   const transactions = transactionsData?.transactions || [];
 
-  const transactionItems = transactions?.map((transaction, index) => {
+  transactions?.map((transaction, index) => {
     const transactionDate = new Date(transaction.date ?? "Unknown").toLocaleDateString([], {
       day: "2-digit",
       month: "short",
@@ -525,12 +546,7 @@ export default function TeamInjuries() {
       );
   });
 
-  const city = franchise?.venue?.address.city ?? "Unknown";
-  const country = franchise?.venue?.address.country ?? "Unknown";
-  const state = franchise?.venue?.address.state ?? "Unknown";
-  const address = `${city}, ${state}, ${country}`;
-
-  if (isLoading || injuryLoading || transactionLoading || franchiseLoading || articleLoading) {
+  if (isLoading || franchiseLoading || injuryLoading || transactionLoading || articleLoading) {
     return <Detail isLoading={true} />;
   }
 
@@ -538,7 +554,6 @@ export default function TeamInjuries() {
     !data ||
     !injuryData ||
     !transactionsData ||
-    !franchiseData ||
     injuryArray.length === 0 ||
     articleDayItems.length === 0 ||
     transactionDayItems.length === 0
@@ -548,45 +563,9 @@ export default function TeamInjuries() {
 
   return (
     <>
-      <List.Section title="Team Information">
-        <List.Item
-          title={`${franchise?.displayName ?? "Unknown"} (${franchise?.abbreviation ?? "Unknown"})`}
-          icon={{
-            source:
-              franchiseData?.team?.logos?.[0]?.href ??
-              `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${favoriteLeague}.png&w=100&h=100&transparent=true`,
-          }}
-          accessories={[
-            {
-              tag: { value: address, color: Color.Yellow },
-              icon: Icon.Map,
-              tooltip: "Location",
-            },
-            {
-              tag: { value: franchise?.venue?.fullName ?? "Unknown", color: Color.Yellow },
-              icon: Icon.Building,
-              tooltip: "Venue",
-            },
-          ]}
-          actions={
-            <ActionPanel>
-              <Action.OpenInBrowser
-                title={`View ${franchiseData?.team?.displayName ?? "Team"} Details on ESPN`}
-                url={`${franchiseData?.team?.links?.[0]?.href ?? `https://www.espn.com/${favoriteLeague}`}`}
-              />
-              <Action
-                title="Refresh"
-                icon={Icon.ArrowClockwise}
-                onAction={revalidate}
-                shortcut={{ modifiers: ["cmd"], key: "r" }}
-              ></Action>
-            </ActionPanel>
-          }
-        />
-        {teamPosition}
-      </List.Section>
+      <List.Section title="Team Standings">{teamPosition}</List.Section>
 
-      <List.Section title="Injury Status">{injuryArray}</List.Section>
+      {<List.Section title="Injury Status">{injuryArray}</List.Section>}
 
       {articleDayItems.map((articleDayItem, index) => (
         <List.Section

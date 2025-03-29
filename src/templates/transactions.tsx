@@ -1,4 +1,4 @@
-import { Detail, List, Color, Icon, Action, ActionPanel } from "@raycast/api";
+import { Detail, List, Icon, Action, ActionPanel } from "@raycast/api";
 import getTransactions from "../utils/getTransactions";
 import sportInfo from "../utils/getSportInfo";
 
@@ -14,7 +14,7 @@ export default function DisplayTransactions() {
   const transactionDayItems: DayItems[] = [];
   const transactions = transactionData?.transactions || [];
 
-  const transactionItems = transactions?.map((transaction, index) => {
+  transactions?.map((transaction, index) => {
     const transactionDate = new Date(transaction?.date ?? "Unknown").toLocaleDateString([], {
       day: "2-digit",
       month: "short",

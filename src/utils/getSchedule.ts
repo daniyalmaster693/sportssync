@@ -93,6 +93,14 @@ export default function getScoresAndSchedule() {
     dateRange = `${currentYear}`;
   }
 
+  if (currentLeague === "mens-college-basketball" || currentLeague === "womens-college-basketball") {
+    dateRange = ``;
+  }
+
+  if (currentSport === "soccer") {
+    dateRange = ``;
+  }
+
   const {
     isLoading: scheduleLoading,
     data: scheduleData,

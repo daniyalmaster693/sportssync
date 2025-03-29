@@ -2,6 +2,7 @@ import { useFetch } from "@raycast/utils";
 import sportInfo from "./getSportInfo";
 
 interface Team {
+  displayName: string;
   logos: { href: string }[];
   links: { href: string }[];
 }
@@ -13,11 +14,17 @@ interface Athlete {
   links: { href: string }[];
 }
 
-interface Injury {
-  injuries: any;
-  athlete: Athlete;
+interface InjuryDetails {
+  id: string;
+  type: string;
+  severity: string;
   status: string;
+  athlete: Athlete;
   details?: { returnDate: string };
+}
+
+interface Injury {
+  injuries: InjuryDetails[];
 }
 
 interface Response {
