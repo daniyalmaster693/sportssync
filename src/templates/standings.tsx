@@ -74,7 +74,7 @@ export default function DisplayTeamStandings() {
       playoffPosition = Number(findStat(team1?.stats, "playoffSeed")) || 0;
     }
 
-    const flagSrc = team1?.athlete?.flag.href ?? `${team1?.athlete?.flag?.href}`;
+    const flagSrc = `${team1?.athlete?.flag?.href}`;
 
     if (currentLeague === "f1") {
       stat1 = `${findStat(team1?.stats, "championshipPts")} pts`;
@@ -102,16 +102,38 @@ export default function DisplayTeamStandings() {
       tagColor = Color.Green;
       tagIcon = Icon.Leaderboard;
       tagTooltip = "Playoff Contender";
-    } else if (playoffPosition >= 9 && playoffPosition <= 14) {
+    } else if (playoffPosition >= 9 && playoffPosition <= 15) {
       tagColor = Color.Orange;
       tagIcon = Icon.XMarkCircle;
       tagTooltip = "Not in Playoffs";
-    } else if (playoffPosition === 15) {
+    } else if (playoffPosition === 16) {
       tagColor = Color.Red;
       tagIcon = Icon.Xmark;
       tagTooltip = "Last in Conference";
     } else {
       tagColor = Color.SecondaryText;
+    }
+
+    if (currentLeague === "nba") {
+      if (playoffPosition === 1) {
+        tagColor = Color.Yellow;
+        tagIcon = Icon.Trophy;
+        tagTooltip = "1st in Conference";
+      } else if (playoffPosition >= 2 && playoffPosition <= 8) {
+        tagColor = Color.Green;
+        tagIcon = Icon.Leaderboard;
+        tagTooltip = "Playoff Contender";
+      } else if (playoffPosition >= 9 && playoffPosition <= 14) {
+        tagColor = Color.Orange;
+        tagIcon = Icon.XMarkCircle;
+        tagTooltip = "Not in Playoffs";
+      } else if (playoffPosition === 15) {
+        tagColor = Color.Red;
+        tagIcon = Icon.Xmark;
+        tagTooltip = "Last in Conference";
+      } else {
+        tagColor = Color.SecondaryText;
+      }
     }
 
     if (currentLeague === "wnba") {
@@ -327,16 +349,38 @@ export default function DisplayTeamStandings() {
       tagColor = Color.Green;
       tagIcon = Icon.Leaderboard;
       tagTooltip = "Playoff Contender";
-    } else if (playoffPosition >= 9 && playoffPosition <= 14) {
+    } else if (playoffPosition >= 9 && playoffPosition <= 15) {
       tagColor = Color.Orange;
       tagIcon = Icon.XMarkCircle;
       tagTooltip = "Not in Playoffs";
-    } else if (playoffPosition === 15) {
+    } else if (playoffPosition === 16) {
       tagColor = Color.Red;
       tagIcon = Icon.Xmark;
       tagTooltip = "Last in Conference";
     } else {
       tagColor = Color.SecondaryText;
+    }
+
+    if (currentLeague === "nba") {
+      if (playoffPosition === 1) {
+        tagColor = Color.Yellow;
+        tagIcon = Icon.Trophy;
+        tagTooltip = "1st in Conference";
+      } else if (playoffPosition >= 2 && playoffPosition <= 8) {
+        tagColor = Color.Green;
+        tagIcon = Icon.Leaderboard;
+        tagTooltip = "Playoff Contender";
+      } else if (playoffPosition >= 9 && playoffPosition <= 14) {
+        tagColor = Color.Orange;
+        tagIcon = Icon.XMarkCircle;
+        tagTooltip = "Not in Playoffs";
+      } else if (playoffPosition === 15) {
+        tagColor = Color.Red;
+        tagIcon = Icon.Xmark;
+        tagTooltip = "Last in Conference";
+      } else {
+        tagColor = Color.SecondaryText;
+      }
     }
 
     if (currentLeague === "wnba") {

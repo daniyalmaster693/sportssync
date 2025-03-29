@@ -38,9 +38,9 @@ const Command = () => {
 
   let searchBarPlaceholder = "Search for a game";
 
-  if (currentType === "Scheduled Games" || currentType === "Completed Games") {
-    searchBarPlaceholder = "Search for a game or team";
-  }
+  // if (currentType === "Scheduled Games" || currentType === "Completed Games") {
+  //   searchBarPlaceholder = "Search for a game or team";
+  // }
 
   if (currentType === "Tracker") {
     searchBarPlaceholder = "Search for an article, player, or transaction";
@@ -59,14 +59,14 @@ const Command = () => {
           value={currentType}
           defaultValue="Scheduled Games"
         >
-          <List.Dropdown.Item title="Scheduled Games" value="Scheduled Games" />
-          <List.Dropdown.Item title="Completed Games" value="Completed Games" />
+          {/* <List.Dropdown.Item title="Scheduled Games" value="Scheduled Games" />
+          <List.Dropdown.Item title="Completed Games" value="Completed Games" /> */}
           <List.Dropdown.Item title="Tracker" value="Tracker" />
         </List.Dropdown>
       }
       isLoading={scheduleLoading}
     >
-      {currentType === "Scheduled Games" && (
+      {/* {currentType === "Scheduled Games" && (
         <>
           <ScheduledGames />
         </>
@@ -76,7 +76,7 @@ const Command = () => {
         <>
           <CompletedGames />
         </>
-      )}
+      )} */}
 
       {currentType === "Tracker" && (
         <>
