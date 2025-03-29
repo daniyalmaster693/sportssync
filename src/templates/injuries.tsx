@@ -27,7 +27,7 @@ export default function DisplayInjuries() {
       accessoryIcon = { source: Icon.MedicalSupport, tintColor: Color.Orange };
     }
 
-    if (injury.status === "Injured Reserve" || injury.status === "Questionable" || injury.status === "60-Day-IL") {
+    if (injury.status === "Injured Reserve" || injury.status === "Questionable" || injury.status.includes("Day-IL")) {
       tagColor = Color.Red;
       accessoryIcon = { source: Icon.MedicalSupport, tintColor: Color.Red };
     }

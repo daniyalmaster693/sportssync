@@ -38,9 +38,9 @@ const Command = () => {
 
   let searchBarPlaceholder = "Search for a game";
 
-  // if (currentType === "Scheduled Games" || currentType === "Completed Games") {
-  //   searchBarPlaceholder = "Search for a game or team";
-  // }
+  if (currentType === "Scheduled Games" || currentType === "Completed Games") {
+    searchBarPlaceholder = "Search for a game or team";
+  }
 
   if (currentType === "Tracker") {
     searchBarPlaceholder = "Search for an article, player, or transaction";
@@ -59,30 +59,22 @@ const Command = () => {
           value={currentType}
           defaultValue="Scheduled Games"
         >
-          {/* <List.Dropdown.Item title="Scheduled Games" value="Scheduled Games" />
-          <List.Dropdown.Item title="Completed Games" value="Completed Games" /> */}
-          <List.Dropdown.Item title="Tracker" value="Tracker" />
+          {favoriteLeague !== "wnba" && <List.Dropdown.Item title="Scheduled Games" value="Scheduled Games" />}
+          <List.Dropdown.Item title="Completed Games" value="Completed Games" />
+          {favoriteSport !== "soccer" && <List.Dropdown.Item title="Tracker" value="Tracker" />}
         </List.Dropdown>
       }
       isLoading={scheduleLoading}
     >
-      {/* {currentType === "Scheduled Games" && (
-        <>
-          <ScheduledGames />
-        </>
-      )}
+      {currentType === "Scheduled Games" && favoriteLeague !== "wnba" && <ScheduledGames />}
 
       {currentType === "Completed Games" && (
         <>
           <CompletedGames />
         </>
-      )} */}
-
-      {currentType === "Tracker" && (
-        <>
-          <TeamInjuries />
-        </>
       )}
+
+      {currentType === "Tracker" && favoriteSport !== "soccer" && <TeamInjuries />}
     </List>
   );
 };

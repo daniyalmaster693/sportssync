@@ -121,10 +121,6 @@ export default function TeamInjuries() {
 
   let teamPositionItems = data?.standings?.entries ?? [];
 
-  if (favoriteSport === "f1") {
-    teamPositionItems = data?.children[2]?.standings?.entries ?? [];
-  }
-
   const findStat = (stats: { name: string; displayValue: string }[], key: string): string =>
     stats?.find((stat) => stat.name === key)?.displayValue ?? "0";
 
@@ -191,15 +187,6 @@ export default function TeamInjuries() {
 
     const flagSrc = team1?.athlete?.[0]?.flag?.href ?? `${team1?.athlete?.[0]?.flag?.href}`;
 
-    if (favoriteLeague === "f1") {
-      stat1 = `${findStat(team1?.stats, "championshipPts")} pts`;
-      stat2 = "";
-      stat3 = "";
-      stat4 = "";
-      stat5 = "";
-      playoffPosition = Number(findStat(team1?.stats, "rank")) || 0;
-    }
-
     if (favoriteSport === "soccer") {
       stat1 = `${findStat(team1?.stats, "gamesPlayed")} GP |`;
       stat2 = `${findRecord(team1?.stats, "overall")} |`;
@@ -227,6 +214,28 @@ export default function TeamInjuries() {
       tagTooltip = "Last in Conference";
     } else {
       tagColor = Color.SecondaryText;
+    }
+
+    if (favoriteLeague === "nba") {
+      if (playoffPosition === 1) {
+        tagColor = Color.Yellow;
+        tagIcon = Icon.Trophy;
+        tagTooltip = "1st in Conference";
+      } else if (playoffPosition >= 2 && playoffPosition <= 8) {
+        tagColor = Color.Green;
+        tagIcon = Icon.Leaderboard;
+        tagTooltip = "Playoff Contender";
+      } else if (playoffPosition >= 9 && playoffPosition <= 14) {
+        tagColor = Color.Orange;
+        tagIcon = Icon.XMarkCircle;
+        tagTooltip = "Not in Playoffs";
+      } else if (playoffPosition === 15) {
+        tagColor = Color.Red;
+        tagIcon = Icon.Xmark;
+        tagTooltip = "Last in Conference";
+      } else {
+        tagColor = Color.SecondaryText;
+      }
     }
 
     if (favoriteLeague === "wnba") {
@@ -295,21 +304,6 @@ export default function TeamInjuries() {
       }
     }
 
-    if (favoriteLeague === "f1") {
-      if (playoffPosition === 1) {
-        tagColor = Color.Yellow;
-        tagIcon = Icon.Trophy;
-        tagTooltip = "1st";
-      } else if (playoffPosition >= 2) {
-        tagColor = Color.Green;
-        tagIcon = Icon.Leaderboard;
-        tagTooltip = "";
-      } else {
-        tagColor = Color.SecondaryText;
-        tagTooltip = "";
-      }
-    }
-
     if (favoriteSport === "soccer") {
       if (playoffPosition === 1) {
         tagColor = Color.Yellow;
@@ -361,224 +355,224 @@ export default function TeamInjuries() {
       );
   });
 
-  // const {
-  //   isLoading: articleLoading,
-  //   data: articleData,
-  //   revalidate: articleRevalidate,
-  // } = useFetch<ArticlesResponse>(
-  //   `https://site.api.espn.com/apis/site/v2/sports/${favoriteSport}/${favoriteLeague}/news?limit=200`,
-  // );
+  const {
+    isLoading: articleLoading,
+    data: articleData,
+    revalidate: articleRevalidate,
+  } = useFetch<ArticlesResponse>(
+    `https://site.api.espn.com/apis/site/v2/sports/${favoriteSport}/${favoriteLeague}/news?limit=200`,
+  );
 
-  // const articleDayItems: ArticleDayItems[] = [];
-  // const articles = articleData?.articles || [];
+  const articleDayItems: ArticleDayItems[] = [];
+  const articles = articleData?.articles || [];
 
-  // articles?.forEach((article, index) => {
-  //   const articleDate = new Date(article?.published ?? "Unknown").toLocaleDateString([], {
-  //     day: "2-digit",
-  //     month: "short",
-  //     year: "numeric",
-  //   });
+  articles?.forEach((article, index) => {
+    const articleDate = new Date(article?.published ?? "Unknown").toLocaleDateString([], {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
 
-  //   const articleHeadline = article?.headline ?? "No Headline Found";
-  //   let articleType = article?.type ?? "Unknown";
+    const articleHeadline = article?.headline ?? "No Headline Found";
+    let articleType = article?.type ?? "Unknown";
 
-  //   if (articleType === "HeadlineNews") {
-  //     articleType = "Headline";
-  //   }
+    if (articleType === "HeadlineNews") {
+      articleType = "Headline";
+    }
 
-  //   let articleDayItem = articleDayItems?.find((item) => item?.title === articleDate);
+    let articleDayItem = articleDayItems?.find((item) => item?.title === articleDate);
 
-  //   if (!articleDayItem) {
-  //     articleDayItem = { title: articleDate, articles: [] };
-  //     articleDayItems.push(articleDayItem);
-  //   }
+    if (!articleDayItem) {
+      articleDayItem = { title: articleDate, articles: [] };
+      articleDayItems.push(articleDayItem);
+    }
 
-  //   const favoriteTeamName = franchiseData?.team?.nickname ?? "Unknown";
+    const favoriteTeamName = franchiseData?.team?.nickname ?? "Unknown";
 
-  //   if (article.headline.includes(favoriteTeamName))
-  //     articleDayItem?.articles.push(
-  //       <List.Item
-  //         key={index}
-  //         title={`${articleHeadline}`}
-  //         icon={{
-  //           source:
-  //             article?.images?.[0]?.url ??
-  //             `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${favoriteLeague}.png&w=100&h=100&transparent=true`,
-  //         }}
-  //         accessories={[
-  //           { tag: { value: articleType, color: Color.Green }, icon: Icon.Megaphone, tooltip: "Category" },
-  //           { icon: Icon.Megaphone },
-  //         ]}
-  //         actions={
-  //           <ActionPanel>
-  //             <Action.OpenInBrowser
-  //               title="View Article on ESPN"
-  //               url={`${article?.links?.web?.href ?? `https://www.espn.com/${favoriteLeague}`}`}
-  //             />
-  //             <Action.CopyToClipboard
-  //               title="Copy Article Link"
-  //               content={`${article?.links?.web?.href ?? `https://www.espn.com/${favoriteLeague}`}`}
-  //             ></Action.CopyToClipboard>
-  //             <Action
-  //               title="Refresh"
-  //               icon={Icon.ArrowClockwise}
-  //               onAction={articleRevalidate}
-  //               shortcut={{ modifiers: ["cmd"], key: "r" }}
-  //             ></Action>
-  //           </ActionPanel>
-  //         }
-  //       />,
-  //     );
-  // });
+    if (article.headline.includes(favoriteTeamName))
+      articleDayItem?.articles.push(
+        <List.Item
+          key={index}
+          title={`${articleHeadline}`}
+          icon={{
+            source:
+              article?.images?.[0]?.url ??
+              `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${favoriteLeague}.png&w=100&h=100&transparent=true`,
+          }}
+          accessories={[
+            { tag: { value: articleType, color: Color.Green }, icon: Icon.Megaphone, tooltip: "Category" },
+            { icon: Icon.Megaphone },
+          ]}
+          actions={
+            <ActionPanel>
+              <Action.OpenInBrowser
+                title="View Article on ESPN"
+                url={`${article?.links?.web?.href ?? `https://www.espn.com/${favoriteLeague}`}`}
+              />
+              <Action.CopyToClipboard
+                title="Copy Article Link"
+                content={`${article?.links?.web?.href ?? `https://www.espn.com/${favoriteLeague}`}`}
+              ></Action.CopyToClipboard>
+              <Action
+                title="Refresh"
+                icon={Icon.ArrowClockwise}
+                onAction={articleRevalidate}
+                shortcut={{ modifiers: ["cmd"], key: "r" }}
+              ></Action>
+            </ActionPanel>
+          }
+        />,
+      );
+  });
 
-  // const {
-  //   isLoading: injuryLoading,
-  //   data: injuryData,
-  //   revalidate: injuryRevalidate,
-  // } = useFetch<Response>(`https://site.api.espn.com/apis/site/v2/sports/${favoriteSport}/${favoriteLeague}/injuries`);
+  const {
+    isLoading: injuryLoading,
+    data: injuryData,
+    revalidate: injuryRevalidate,
+  } = useFetch<Response>(`https://site.api.espn.com/apis/site/v2/sports/${favoriteSport}/${favoriteLeague}/injuries`);
 
-  // const injuryItems = injuryData?.injuries.flatMap((injuryItem) => injuryItem.injuries) || [];
-  // const injuryArray = injuryItems?.map((injury, index) => {
-  //   const articleDate = injury?.details?.returnDate ?? "";
+  const injuryItems = injuryData?.injuries.flatMap((injuryItem) => injuryItem.injuries) || [];
+  const injuryArray = injuryItems?.map((injury, index) => {
+    const articleDate = injury?.details?.returnDate ?? "";
 
-  //   if (!articleDate) {
-  //     return null;
-  //   }
+    if (!articleDate) {
+      return null;
+    }
 
-  //   let tagColor = Color.SecondaryText;
-  //   let accessoryIcon = { source: Icon.MedicalSupport, tintColor: Color.SecondaryText };
+    let tagColor = Color.SecondaryText;
+    let accessoryIcon = { source: Icon.MedicalSupport, tintColor: Color.SecondaryText };
 
-  //   if (injury.status === "Day-To-Day") {
-  //     tagColor = Color.Yellow;
-  //     accessoryIcon = { source: Icon.MedicalSupport, tintColor: Color.Yellow };
-  //   }
+    if (injury.status === "Day-To-Day") {
+      tagColor = Color.Yellow;
+      accessoryIcon = { source: Icon.MedicalSupport, tintColor: Color.Yellow };
+    }
 
-  //   if (injury.status === "Out") {
-  //     tagColor = Color.Orange;
-  //     accessoryIcon = { source: Icon.MedicalSupport, tintColor: Color.Orange };
-  //   }
+    if (injury.status === "Out") {
+      tagColor = Color.Orange;
+      accessoryIcon = { source: Icon.MedicalSupport, tintColor: Color.Orange };
+    }
 
-  //   if (injury.status === "Injured Reserve" || injury.status === "Questionable" || injury.status === "60-Day-IL") {
-  //     tagColor = Color.Red;
-  //     accessoryIcon = { source: Icon.MedicalSupport, tintColor: Color.Red };
-  //   }
+    if (injury.status === "Injured Reserve" || injury.status === "Questionable" || injury.status.includes("Day-IL")) {
+      tagColor = Color.Red;
+      accessoryIcon = { source: Icon.MedicalSupport, tintColor: Color.Red };
+    }
 
-  //   if (injury.status === "Suspension") {
-  //     tagColor = Color.Orange;
-  //     accessoryIcon = { source: Icon.Warning, tintColor: Color.Orange };
-  //   }
+    if (injury.status === "Suspension") {
+      tagColor = Color.Orange;
+      accessoryIcon = { source: Icon.Warning, tintColor: Color.Orange };
+    }
 
-  //   if (injury.athlete.team.id === `${favoriteTeam}`)
-  //     return (
-  //       <List.Item
-  //         key={index}
-  //         title={`${injury.athlete.displayName}`}
-  //         subtitle={`${injury.athlete.position.displayName}`}
-  //         icon={{ source: injury.athlete.team.logos[0].href }}
-  //         accessories={[
-  //           {
-  //             tag: { value: injury.status.replace(/-/g, " "), color: tagColor },
-  //             tooltip: "Status",
-  //           },
-  //           { text: articleDate, tooltip: "Est. Return Date" },
-  //           { icon: accessoryIcon },
-  //         ]}
-  //         actions={
-  //           <ActionPanel>
-  //             <Action.OpenInBrowser
-  //               title={`View ${injury.athlete.displayName} Details on ESPN`}
-  //               url={`${injury.athlete.links[0]?.href ?? "https://www.espn.com"}`}
-  //             />
-  //             <Action.OpenInBrowser
-  //               title={`View ${injury.athlete.team.displayName} Details on ESPN`}
-  //               url={`${injury.athlete.team.links[0]?.href ?? "https://www.espn.com"}`}
-  //             />
-  //             <Action
-  //               title="Refresh"
-  //               icon={Icon.ArrowClockwise}
-  //               onAction={injuryRevalidate}
-  //               shortcut={{ modifiers: ["cmd"], key: "r" }}
-  //             ></Action>
-  //           </ActionPanel>
-  //         }
-  //       />
-  //     );
-  // });
+    if (injury.athlete.team.id === `${favoriteTeam}`)
+      return (
+        <List.Item
+          key={index}
+          title={`${injury.athlete.displayName}`}
+          subtitle={`${injury.athlete.position.displayName}`}
+          icon={{ source: injury.athlete.team.logos[0].href }}
+          accessories={[
+            {
+              tag: { value: injury.status.replace(/-/g, " "), color: tagColor },
+              tooltip: "Status",
+            },
+            { text: articleDate, tooltip: "Est. Return Date" },
+            { icon: accessoryIcon },
+          ]}
+          actions={
+            <ActionPanel>
+              <Action.OpenInBrowser
+                title={`View ${injury.athlete.displayName} Details on ESPN`}
+                url={`${injury.athlete.links[0]?.href ?? "https://www.espn.com"}`}
+              />
+              <Action.OpenInBrowser
+                title={`View ${injury.athlete.team.displayName} Details on ESPN`}
+                url={`${injury.athlete.team.links[0]?.href ?? "https://www.espn.com"}`}
+              />
+              <Action
+                title="Refresh"
+                icon={Icon.ArrowClockwise}
+                onAction={injuryRevalidate}
+                shortcut={{ modifiers: ["cmd"], key: "r" }}
+              ></Action>
+            </ActionPanel>
+          }
+        />
+      );
+  });
 
-  // const {
-  //   isLoading: transactionLoading,
-  //   data: transactionsData,
-  //   revalidate: transactionRevalidate,
-  // } = useFetch<Response>(
-  //   `https://site.api.espn.com/apis/site/v2/sports/${favoriteSport}/${favoriteLeague}/transactions?limit=200`,
-  // );
+  const {
+    isLoading: transactionLoading,
+    data: transactionsData,
+    revalidate: transactionRevalidate,
+  } = useFetch<Response>(
+    `https://site.api.espn.com/apis/site/v2/sports/${favoriteSport}/${favoriteLeague}/transactions?limit=200`,
+  );
 
-  // const transactionDayItems: TransactionDayItems[] = [];
-  // const transactions = transactionsData?.transactions || [];
+  const transactionDayItems: TransactionDayItems[] = [];
+  const transactions = transactionsData?.transactions || [];
 
-  // const transactionItems = transactions?.map((transaction, index) => {
-  //   const transactionDate = new Date(transaction.date ?? "Unknown").toLocaleDateString([], {
-  //     day: "2-digit",
-  //     month: "short",
-  //     year: "numeric",
-  //   });
+  const transactionItems = transactions?.map((transaction, index) => {
+    const transactionDate = new Date(transaction.date ?? "Unknown").toLocaleDateString([], {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
 
-  //   const transactionDay = transactionDate;
+    const transactionDay = transactionDate;
 
-  //   let transactionDayItem = transactionDayItems.find((item) => item.title === transactionDay);
+    let transactionDayItem = transactionDayItems.find((item) => item.title === transactionDay);
 
-  //   if (!transactionDayItem) {
-  //     transactionDayItem = { title: transactionDay, transactions: [] };
-  //     transactionDayItems.push(transactionDayItem);
-  //   }
+    if (!transactionDayItem) {
+      transactionDayItem = { title: transactionDay, transactions: [] };
+      transactionDayItems.push(transactionDayItem);
+    }
 
-  //   if (transaction.team.id === `${favoriteTeam}`)
-  //     transactionDayItem?.transactions.push(
-  //       <List.Item
-  //         key={index}
-  //         title={`${transaction?.description ?? "Unknown"}`}
-  //         icon={{ source: transaction?.team.logos[0]?.href }}
-  //         accessories={[{ icon: Icon.Switch }]}
-  //         actions={
-  //           <ActionPanel>
-  //             <Action.OpenInBrowser
-  //               title={`View ${transaction?.team?.displayName ?? "Team"} Details on ESPN`}
-  //               url={`${transaction?.team.links[0]?.href ?? "https://www.espn.com"}`}
-  //             />
-  //             <Action
-  //               title="Refresh"
-  //               icon={Icon.ArrowClockwise}
-  //               onAction={transactionRevalidate}
-  //               shortcut={{ modifiers: ["cmd"], key: "r" }}
-  //             ></Action>
-  //           </ActionPanel>
-  //         }
-  //       />,
-  //     );
-  // });
+    if (transaction.team.id === `${favoriteTeam}`)
+      transactionDayItem?.transactions.push(
+        <List.Item
+          key={index}
+          title={`${transaction?.description ?? "Unknown"}`}
+          icon={{ source: transaction?.team.logos[0]?.href }}
+          accessories={[{ icon: Icon.Switch }]}
+          actions={
+            <ActionPanel>
+              <Action.OpenInBrowser
+                title={`View ${transaction?.team?.displayName ?? "Team"} Details on ESPN`}
+                url={`${transaction?.team.links[0]?.href ?? "https://www.espn.com"}`}
+              />
+              <Action
+                title="Refresh"
+                icon={Icon.ArrowClockwise}
+                onAction={transactionRevalidate}
+                shortcut={{ modifiers: ["cmd"], key: "r" }}
+              ></Action>
+            </ActionPanel>
+          }
+        />,
+      );
+  });
 
-  // if (isLoading || franchiseLoading || injuryLoading || transactionLoading || articleLoading) {
-  //   return <Detail isLoading={true} />;
-  // }
+  if (isLoading || franchiseLoading || injuryLoading || transactionLoading || articleLoading) {
+    return <Detail isLoading={true} />;
+  }
 
-  // if (
-  //   !data ||
-  //   !injuryData ||
-  //   !transactionsData ||
-  //   injuryArray.length === 0 ||
-  //   articleDayItems.length === 0 ||
-  //   transactionDayItems.length === 0
-  // ) {
-  //   return <List.EmptyView icon="Empty.png" title="No Results Found" />;
-  // }
+  if (
+    !data ||
+    !injuryData ||
+    !transactionsData ||
+    injuryArray.length === 0 ||
+    articleDayItems.length === 0 ||
+    transactionDayItems.length === 0
+  ) {
+    return <List.EmptyView icon="Empty.png" title="No Results Found" />;
+  }
 
   return (
     <>
       <List.Section title="Team Standings">{teamPosition}</List.Section>
 
-      {favoriteSport !== "racing" && <List.Section title="Injury Status">{injuryArray}</List.Section>}
+      {<List.Section title="Injury Status">{injuryArray}</List.Section>}
 
-      {/* {articleDayItems.map((articleDayItem, index) => (
+      {articleDayItems.map((articleDayItem, index) => (
         <List.Section
           key={index}
           title={`Article${articleDayItem?.articles?.length !== 1 ? "s" : ""}`}
@@ -586,18 +580,17 @@ export default function TeamInjuries() {
         >
           {articleDayItem?.articles}
         </List.Section>
-      ))} */}
+      ))}
 
-      {favoriteSport !== "racing" &&
-        transactionDayItems.map((transactionDayItem, index) => (
-          <List.Section
-            key={index}
-            title={`Transaction${transactionDayItem?.transactions?.length !== 1 ? "s" : ""}`}
-            subtitle={`${transactionDayItem.title}`}
-          >
-            {transactionDayItem?.transactions}
-          </List.Section>
-        ))}
+      {transactionDayItems.map((transactionDayItem, index) => (
+        <List.Section
+          key={index}
+          title={`Transaction${transactionDayItem?.transactions?.length !== 1 ? "s" : ""}`}
+          subtitle={`${transactionDayItem.title}`}
+        >
+          {transactionDayItem?.transactions}
+        </List.Section>
+      ))}
     </>
   );
 }

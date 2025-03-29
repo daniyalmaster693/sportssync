@@ -129,20 +129,11 @@ export default function CompletedGames() {
     let accessoryIcon = { source: Icon.CheckCircle, tintColor: Color.SecondaryText };
     let accessoryToolTip = "Final";
 
-    if (favoriteSport !== "racing") {
-      if (game?.status?.type?.state === "post") {
-        accessoryTitle = `${game?.competitions?.[0]?.competitors?.[1]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[1]?.score} - ${game?.competitions?.[0]?.competitors?.[0]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[0]?.score}`;
-        accessoryColor = Color.SecondaryText;
-        accessoryIcon = { source: Icon.CheckCircle, tintColor: Color.SecondaryText };
-        accessoryToolTip = "Final";
-      }
-    } else {
-      if (game?.status?.type?.state === "post") {
-        accessoryTitle = `${game?.competitions?.[4]?.competitors?.[0]?.athlete?.shortName}`;
-        accessoryColor = Color.SecondaryText;
-        accessoryIcon = { source: Icon.CheckCircle, tintColor: Color.SecondaryText };
-        accessoryToolTip = "Winner";
-      }
+    if (game?.status?.type?.state === "post") {
+      accessoryTitle = `${game?.competitions?.[0]?.competitors?.[1]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[1]?.score} - ${game?.competitions?.[0]?.competitors?.[0]?.team?.abbreviation} ${game?.competitions?.[0]?.competitors?.[0]?.score}`;
+      accessoryColor = Color.SecondaryText;
+      accessoryIcon = { source: Icon.CheckCircle, tintColor: Color.SecondaryText };
+      accessoryToolTip = "Final";
     }
 
     if (
@@ -186,44 +177,29 @@ export default function CompletedGames() {
                 shortcut={{ modifiers: ["cmd"], key: "r" }}
               />
 
-              {favoriteSport !== "racing" ? (
-                <>
-                  <Action.OpenInBrowser
-                    title="View Game Details on ESPN"
-                    url={`${game?.links?.[0]?.href ?? `https://www.espn.com/${favoriteLeague}`}`}
-                  />
+              <Action.OpenInBrowser
+                title="View Game Details on ESPN"
+                url={`${game?.links?.[0]?.href ?? `https://www.espn.com/${favoriteLeague}`}`}
+              />
 
-                  {game?.competitions?.[0]?.competitors?.[1]?.team.links?.length > 0 && (
-                    <Action.OpenInBrowser
-                      title={`View ${game?.competitions?.[0]?.competitors?.[1]?.team?.displayName ?? "Away"} Team Details`}
-                      url={
-                        game?.competitions?.[0]?.competitors?.[1]?.team?.links?.[0]?.href ??
-                        `https://www.espn.com/${favoriteLeague}`
-                      }
-                    />
-                  )}
+              {game?.competitions?.[0]?.competitors?.[1]?.team.links?.length > 0 && (
+                <Action.OpenInBrowser
+                  title={`View ${game?.competitions?.[0]?.competitors?.[1]?.team?.displayName ?? "Away"} Team Details`}
+                  url={
+                    game?.competitions?.[0]?.competitors?.[1]?.team?.links?.[0]?.href ??
+                    `https://www.espn.com/${favoriteLeague}`
+                  }
+                />
+              )}
 
-                  {game.competitions?.[0]?.competitors?.[0]?.team?.links?.length > 0 && (
-                    <Action.OpenInBrowser
-                      title={`View ${game?.competitions?.[0]?.competitors?.[0]?.team?.displayName ?? "Home"} Team Details`}
-                      url={
-                        game?.competitions?.[0]?.competitors?.[0]?.team?.links?.[0]?.href ??
-                        `https://www.espn.com/${favoriteLeague}`
-                      }
-                    />
-                  )}
-                </>
-              ) : (
-                <>
-                  <Action.OpenInBrowser
-                    title="View Race Details on ESPN"
-                    url={`${game?.links?.[0].href ?? `https://www.espn.com/${favoriteLeague}`}`}
-                  />
-                  <Action.OpenInBrowser
-                    title="View Circuit Details on ESPN"
-                    url={`${game?.links?.[2].href ?? `https://www.espn.com/${favoriteLeague}`}`}
-                  />
-                </>
+              {game.competitions?.[0]?.competitors?.[0]?.team?.links?.length > 0 && (
+                <Action.OpenInBrowser
+                  title={`View ${game?.competitions?.[0]?.competitors?.[0]?.team?.displayName ?? "Home"} Team Details`}
+                  url={
+                    game?.competitions?.[0]?.competitors?.[0]?.team?.links?.[0]?.href ??
+                    `https://www.espn.com/${favoriteLeague}`
+                  }
+                />
               )}
             </ActionPanel>
           }
@@ -235,15 +211,11 @@ export default function CompletedGames() {
 
   let subTitleText = "Game";
 
-  if (favoriteSport === "racing") {
-    subTitleText = "Race";
-  }
-
   if (completedLoading) {
     return <Detail isLoading={true} />;
   }
 
-  if (!completedData || gameItems.length === 0) {
+  if (!completedData || games.length === 0) {
     return <List.EmptyView icon="Empty.png" title="No Results Found" />;
   }
 
