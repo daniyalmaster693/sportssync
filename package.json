@@ -2,7 +2,11 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "sportssync",
   "title": "Sportssync",
+<<<<<<< HEAD
   "description": "View scores, games, standings, news, injuries, and transactions across your favorite sports leagues",
+=======
+  "description": "View live scores, standings, and news across your favorite sports leagues",
+>>>>>>> contributions/merge-1743277393899
   "icon": "Sportssync.png",
   "author": "daniyal_master",
   "categories": [
@@ -45,11 +49,35 @@
       "mode": "view"
     },
     {
+<<<<<<< HEAD
       "name": "basketball-tracker",
       "title": "Basketball Tracker",
       "subtitle": "NBA & WNBA & NCAA",
       "description": "View articles, injuries, and transactions across the NBA, WNBA, and NCAA Men's and Women's Leagues",
       "mode": "view"
+=======
+      "name": "basketball-news",
+      "title": "Basketball News",
+      "subtitle": "NBA & WNBA",
+      "description": "View news articles across the NBA and WNBA",
+      "mode": "view"
+    },
+    {
+      "name": "college-basketball",
+      "title": "College Basketball Scores and Schedule",
+      "subtitle": "NCAA Men's & Women's",
+      "description": "View scores and upcoming games across the NCAA Men's and Women's League",
+      "mode": "view",
+      "disabledByDefault": true
+    },
+    {
+      "name": "college-basketball-news",
+      "title": "College Basketball News",
+      "subtitle": "NCAA Men's & Women's",
+      "description": "View news articles across the NCAA Men's and Women's League",
+      "mode": "view",
+      "disabledByDefault": true
+>>>>>>> contributions/merge-1743277393899
     },
     {
       "name": "football-scores-and-schedule",
@@ -126,6 +154,7 @@
       "title": "F1 News",
       "description": "View news articles across the F1",
       "mode": "view"
+<<<<<<< HEAD
     },
     {
       "name": "favorite-team-dashboard",
@@ -1107,6 +1136,8 @@
           "value": "17530"
         }
       ]
+=======
+>>>>>>> contributions/merge-1743277393899
     }
   ],
   "dependencies": {

@@ -22,7 +22,7 @@
 - Rewrote the entire code base to now be modular, easier to understand, and expand on. (Also reduced a significant amount of code)
 - Added a new copy link action to the article views
 
-## [Implemented past and future scores] - March 11, 2025
+## [Implemented past and future scores] - 2025-03-12
 
 - Updated the NHL Standings command to use divisions instead of conferences
 - Updated each scores and schedule command to now show the scores for the past 3 days, and the games for the next 5 days
