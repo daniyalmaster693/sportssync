@@ -2,13 +2,6 @@ import { Detail, List, Color, Icon, Action, ActionPanel } from "@raycast/api";
 import { useFetch } from "@raycast/utils";
 import { getPreferenceValues } from "@raycast/api";
 
-interface Preferences {
-  name: string;
-  id?: string;
-}
-
-const preferences = getPreferenceValues<Preferences>();
-
 const favoriteTeam = getPreferenceValues().team as string;
 const favoriteLeague = getPreferenceValues().league as string;
 const favoriteSport = getPreferenceValues().sport as string;

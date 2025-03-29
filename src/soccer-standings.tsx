@@ -1,4 +1,4 @@
-import { LocalStorage, List, Detail } from "@raycast/api";
+import { LocalStorage, List } from "@raycast/api";
 import { useEffect, useState } from "react";
 import sportInfo from "./utils/getSportInfo";
 import getTeamStandings from "./utils/getStandings";

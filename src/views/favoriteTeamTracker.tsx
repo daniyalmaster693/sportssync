@@ -2,11 +2,6 @@ import { Detail, List, Color, Icon, Action, ActionPanel } from "@raycast/api";
 import { useFetch } from "@raycast/utils";
 import { getPreferenceValues } from "@raycast/api";
 
-interface Preferences {
-  name: string;
-  id?: string;
-}
-
 interface Article {
   headline: string;
   published: string;

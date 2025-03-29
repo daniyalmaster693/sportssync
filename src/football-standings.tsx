@@ -1,4 +1,4 @@
-import { List, Detail } from "@raycast/api";
+import { List } from "@raycast/api";
 import sportInfo from "./utils/getSportInfo";
 import getTeamStandings from "./utils/getStandings";
 import DisplayTeamStandings from "./templates/standings";
