@@ -43,7 +43,7 @@ const displaySchedule = () => {
       }
       isLoading={scheduleLoading}
     >
-      <DisplayScoresAndSchedule />;
+      <DisplayScoresAndSchedule />
     </List>
   );
 };
