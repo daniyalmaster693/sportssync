@@ -72,7 +72,6 @@ export default function RosterDetail({ teamId }: { teamId: string }) {
     const weight = athlete?.displayWeight ?? "Unknown";
     const height = athlete?.displayHeight ?? "Unknown";
     const formattedHeight = height?.replace(/\s+/g, "") ?? "Unknown";
-    const age = athlete?.age ?? "Unknown";
     const headshot = athlete?.headshot?.href ?? Icon.Person;
     const jersey = athlete?.jersey ?? "Unknown";
     const health = athlete?.injuries?.[0]?.status;

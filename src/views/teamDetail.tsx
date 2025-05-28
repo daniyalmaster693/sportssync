@@ -1,4 +1,4 @@
-import { Detail, List, Icon, Color, Action, ActionPanel } from "@raycast/api";
+import { Detail, Icon, Color, Action, ActionPanel } from "@raycast/api";
 import { useFetch } from "@raycast/utils";
 import sportInfo from "../utils/getSportInfo";
 import RosterDetail from "./roster";
