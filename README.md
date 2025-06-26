@@ -41,17 +41,17 @@ View changelog here: https://github.com/daniyalmaster693/sportssync/blob/main/CH
 - ~~Tracker Command: A command to view injuries and transactions~~
 - ~~Past Scores Command: A separate command (or something integrated into the scores and schedules command) to allow users to view scores for previous games (up to a few days)~~
 - ~~Favorite Team Command: A single command to follow a specific team~~
-- Roster View for Standings Command - In Progress
+- ~~Roster View for Standings Command~~
 - Player Profiles from Roster View - In Progress
 - Universal Player Search Command
-- Article Viewer for Tracker Command (Read Articles directly in Raycast)
+- ~~Article Viewer for Tracker Command (Read Articles directly in Raycast)~~
 - Add to Calendar Action for games
 - Current Leagues Planned: (UFC, Boxing, WWE, Nascar)
 - Additional Leagues: Please request any leagues that you'd like me to add support for, and I'll look into seeing what I can do.
 
 **_In depth stats, for the scores and schedule command_**
 
-- Play by Play Tracker: A menu to view play by play events during live games - In Progress
+- ~~Play by Play Tracker: A menu to view play by play events during live games~~
 - Team Stats and Team Matchups: A separate similar to the play by play tracker, to view individual team stats, leaders, and the season series for upcoming games - In Progress
 - Final Team Stats: Another separate menu to view the final team stats after a game has been completed, including team leaders, player stats, and overall team stats - In Progress
 
