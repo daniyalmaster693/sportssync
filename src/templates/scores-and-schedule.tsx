@@ -3,6 +3,7 @@ import getScoresAndSchedule from "../utils/getSchedule";
 import sportInfo from "../utils/getSportInfo";
 import getCountryCode from "../utils/getF1RaceFlag";
 import Plays from "../views/playbyplay";
+import Baseball from "../views/boxscore/baseball";
 import TeamDetail from "../views/teamDetail";
 
 interface DayItems {
@@ -175,6 +176,10 @@ export default function DisplayScoresAndSchedule() {
               game?.competitions?.[0]?.status?.type?.state === "in" && (
                 <Action.Push title="View Play by Play" icon={Icon.Stopwatch} target={<Plays gameId={game.id} />} />
               )}
+
+            {currentLeague !== "f1" && currentSport !== "soccer" && game?.status?.type?.state === "in" && (
+              <Action.Push title="View Box Score" icon={Icon.Building} target={<Baseball gameId={game.id} />} />
+            )}
 
             {currentLeague !== "f1" &&
               currentSport !== "soccer" &&

@@ -8,7 +8,7 @@ interface GameHeader {
   }[];
 }
 
-interface PlayByPlayData {
+export interface PlayByPlayData {
   header: GameHeader;
   boxscore: {
     teams: {
