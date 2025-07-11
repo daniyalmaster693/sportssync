@@ -22,6 +22,25 @@ export interface PlayByPlayData {
     team: { id: string };
     text: string;
   }>;
+  rosters?: Array<{
+    teamInfo: {
+      homeAway: string;
+      team: {
+        logos: Array<{ href: string }>;
+      };
+      roster: Array<{
+        rosterItem: {
+          athlete: {
+            id: string;
+            displayName: string;
+            headshot: { href: string };
+          };
+          position: { abbreviation: string };
+          jersey: string;
+        };
+      }>;
+    };
+  }>;
 }
 
 export default function getPlayByPlayEvents({ gameId }: { gameId: string }) {

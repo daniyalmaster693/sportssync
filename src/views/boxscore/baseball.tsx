@@ -5,6 +5,9 @@ import sportInfo from "../../utils/getSportInfo";
 // import TeamDetail from "../views/teamDetail";
 
 const Baseball = ({ gameId }: { gameId: string }) => {
+  const currentLeague = sportInfo.getLeague();
+  const currentSport = sportInfo.getSport();
+
   const { playByPlayEventData, playByPlayLoading, playByPlayRevalidate } = getPlayByPlayEvents({ gameId });
   const period = "Inning";
   const [currentPeriod, displaySelectPeriod] = useState(`${period}1`);
@@ -18,8 +21,13 @@ const Baseball = ({ gameId }: { gameId: string }) => {
 
   const homeTeamFull = playByPlayEventData?.boxscore?.teams?.[1]?.team?.displayName;
   const homeTeamId = playByPlayEventData?.boxscore?.teams?.[1]?.team?.id ?? "";
-  const homeTeamLogo = playByPlayEventData?.boxscore?.teams?.[1]?.team.logo;
+  const homeTeamLogo = playByPlayEventData?.boxscore?.teams?.[1]?.team?.logo;
 
+  // const homeTeamRoster = playByPlayEventData?.rosters?.[0].roster?.players ?? [];
+  // const homeTeamPlayer = homeTeamRoster[0]?.athlete.displayName;
+  const test = playByPlayEventData?.rosters?.[0]?.teamInfo?.roster[0]?.rosterItem?.athlete || {};
+
+  console.log(test);
   const leagueLogo = `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${currentLeague}.png&w=100&h=100&transparent=true`;
 
   useEffect(() => {
@@ -43,13 +51,33 @@ const Baseball = ({ gameId }: { gameId: string }) => {
   if (!playByPlayEventData) {
     return <Detail markdown="No data found." />;
   }
+
+  const markdownArea = `
+  ### Last Play
+  > Game ID: ${gameId}
+  ---
+
+  ### Home
+  - **Home Team:** ${homeTeamPlayer}
+  - Hits
+  - Errors
+
+  ### Away 
+  - **Away Team:** ${awayTeamFull}
+  - Hits
+  - Errors
+  `;
   return (
     <Detail
-      markdown={`our game id is ${gameId}`}
+      markdown={markdownArea}
       metadata={
         <Detail.Metadata>
-          <Detail.Metadata.Label title="Away Team" text={awayTeamFull}></Detail.Metadata.Label>
-          <Detail.Metadata.Label title="Home Team" text={homeTeamFull}></Detail.Metadata.Label>
+          <Detail.Metadata.Label title="Pitcher" text={awayTeamFull} icon={awayTeamLogo} />
+          <Detail.Metadata.Label title="Batter" text={homeTeamFull} icon={homeTeamLogo} />
+          <Detail.Metadata.Separator />
+          <Detail.Metadata.Label title="Bases" />
+          <Detail.Metadata.Label title="Count" />
+          <Detail.Metadata.Label title="Outs" />
         </Detail.Metadata>
       }
     />
