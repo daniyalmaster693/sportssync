@@ -8,6 +8,42 @@ interface GameHeader {
   }[];
 }
 
+type RosterTeamInfo = {
+  homeAway: string;
+  team: {
+    id: string;
+    abbreviation: string;
+    displayName: string;
+    color: string;
+    alternateColor: string;
+    logos: Array<{ href: string }>;
+  };
+  roster: RosterPlayer[];
+};
+
+type RosterPlayer = {
+  active: boolean;
+  starter: boolean;
+  athlete: {
+    id: string;
+    uid: string;
+    guid: string;
+    lastName: string;
+    fullName: string;
+    displayName: string;
+    headshot: {
+      href: string;
+      alt: string;
+    };
+    positions: Array<{
+      $ref: string;
+      id: string;
+      name: string;
+      displayName: string;
+      abbreviation: string;
+    }>;
+  };
+};
 export interface PlayByPlayData {
   header: GameHeader;
   boxscore: {
@@ -22,25 +58,7 @@ export interface PlayByPlayData {
     team: { id: string };
     text: string;
   }>;
-  rosters?: Array<{
-    teamInfo: {
-      homeAway: string;
-      team: {
-        logos: Array<{ href: string }>;
-      };
-      roster: Array<{
-        rosterItem: {
-          athlete: {
-            id: string;
-            displayName: string;
-            headshot: { href: string };
-          };
-          position: { abbreviation: string };
-          jersey: string;
-        };
-      }>;
-    };
-  }>;
+  rosters?: RosterTeamInfo[];
 }
 
 export default function getPlayByPlayEvents({ gameId }: { gameId: string }) {

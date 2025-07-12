@@ -23,11 +23,11 @@ const Baseball = ({ gameId }: { gameId: string }) => {
   const homeTeamId = playByPlayEventData?.boxscore?.teams?.[1]?.team?.id ?? "";
   const homeTeamLogo = playByPlayEventData?.boxscore?.teams?.[1]?.team?.logo;
 
-  // const homeTeamRoster = playByPlayEventData?.rosters?.[0].roster?.players ?? [];
-  // const homeTeamPlayer = homeTeamRoster[0]?.athlete.displayName;
-  const test = playByPlayEventData?.rosters?.[0]?.teamInfo?.roster[0]?.rosterItem?.athlete || {};
+  const homeTeamRoster = playByPlayEventData?.rosters?.[0].roster;
+  const homeTeamPlayer = homeTeamRoster?.[0]?.athlete.displayName;
 
-  console.log(test);
+  const lastPlay = playByPlayEventData?.plays?.[playByPlayEventData.plays.length - 1];
+
   const leagueLogo = `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${currentLeague}.png&w=100&h=100&transparent=true`;
 
   useEffect(() => {
@@ -52,13 +52,15 @@ const Baseball = ({ gameId }: { gameId: string }) => {
     return <Detail markdown="No data found." />;
   }
 
+  //Game ID: ${gameId}
+
   const markdownArea = `
   ### Last Play
-  > Game ID: ${gameId}
+  > ${lastPlay?.text}
   ---
 
   ### Home
-  - **Home Team:** ${homeTeamPlayer}
+  - **Home Team:**  ${homeTeamFull}
   - Hits
   - Errors
 
