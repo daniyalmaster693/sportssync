@@ -44,20 +44,53 @@ type RosterPlayer = {
     }>;
   };
 };
+
+export interface Play {
+  type: {
+    text: string;
+  };
+  period: {
+    number: string;
+    type: string;
+  };
+  clock: {
+    displayValue: string;
+  };
+  team: {
+    id: string;
+  };
+  participants?: {
+    athlete: {
+      id: string;
+    };
+    type: string;
+  }[];
+  text: string;
+}
+
 export interface PlayByPlayData {
   header: GameHeader;
   boxscore: {
     teams: {
       team: { id: string; logo: string; displayName: string };
     }[];
+    players: {
+      statistics: {
+        athletes: {
+          athlete: {
+            id: string;
+            shortName: string;
+            headshot: {
+              href: string;
+            };
+          };
+          active: boolean;
+          stats: string[];
+        }[];
+      }[];
+    }[];
   };
-  plays: Array<{
-    type: { text: string };
-    period: { number: string; type: string };
-    clock: { displayValue: string };
-    team: { id: string };
-    text: string;
-  }>;
+  plays: Play[];
   rosters?: RosterTeamInfo[];
 }
 

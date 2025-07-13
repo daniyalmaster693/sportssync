@@ -1,48 +1,57 @@
-import { Detail, Color, LocalStorage, Icon, List, Action, ActionPanel } from "@raycast/api";
-import getPlayByPlayEvents from "../../utils/getPlaybyPlay";
-import { useState, useEffect } from "react";
-import sportInfo from "../../utils/getSportInfo";
-// import TeamDetail from "../views/teamDetail";
+import { Detail, Icon, Action, ActionPanel } from "@raycast/api";
+import getPlayByPlayEvents, { PlayByPlayData, Play } from "../../utils/getPlaybyPlay";
+
+const findPlayer = ({
+  playerType,
+  lastPlay,
+  playByPlayEventData,
+}: {
+  playerType: "batter" | "pitcher";
+  lastPlay: Play | undefined;
+  playByPlayEventData: PlayByPlayData | undefined;
+}) => {
+  const playerParticipant = lastPlay?.participants?.find((p) => p.type === playerType);
+  const playerId = playerParticipant?.athlete?.id;
+
+  const allAthletes = playByPlayEventData?.boxscore.players.flatMap(
+    (team) => team?.statistics?.flatMap((stat) => stat?.athletes) || [],
+  );
+
+  const currentPlayer = allAthletes?.find((a) => a?.athlete?.id === playerId);
+
+  return { playerId, currentPlayer };
+};
 
 const Baseball = ({ gameId }: { gameId: string }) => {
-  const currentLeague = sportInfo.getLeague();
-  const currentSport = sportInfo.getSport();
-
   const { playByPlayEventData, playByPlayLoading, playByPlayRevalidate } = getPlayByPlayEvents({ gameId });
-  const period = "Inning";
-  const [currentPeriod, displaySelectPeriod] = useState(`${period}1`);
-
-  const events = playByPlayEventData?.plays || [];
-  const playByPlayEvents: JSX.Element[] = [];
 
   const awayTeamFull = playByPlayEventData?.boxscore?.teams?.[0]?.team?.displayName;
-  const awayTeamId = playByPlayEventData?.boxscore?.teams?.[0]?.team?.id ?? "";
-  const awayTeamLogo = playByPlayEventData?.boxscore?.teams?.[0]?.team.logo;
-
   const homeTeamFull = playByPlayEventData?.boxscore?.teams?.[1]?.team?.displayName;
-  const homeTeamId = playByPlayEventData?.boxscore?.teams?.[1]?.team?.id ?? "";
-  const homeTeamLogo = playByPlayEventData?.boxscore?.teams?.[1]?.team?.logo;
-
-  const homeTeamRoster = playByPlayEventData?.rosters?.[0].roster;
-  const homeTeamPlayer = homeTeamRoster?.[0]?.athlete.displayName;
-
   const lastPlay = playByPlayEventData?.plays?.[playByPlayEventData.plays.length - 1];
 
-  const leagueLogo = `https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/${currentLeague}.png&w=100&h=100&transparent=true`;
+  const { playerId: batterId, currentPlayer: currentBatter } = findPlayer({
+    playerType: "batter",
+    lastPlay,
+    playByPlayEventData,
+  });
 
-  useEffect(() => {
-    async function loadStoredDropdown() {
-      const storedValue = await LocalStorage.getItem("selectedPeriod");
+  const { playerId: pitcherId, currentPlayer: currentPitcher } = findPlayer({
+    playerType: "pitcher",
+    lastPlay,
+    playByPlayEventData,
+  });
 
-      if (typeof storedValue === "string") {
-        displaySelectPeriod(storedValue);
-      } else {
-        displaySelectPeriod(`${period}1`);
-      }
-    }
+  const batter = {
+    id: batterId,
+    name: currentBatter?.athlete?.shortName,
+    headshot: currentBatter?.athlete?.headshot?.href,
+  };
 
-    loadStoredDropdown();
-  }, []);
+  const pitcher = {
+    id: pitcherId,
+    name: currentPitcher?.athlete?.shortName,
+    headshot: currentPitcher?.athlete?.headshot?.href,
+  };
 
   if (playByPlayLoading) {
     return <Detail isLoading={true} />;
@@ -64,7 +73,7 @@ const Baseball = ({ gameId }: { gameId: string }) => {
   - Hits
   - Errors
 
-  ### Away 
+  ### Away
   - **Away Team:** ${awayTeamFull}
   - Hits
   - Errors
@@ -74,13 +83,23 @@ const Baseball = ({ gameId }: { gameId: string }) => {
       markdown={markdownArea}
       metadata={
         <Detail.Metadata>
-          <Detail.Metadata.Label title="Pitcher" text={awayTeamFull} icon={awayTeamLogo} />
-          <Detail.Metadata.Label title="Batter" text={homeTeamFull} icon={homeTeamLogo} />
+          <Detail.Metadata.Label title="Pitcher" text={pitcher.name} icon={pitcher.headshot} />
+          <Detail.Metadata.Label title="Batter" text={batter.name} icon={batter.headshot} />
           <Detail.Metadata.Separator />
           <Detail.Metadata.Label title="Bases" />
           <Detail.Metadata.Label title="Count" />
           <Detail.Metadata.Label title="Outs" />
         </Detail.Metadata>
+      }
+      actions={
+        <ActionPanel>
+          <Action
+            title="Refresh"
+            icon={Icon.ArrowClockwise}
+            onAction={playByPlayRevalidate}
+            shortcut={{ modifiers: ["cmd"], key: "r" }}
+          />
+        </ActionPanel>
       }
     />
   );
