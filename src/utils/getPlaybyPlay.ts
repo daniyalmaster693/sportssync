@@ -23,12 +23,9 @@ type RosterTeamInfo = {
 
 type RosterPlayer = {
   active: boolean;
-  starter: boolean;
   athlete: {
     id: string;
     uid: string;
-    guid: string;
-    lastName: string;
     fullName: string;
     displayName: string;
     headshot: {
@@ -37,7 +34,6 @@ type RosterPlayer = {
     };
     positions: Array<{
       $ref: string;
-      id: string;
       name: string;
       displayName: string;
       abbreviation: string;
@@ -68,11 +64,34 @@ export interface Play {
   text: string;
 }
 
+type Situation = {
+  balls: number;
+  strikes: number;
+  outs: number;
+  onFirst?: {
+    playerId: number;
+  };
+  onSecond?: {
+    playerId: number;
+  };
+  onThird?: {
+    playerId: number;
+  };
+};
+
 export interface PlayByPlayData {
+  situation: Situation;
   header: GameHeader;
   boxscore: {
     teams: {
       team: { id: string; logo: string; displayName: string };
+      statistics: {
+        name: string;
+        stats: {
+          name: string;
+          displayValue: string;
+        }[];
+      }[];
     }[];
     players: {
       statistics: {
