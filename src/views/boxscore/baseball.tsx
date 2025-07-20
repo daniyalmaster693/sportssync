@@ -1,6 +1,7 @@
 import { Detail, Icon, Action, ActionPanel } from "@raycast/api";
 import getPlayByPlayEvents, { PlayByPlayData, Play } from "../../utils/getPlaybyPlay";
 import TeamDetail from "../teamDetail";
+import Plays from "../playbyplay";
 
 const findPlayer = ({
   playerType,
@@ -163,12 +164,7 @@ const Baseball = ({ gameId }: { gameId: string }) => {
       }
       actions={
         <ActionPanel>
-          <Action
-            title="Refresh"
-            icon={Icon.ArrowClockwise}
-            onAction={playByPlayRevalidate}
-            shortcut={{ modifiers: ["cmd"], key: "r" }}
-          />
+          <Action.Push title="View Play by Play" icon={Icon.Stopwatch} target={<Plays gameId={gameId} />} />
           <>
             <Action.Push
               title={`View ${awayTeam.name ?? "Away"} Team Details`}
@@ -181,6 +177,12 @@ const Baseball = ({ gameId }: { gameId: string }) => {
               target={<TeamDetail teamId={homeTeam.id} />}
             />
           </>
+          <Action
+            title="Refresh"
+            icon={Icon.ArrowClockwise}
+            onAction={playByPlayRevalidate}
+            shortcut={{ modifiers: ["cmd"], key: "r" }}
+          />
         </ActionPanel>
       }
     />
