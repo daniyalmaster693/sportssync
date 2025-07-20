@@ -171,15 +171,15 @@ export default function DisplayScoresAndSchedule() {
         }
         actions={
           <ActionPanel>
+            {currentLeague === "mlb" && currentSport === "baseball" && game?.status?.type?.state === "in" && (
+              <Action.Push title="View Box Score" icon={Icon.Building} target={<Baseball gameId={game.id} />} />
+            )}
+
             {currentLeague !== "f1" &&
               currentSport !== "soccer" &&
               game?.competitions?.[0]?.status?.type?.state === "in" && (
                 <Action.Push title="View Play by Play" icon={Icon.Stopwatch} target={<Plays gameId={game.id} />} />
               )}
-
-            {currentLeague === "mlb" && currentSport === "baseball" && game?.status?.type?.state === "in" && (
-              <Action.Push title="View Box Score" icon={Icon.Building} target={<Baseball gameId={game.id} />} />
-            )}
 
             {currentLeague !== "f1" &&
               currentSport !== "soccer" &&
