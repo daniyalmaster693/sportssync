@@ -8,39 +8,6 @@ interface GameHeader {
   }[];
 }
 
-type RosterTeamInfo = {
-  homeAway: string;
-  team: {
-    id: string;
-    abbreviation: string;
-    displayName: string;
-    color: string;
-    alternateColor: string;
-    logos: Array<{ href: string }>;
-  };
-  roster: RosterPlayer[];
-};
-
-type RosterPlayer = {
-  active: boolean;
-  athlete: {
-    id: string;
-    uid: string;
-    fullName: string;
-    displayName: string;
-    headshot: {
-      href: string;
-      alt: string;
-    };
-    positions: Array<{
-      $ref: string;
-      name: string;
-      displayName: string;
-      abbreviation: string;
-    }>;
-  };
-};
-
 export interface Play {
   type: {
     text: string;
@@ -64,7 +31,7 @@ export interface Play {
   text: string;
 }
 
-type Situation = {
+type BaseballSituation = {
   balls: number;
   strikes: number;
   outs: number;
@@ -79,20 +46,60 @@ type Situation = {
   };
 };
 
-export interface PlayByPlayData {
-  situation: Situation;
-  header: GameHeader;
-  boxscore: {
-    teams: {
-      team: { id: string; logo: string; displayName: string };
-      statistics: {
-        name: string;
-        stats: {
-          name: string;
-          displayValue: string;
-        }[];
-      }[];
+type BoxScoreTeam = {
+  team: {
+    id: string;
+    displayName: string;
+    logo: string;
+  };
+  homeAway: string;
+  statistics?: {
+    name: string;
+    stats?: {
+      name: string;
+      displayValue: string;
     }[];
+    displayValue?: string;
+  }[];
+};
+
+export interface PlayByPlayData {
+  situation?: BaseballSituation;
+  header: GameHeader;
+  leaders?: {
+    team: {
+      id: string;
+    };
+    leaders: {
+      // leaders: {
+      name: string;
+      leaders: {
+        displayValue: string;
+        athlete: {
+          id: string;
+          shortName: string;
+          headshot: {
+            href: string;
+          };
+        };
+        // }[];
+      }[];
+
+      // name: string; // points/assist3s/rebounds
+      // leaders: {
+      //   athlete: {
+      //     id: string;
+      //     shortName: string;
+      //   };
+      //   statistics: {
+      //     name: string;
+      //     displayValue: string;
+      //   }[];
+      // }[];
+    }[];
+  }[];
+  boxscore: {
+    teams: BoxScoreTeam[];
     players: {
       statistics: {
         athletes: {
@@ -110,12 +117,14 @@ export interface PlayByPlayData {
     }[];
   };
   plays: Play[];
-  rosters?: RosterTeamInfo[];
+  // rosters?: RosterTeamInfo[];
 }
 
 export default function getPlayByPlayEvents({ gameId }: { gameId: string }) {
   const currentLeague = sportInfo.getLeague();
   const currentSport = sportInfo.getSport();
+  // const currentLeague = "nba";
+  // const currentSport = "basketball";
 
   const {
     isLoading: playByPlayLoading,

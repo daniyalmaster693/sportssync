@@ -4,6 +4,7 @@ import sportInfo from "../utils/getSportInfo";
 import getCountryCode from "../utils/getF1RaceFlag";
 import Plays from "../views/playbyplay";
 import Baseball from "../views/boxscore/baseball";
+import Basketball from "../views/boxscore/basketball";
 import TeamDetail from "../views/teamDetail";
 
 interface DayItems {
@@ -174,6 +175,10 @@ export default function DisplayScoresAndSchedule() {
             {currentLeague === "mlb" && currentSport === "baseball" && game?.status?.type?.state === "in" && (
               <Action.Push title="View Box Score" icon={Icon.Building} target={<Baseball gameId={game.id} />} />
             )}
+
+            {/* {currentLeague === "nba" && currentSport === "basketball" && game?.status?.type?.state === "in" && (
+              <Action.Push title="View Box Score" icon={Icon.Building} target={<Basketball gameId={game.id} />} />
+            )} */}
 
             {currentLeague !== "f1" &&
               currentSport !== "soccer" &&
