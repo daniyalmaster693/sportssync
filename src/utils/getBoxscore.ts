@@ -130,14 +130,14 @@ export function getFootballBoxScore(playByPlayData: PlayByPlayData | undefined) 
         timeOfPossession: "0:00",
       },
       homePlayers: {
-        qb: { id: "", shortName: "", displayValue: "" },
-        wr: { id: "", shortName: "", displayValue: "" },
-        rb: { id: "", shortName: "", displayValue: "" },
+        qb: { id: "", shortName: "", displayValue: "", headshot: "" },
+        wr: { id: "", shortName: "", displayValue: "", headshot: "" },
+        rb: { id: "", shortName: "", displayValue: "", headshot: "" },
       },
       awayPlayers: {
-        qb: { id: "", shortName: "", displayValue: "" },
-        wr: { id: "", shortName: "", displayValue: "" },
-        rb: { id: "", shortName: "", displayValue: "" },
+        qb: { id: "", shortName: "", displayValue: "", headshot: "" },
+        wr: { id: "", shortName: "", displayValue: "", headshot: "" },
+        rb: { id: "", shortName: "", displayValue: "", headshot: "" },
       },
     };
   }
@@ -164,12 +164,45 @@ export function getFootballBoxScore(playByPlayData: PlayByPlayData | undefined) 
 
   const homePlayers = {
     qb: {
-      id: playByPlayData?.leaders?.[0].leaders?.[0].leaders?.[0].athlete.id || "",
-      shortName: playByPlayData?.leaders?.[0].leaders?.[0].leaders?.[0].athlete.shortName || "",
-      displayValue: playByPlayData?.leaders?.[0].leaders?.[0].leaders?.[0].displayValue || "",
+      id: playByPlayData?.leaders?.[0]?.leaders?.[0]?.leaders?.[0]?.athlete?.id || "",
+      shortName: playByPlayData?.leaders?.[0]?.leaders?.[0]?.leaders?.[0]?.athlete?.shortName || "",
+      headshot: playByPlayData?.leaders?.[0]?.leaders?.[0]?.leaders?.[0]?.athlete?.headshot?.href || "",
+      displayValue: playByPlayData?.leaders?.[0]?.leaders?.[0]?.leaders?.[0]?.displayValue || "",
     },
-    wr: {},
+    rb: {
+      id: playByPlayData?.leaders?.[0]?.leaders?.[1]?.leaders?.[0]?.athlete?.id || "",
+      shortName: playByPlayData?.leaders?.[0]?.leaders?.[1]?.leaders?.[0]?.athlete?.shortName || "",
+      headshot: playByPlayData?.leaders?.[0]?.leaders?.[1]?.leaders?.[0]?.athlete?.headshot?.href || "",
+      displayValue: playByPlayData?.leaders?.[0]?.leaders?.[1]?.leaders?.[0]?.displayValue || "",
+    },
+    wr: {
+      id: playByPlayData?.leaders?.[0]?.leaders?.[2]?.leaders?.[0]?.athlete?.id || "",
+      shortName: playByPlayData?.leaders?.[0]?.leaders?.[2]?.leaders?.[0]?.athlete?.shortName || "",
+      headshot: playByPlayData?.leaders?.[0]?.leaders?.[2]?.leaders?.[0]?.athlete?.headshot?.href || "",
+      displayValue: playByPlayData?.leaders?.[0]?.leaders?.[2]?.leaders?.[0]?.displayValue || "",
+    },
   };
 
-  return { homeTeam, awayTeam, homePlayers };
+  const awayPlayers = {
+    qb: {
+      id: playByPlayData?.leaders?.[1]?.leaders?.[0]?.leaders?.[0]?.athlete?.id || "",
+      shortName: playByPlayData?.leaders?.[1]?.leaders?.[0]?.leaders?.[0]?.athlete?.shortName || "",
+      headshot: playByPlayData?.leaders?.[1]?.leaders?.[0]?.leaders?.[0]?.athlete?.headshot?.href || "",
+      displayValue: playByPlayData?.leaders?.[1]?.leaders?.[0]?.leaders?.[0]?.displayValue || "",
+    },
+    rb: {
+      id: playByPlayData?.leaders?.[1]?.leaders?.[1]?.leaders?.[0]?.athlete?.id || "",
+      shortName: playByPlayData?.leaders?.[1]?.leaders?.[1]?.leaders?.[0]?.athlete?.shortName || "",
+      headshot: playByPlayData?.leaders?.[1]?.leaders?.[1]?.leaders?.[0]?.athlete?.headshot?.href || "",
+      displayValue: playByPlayData?.leaders?.[1]?.leaders?.[1]?.leaders?.[0]?.displayValue || "",
+    },
+    wr: {
+      id: playByPlayData?.leaders?.[1]?.leaders?.[2]?.leaders?.[0]?.athlete?.id || "",
+      shortName: playByPlayData?.leaders?.[1]?.leaders?.[2]?.leaders?.[0]?.athlete?.shortName || "",
+      headshot: playByPlayData?.leaders?.[1]?.leaders?.[2]?.leaders?.[0]?.athlete?.headshot?.href || "",
+      displayValue: playByPlayData?.leaders?.[1]?.leaders?.[2]?.leaders?.[0]?.displayValue || "",
+    },
+  };
+
+  return { homeTeam, awayTeam, homePlayers, awayPlayers };
 }

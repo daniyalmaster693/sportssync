@@ -70,7 +70,6 @@ export interface PlayByPlayData {
       id: string;
     };
     leaders: {
-      // leaders: {
       name: string;
       leaders: {
         displayValue: string;
@@ -81,7 +80,6 @@ export interface PlayByPlayData {
             href: string;
           };
         };
-        // }[];
       }[];
     }[];
   }[];
@@ -104,16 +102,11 @@ export interface PlayByPlayData {
     }[];
   };
   plays: Play[];
-  // rosters?: RosterTeamInfo[];
 }
 
 export default function getPlayByPlayEvents({ gameId }: { gameId: string }) {
-  // const currentLeague = sportInfo.getLeague();
-  // const currentSport = sportInfo.getSport();
-  // const currentLeague = "nba";
-  // const currentSport = "basketball";
-  const currentLeague = "nfl";
-  const currentSport = "football";
+  const currentLeague = sportInfo.getLeague();
+  const currentSport = sportInfo.getSport();
 
   const {
     isLoading: playByPlayLoading,

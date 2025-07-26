@@ -2,11 +2,9 @@ import { Detail, Icon, Action, ActionPanel } from "@raycast/api";
 import getPlayByPlayEvents from "../../utils/getPlaybyPlay";
 import Plays from "../playbyplay";
 import { getBasketballBoxScore } from "../../utils/getBoxscore";
+import TeamDetail from "../teamDetail";
 
 const Basketball = ({ gameId }: { gameId: string }) => {
-  // gameId = "401705511";
-  // gameId = "401736174" -- test for wnba
-
   const { playByPlayEventData, playByPlayLoading, playByPlayRevalidate } = getPlayByPlayEvents({ gameId });
   const { homeTeam, awayTeam, homeLeaders, awayLeaders } = getBasketballBoxScore(playByPlayEventData);
 
@@ -66,18 +64,18 @@ const Basketball = ({ gameId }: { gameId: string }) => {
             onAction={playByPlayRevalidate}
             shortcut={{ modifiers: ["cmd"], key: "r" }}
           />
-          {/* <>
-                    <Action.Push
-                      title={`View ${awayTeam.name ?? "Away"} Team Details`}
-                      icon={Icon.List}
-                      target={<TeamDetail teamId={awayTeam.id} />}
-                    />
-                    <Action.Push
-                      title={`View ${homeTeam.name ?? "Home"} Team Details`}
-                      icon={Icon.List}
-                      target={<TeamDetail teamId={homeTeam.id} />}
-                    />
-                  </> */}
+          <>
+            <Action.Push
+              title={`View ${awayTeam.name ?? "Away"} Team Details`}
+              icon={Icon.List}
+              target={<TeamDetail teamId={awayTeam.id} />}
+            />
+            <Action.Push
+              title={`View ${homeTeam.name ?? "Home"} Team Details`}
+              icon={Icon.List}
+              target={<TeamDetail teamId={homeTeam.id} />}
+            />
+          </>
         </ActionPanel>
       }
     />
