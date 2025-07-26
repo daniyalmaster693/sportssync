@@ -1,29 +1,43 @@
 import { Detail, Icon, Action, ActionPanel } from "@raycast/api";
-import getPlayByPlayEvents, { PlayByPlayData, Play } from "../../utils/getPlaybyPlay";
+import getPlayByPlayEvents from "../../utils/getPlaybyPlay";
+import { getFootballBoxScore } from "../../utils/getBoxscore";
 
 const Football = ({ gameId }: { gameId: string }) => {
-  const { playByPlayEventData, playByPlayLoading, playByPlayRevalidate } = getPlayByPlayEvents({ gameId });
+  //! test for college and nfl
 
-  //? idea: render an emoji for team that is leading in a stat (trophy, medal, etc.)
+  gameId = "401671777";
+  const { playByPlayEventData, playByPlayLoading, playByPlayRevalidate } = getPlayByPlayEvents({ gameId });
+  const boxScore = getFootballBoxScore(playByPlayEventData);
+
+  if (playByPlayLoading) {
+    return <Detail isLoading={true} />;
+  }
+
+  if (!playByPlayEventData) {
+    return <Detail markdown="No data found." />;
+  }
+
   const markdownArea = `
   ### Last Play
   > 
   ---
 
-  ### Home
-  - Total Yards: 8/10 (80.0%)
-  - Turnovers: 2
-  - Penalties: 3
-  - 3rd Downs: 5/15 (33.3%)
-  - Time of Possession: 20:00
+  ### ${boxScore.homeTeam.name} (Home)
+  - Total Yards: ${boxScore.homeTeam.totalYards}
+  - Turnovers: ${boxScore.homeTeam.turnovers}
+  - Penalties: ${boxScore.homeTeam.penalties}
+  - 3rd Downs: ${boxScore.homeTeam.thirdDowns}
+  - Time of Possession: ${boxScore.homeTeam.timeOfPossession}
 
-  ### Away
-  - Total Yards: 12/28 (42.9%)
-  - Turnovers: 1
-  - Penalties: 2
-  - 3rd Downs: 4/12 (33.3%)
-  - Time of Possession: 20:00
+  ### ${boxScore.awayTeam.name} (Away)
+  - Total Yards: ${boxScore.awayTeam.totalYards}
+  - Turnovers: ${boxScore.awayTeam.turnovers}
+  - Penalties: ${boxScore.awayTeam.penalties}
+  - 3rd Downs: ${boxScore.awayTeam.thirdDowns}
+  - Time of Possession: ${boxScore.awayTeam.timeOfPossession}
   `;
+
+  // separate home team and away team with separator component
 
   return (
     <Detail

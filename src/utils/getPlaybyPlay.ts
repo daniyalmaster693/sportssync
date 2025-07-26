@@ -7,7 +7,6 @@ interface GameHeader {
     competitors: { team: { links: { href: string }[] } }[];
   }[];
 }
-
 export interface Play {
   type: {
     text: string;
@@ -84,18 +83,6 @@ export interface PlayByPlayData {
         };
         // }[];
       }[];
-
-      // name: string; // points/assist3s/rebounds
-      // leaders: {
-      //   athlete: {
-      //     id: string;
-      //     shortName: string;
-      //   };
-      //   statistics: {
-      //     name: string;
-      //     displayValue: string;
-      //   }[];
-      // }[];
     }[];
   }[];
   boxscore: {
@@ -121,10 +108,12 @@ export interface PlayByPlayData {
 }
 
 export default function getPlayByPlayEvents({ gameId }: { gameId: string }) {
-  const currentLeague = sportInfo.getLeague();
-  const currentSport = sportInfo.getSport();
+  // const currentLeague = sportInfo.getLeague();
+  // const currentSport = sportInfo.getSport();
   // const currentLeague = "nba";
   // const currentSport = "basketball";
+  const currentLeague = "nfl";
+  const currentSport = "football";
 
   const {
     isLoading: playByPlayLoading,

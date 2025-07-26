@@ -5,6 +5,7 @@ import { getBasketballBoxScore } from "../../utils/getBoxscore";
 
 const Basketball = ({ gameId }: { gameId: string }) => {
   // gameId = "401705511";
+  // gameId = "401736174" -- test for wnba
 
   const { playByPlayEventData, playByPlayLoading, playByPlayRevalidate } = getPlayByPlayEvents({ gameId });
   const { homeTeam, awayTeam, homeLeaders, awayLeaders } = getBasketballBoxScore(playByPlayEventData);

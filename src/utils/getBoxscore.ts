@@ -107,3 +107,69 @@ export function getBasketballBoxScore(playByPlayData: PlayByPlayData | undefined
 
   return { homeTeam, awayTeam, homeLeaders, awayLeaders };
 }
+
+export function getFootballBoxScore(playByPlayData: PlayByPlayData | undefined) {
+  if (!playByPlayData) {
+    return {
+      homeTeam: {
+        id: "",
+        name: "",
+        totalYards: "0",
+        turnovers: "0",
+        penalties: "0",
+        thirdDowns: "0",
+        timeOfPossession: "0:00",
+      },
+      awayTeam: {
+        id: "",
+        name: "",
+        totalYards: "0",
+        turnovers: "0",
+        penalties: "0",
+        thirdDowns: "0",
+        timeOfPossession: "0:00",
+      },
+      homePlayers: {
+        qb: { id: "", shortName: "", displayValue: "" },
+        wr: { id: "", shortName: "", displayValue: "" },
+        rb: { id: "", shortName: "", displayValue: "" },
+      },
+      awayPlayers: {
+        qb: { id: "", shortName: "", displayValue: "" },
+        wr: { id: "", shortName: "", displayValue: "" },
+        rb: { id: "", shortName: "", displayValue: "" },
+      },
+    };
+  }
+
+  const homeTeam = {
+    id: playByPlayData?.boxscore?.teams?.[1].team.id || "",
+    name: playByPlayData?.boxscore?.teams?.[1].team.displayName || "",
+    totalYards: playByPlayData?.boxscore?.teams?.[1].statistics?.[7].displayValue || "",
+    turnovers: playByPlayData?.boxscore?.teams?.[1].statistics?.[20].displayValue || "",
+    penalties: playByPlayData?.boxscore?.teams?.[1].statistics?.[19].displayValue || "",
+    thirdDowns: playByPlayData?.boxscore?.teams?.[1].statistics?.[4].displayValue || "",
+    timeOfPossession: playByPlayData?.boxscore?.teams?.[1].statistics?.[24].displayValue || "0:00",
+  };
+
+  const awayTeam = {
+    id: playByPlayData?.boxscore?.teams?.[0].team.id || "",
+    name: playByPlayData?.boxscore?.teams?.[0].team.displayName || "",
+    totalYards: playByPlayData?.boxscore?.teams?.[0].statistics?.[7].displayValue || "",
+    turnovers: playByPlayData?.boxscore?.teams?.[0].statistics?.[20].displayValue || "",
+    penalties: playByPlayData?.boxscore?.teams?.[0].statistics?.[19].displayValue || "",
+    thirdDowns: playByPlayData?.boxscore?.teams?.[0].statistics?.[4].displayValue || "",
+    timeOfPossession: playByPlayData?.boxscore?.teams?.[0].statistics?.[24].displayValue || "0:00",
+  };
+
+  const homePlayers = {
+    qb: {
+      id: playByPlayData?.leaders?.[0].leaders?.[0].leaders?.[0].athlete.id || "",
+      shortName: playByPlayData?.leaders?.[0].leaders?.[0].leaders?.[0].athlete.shortName || "",
+      displayValue: playByPlayData?.leaders?.[0].leaders?.[0].leaders?.[0].displayValue || "",
+    },
+    wr: {},
+  };
+
+  return { homeTeam, awayTeam, homePlayers };
+}
