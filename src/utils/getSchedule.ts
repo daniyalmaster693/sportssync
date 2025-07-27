@@ -107,7 +107,7 @@ export default function getScoresAndSchedule() {
     data: scheduleData,
     revalidate: scheduleRevalidate,
   } = useFetch<Response>(
-    `https://site.api.espn.com/apis/site/v2/sports/${currentSport}/${currentLeague}/scoreboard?dates=${dateRange}`,
+    `https://site.api.espn.com/apis/site/v2/sports/${currentSport}/${currentLeague}/scoreboard?dates=20250113`,
   );
 
   return { scheduleData, scheduleLoading, scheduleRevalidate };

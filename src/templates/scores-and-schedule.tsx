@@ -177,11 +177,11 @@ export default function DisplayScoresAndSchedule() {
               <Action.Push title="View Box Score" icon={Icon.Building} target={<Baseball gameId={game.id} />} />
             )}
 
-            {currentLeague === "nba" && currentSport === "basketball" && game?.status?.type?.state === "in" && (
+            {currentSport === "basketball" && game?.status?.type?.state === "in" && (
               <Action.Push title="View Box Score" icon={Icon.Building} target={<Basketball gameId={game.id} />} />
             )}
 
-            {currentLeague === "nfl" && currentSport === "football" && game?.status?.type?.state === "in" && (
+            {currentSport === "football" && game?.status?.type?.state === "in" && (
               <Action.Push title="View Box Score" icon={Icon.Building} target={<Football gameId={game.id} />} />
             )}
 
