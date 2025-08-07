@@ -1,8 +1,23 @@
-## Sportssync
+<div align="center">
+<img src="./assets/Sportssync.png" width="200" alt="App Icon">
 
-View scores, games, standings, news, injuries, and transactions across your favorite sports leagues
+  <h1>Sportssync</h1>
+  <p>An All-in-One Sports Extension for Raycast</p>
 
-![Sportssync](./metadata/Sportssync-1.png)
+</div>
+
+<div align="center">
+
+<a title="Install sportssync Raycast Extension" href="https://www.raycast.com/daniyal_master/sportssync"><img src="https://www.raycast.com/daniyal_master/sportssync/install_button@2x.png?v=1.1" height="64" style="height: 64px;" alt=""></a>
+
+</div>
+
+<br>
+<br>
+
+![Sportssync](./assets/Sportssync-1.webp)
+
+<img src="./assets/Sportssync-1.webp" width="100%" alt="Sportssync"/><br/>
 
 ## Commands:
 
@@ -67,14 +82,10 @@ To enable the favorite team dashboard and live scores menubar commands, you will
 
 - **Note: F1 does not support the favorite team dashboard command, but is still available in the preferences for use in the live scores menubar command**
 
-## Data Source
+## Contributions
 
-All data is sourced directly from the unofficial ESPN Sports API. The accuracy of the data depends on ESPN's public APIs.
+Any contributions and feedback is welcome! Feel free to open issues or submit pull requests.
 
-## Disclaimer
+## License
 
-This is an unofficial Raycast extension and is not affiliated with, endorsed by, or connected to ESPN.
-
-All data is sourced from publicly available ESPN APIs services. Team logos, player images, and other league related trademarks and content are properties of their respective owners and are used for informational purposes only.
-
-All Rights Reserved.
+This project is licensed under the GPLv3 License.
