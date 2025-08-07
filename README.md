@@ -1,5 +1,5 @@
 <div align="center">
-<img src="./assets/Sportssync.png" width="150" alt="App Icon">
+<img src="./assets/Sportssync.png" width="175" alt="App Icon">
 
   <h1>Sportssync</h1>
   <p>An All-in-One Sports Extension for Raycast</p>
