@@ -17,6 +17,8 @@
 
 <img src="./assets/Sportssync-1.webp" width="100%" alt="Sportssync"/><br/>
 
+Sportssync is a raycast extension to view live scores, standings, injuries, transactions, and articles across your favorite sports leagues directly in Raycast.
+
 ## Commands:
 
 | **Command**                 | **Description**                                                                                                                                                                                                    |
