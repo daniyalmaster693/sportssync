@@ -15,8 +15,6 @@
 <br>
 <br>
 
-![Sportssync](./assets/Sportssync-1.webp)
-
 <img src="./assets/Sportssync-1.webp" width="100%" alt="Sportssync"/><br/>
 
 ## Commands:
