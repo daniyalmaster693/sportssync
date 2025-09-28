@@ -1,12 +1,12 @@
 import { Detail, Icon, Action, ActionPanel } from "@raycast/api";
 import getPlayByPlayEvents from "../../utils/getPlaybyPlay";
 import Plays from "../playbyplay";
-import { getBasketballBoxScore } from "../../utils/getBoxscore";
 import TeamDetail from "../teamDetail";
+import { getHockeyBoxScore } from "../../utils/getBoxscore";
 
-const Basketball = ({ gameId }: { gameId: string }) => {
+const Hockey = ({ gameId }: { gameId: string }) => {
   const { playByPlayEventData, playByPlayLoading, playByPlayRevalidate } = getPlayByPlayEvents({ gameId });
-  const { homeTeam, awayTeam, homeLeaders, awayLeaders } = getBasketballBoxScore(playByPlayEventData);
+  const { homeTeam, awayTeam, homeLeaders, awayLeaders } = getHockeyBoxScore(playByPlayEventData);
 
   if (playByPlayLoading) {
     return <Detail isLoading={true} />;
@@ -22,17 +22,21 @@ const Basketball = ({ gameId }: { gameId: string }) => {
   ---
 
   ### ${homeTeam.name} (Home)
-  - FG: ${homeTeam.fieldGoalAttempted} (${homeTeam.fieldGoalPct}%) ${parseFloat(homeTeam.fieldGoalPct) > parseFloat(awayTeam.fieldGoalPct) ? "🏆" : ""}
-  - 3PT: ${homeTeam.threePointAttempted} (${homeTeam.threePointPct}%) ${parseFloat(homeTeam.threePointPct) > parseFloat(awayTeam.threePointPct) ? "🏆" : ""}
-  - FT: ${homeTeam.freeThrowAttempted} (${homeTeam.freeThrowPct}%) ${parseFloat(homeTeam.freeThrowPct) > parseFloat(awayTeam.freeThrowPct) ? "🏆" : ""}
-  - Turnovers: ${homeTeam.turnovers}
+  - Hits: ${homeTeam.hits} ${parseFloat(homeTeam.hits) > parseFloat(awayTeam.hits) ? "🏆" : ""}
+  - Shots: ${homeTeam.shots} ${parseFloat(homeTeam.shots) > parseFloat(awayTeam.shots) ? "🏆" : ""}
+  - Takeaways: ${homeTeam.takeaways} ${parseFloat(homeTeam.takeaways) > parseFloat(awayTeam.takeaways) ? "🏆" : ""}
+  - Powerplay %: ${homeTeam.powerPlayPct}
+  - Face-off %: ${homeTeam.faceOffPct}
+  - Penalties: ${homeTeam.penalties}
 
   ### ${awayTeam.name} (Away)
-  - FG: ${awayTeam.fieldGoalAttempted} (${awayTeam.fieldGoalPct}%) ${parseFloat(awayTeam.fieldGoalPct) > parseFloat(homeTeam.fieldGoalPct) ? "🏆" : ""}
-  - 3PT: ${awayTeam.threePointAttempted} (${awayTeam.threePointPct}%) ${parseFloat(awayTeam.threePointPct) > parseFloat(homeTeam.threePointPct) ? "🏆" : ""}
-  - FT: ${awayTeam.freeThrowAttempted} (${awayTeam.freeThrowPct}%) ${parseFloat(awayTeam.freeThrowPct) > parseFloat(homeTeam.freeThrowPct) ? "🏆" : ""}
-  - Turnovers: ${awayTeam.turnovers}
-  `;
+  - Hits: ${awayTeam.hits} ${parseFloat(awayTeam.hits) > parseFloat(homeTeam.hits) ? "🏆" : ""}
+  - Shots: ${awayTeam.shots} ${parseFloat(awayTeam.shots) > parseFloat(homeTeam.shots) ? "🏆" : ""}
+  - Takeaways: ${awayTeam.takeaways} ${parseFloat(awayTeam.takeaways) > parseFloat(homeTeam.takeaways) ? "🏆" : ""}
+  - Powerplay %: ${awayTeam.powerPlayPct}
+  - Face-off %: ${awayTeam.faceOffPct}
+  - Penalties: ${awayTeam.penalties}
+`;
 
   return (
     <Detail
@@ -41,17 +45,17 @@ const Basketball = ({ gameId }: { gameId: string }) => {
         <Detail.Metadata>
           <Detail.Metadata.Label
             title="Leading Scorers"
-            text={`${homeLeaders.leadingScorer.name} (${homeLeaders.leadingScorer.value}), ${awayLeaders.leadingScorer.name} (${awayLeaders.leadingScorer.value})`}
+            text={`${homeLeaders.leadingGoals.shortName} (${homeLeaders.leadingGoals.displayValue}), ${awayLeaders.leadingGoals.shortName} (${awayLeaders.leadingGoals.displayValue})`}
           />
           <Detail.Metadata.Separator />
           <Detail.Metadata.Label
             title="Leading Assists"
-            text={`${homeLeaders.leadingAssists.name} (${homeLeaders.leadingAssists.value}), ${awayLeaders.leadingAssists.name} (${awayLeaders.leadingAssists.value})`}
+            text={`${homeLeaders.leadingAssists.shortName} (${homeLeaders.leadingAssists.displayValue}), ${awayLeaders.leadingAssists.shortName} (${awayLeaders.leadingAssists.displayValue})`}
           />
           <Detail.Metadata.Separator />
           <Detail.Metadata.Label
-            title="Leading Rebounders"
-            text={`${homeLeaders.leadingRebounder.name} (${homeLeaders.leadingRebounder.value}), ${awayLeaders.leadingRebounder.name} (${awayLeaders.leadingRebounder.value})`}
+            title="Leading Points"
+            text={`${homeLeaders.leadingPoints.shortName} (${homeLeaders.leadingPoints.displayValue}), ${awayLeaders.leadingPoints.shortName} (${awayLeaders.leadingPoints.displayValue})`}
           />
         </Detail.Metadata>
       }
@@ -82,4 +86,4 @@ const Basketball = ({ gameId }: { gameId: string }) => {
   );
 };
 
-export default Basketball;
+export default Hockey;

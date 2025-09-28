@@ -68,6 +68,7 @@ export interface PlayByPlayData {
   leaders?: {
     team: {
       id: string;
+      abbreviation: string;
     };
     leaders: {
       name: string;

@@ -206,3 +206,97 @@ export function getFootballBoxScore(playByPlayData: PlayByPlayData | undefined) 
 
   return { homeTeam, awayTeam, homePlayers, awayPlayers };
 }
+
+export function getHockeyBoxScore(playByPlayData: PlayByPlayData | undefined) {
+  if (!playByPlayData) {
+    return {
+      homeTeam: {
+        id: "",
+        name: "",
+        hits: "0",
+        shots: "0",
+        takeaways: "0",
+        powerPlayPct: "0",
+        faceOffPct: "0",
+        penalties: "0",
+      },
+      awayTeam: {
+        id: "",
+        name: "",
+        hits: "0",
+        shots: "0",
+        takeaways: "0",
+        powerPlayPct: "0",
+        faceOffPct: "0",
+        penalties: "0",
+      },
+      homeLeaders: {
+        leadingGoals: { id: "", shortName: "", displayValue: "" },
+        leadingAssists: { id: "", shortName: "", displayValue: "" },
+        leadingPoints: { id: "", shortName: "", displayValue: "" },
+      },
+      awayLeaders: {
+        leadingGoals: { id: "", shortName: "", displayValue: "" },
+        leadingAssists: { id: "", shortName: "", displayValue: "" },
+        leadingPoints: { id: "", shortName: "", displayValue: "" },
+      },
+    };
+  }
+
+  const homeTeam = {
+    id: playByPlayData?.boxscore?.teams?.[1].team.id || "",
+    name: playByPlayData?.boxscore?.teams?.[1].team.displayName || "",
+    hits: playByPlayData?.boxscore?.teams?.[1].statistics?.[1].displayValue || "0",
+    shots: playByPlayData?.boxscore?.teams?.[1].statistics?.[3].displayValue || "0",
+    takeaways: playByPlayData?.boxscore?.teams?.[1].statistics?.[2].displayValue || "0",
+    powerPlayPct: playByPlayData?.boxscore?.teams?.[1].statistics?.[6].displayValue || "0",
+    faceOffPct: playByPlayData?.boxscore?.teams?.[1].statistics?.[10].displayValue || "0",
+    penalties: playByPlayData?.boxscore?.teams?.[1].statistics?.[12].displayValue || "0",
+  };
+  const awayTeam = {
+    id: playByPlayData?.boxscore?.teams?.[0].team.id || "",
+    name: playByPlayData?.boxscore?.teams?.[0].team.displayName || "",
+    hits: playByPlayData?.boxscore?.teams?.[0].statistics?.[1].displayValue || "0",
+    shots: playByPlayData?.boxscore?.teams?.[0].statistics?.[3].displayValue || "0",
+    takeaways: playByPlayData?.boxscore?.teams?.[0].statistics?.[2].displayValue || "0",
+    powerPlayPct: playByPlayData?.boxscore?.teams?.[0].statistics?.[6].displayValue || "0",
+    faceOffPct: playByPlayData?.boxscore?.teams?.[0].statistics?.[10].displayValue || "0",
+    penalties: playByPlayData?.boxscore?.teams?.[0].statistics?.[12].displayValue || "0",
+  };
+  const homeLeaders = {
+    leadingGoals: {
+      id: playByPlayData?.leaders?.[0].team.id,
+      shortName: playByPlayData?.leaders?.[0].leaders?.[0].leaders?.[0]?.athlete?.shortName || "",
+      displayValue: playByPlayData?.leaders?.[0].leaders?.[0].leaders?.[0]?.displayValue || "",
+    },
+    leadingAssists: {
+      id: playByPlayData?.leaders?.[0].team.id,
+      shortName: playByPlayData?.leaders?.[0].leaders?.[1].leaders?.[0]?.athlete?.shortName || "",
+      displayValue: playByPlayData?.leaders?.[0].leaders?.[1].leaders?.[0]?.displayValue || "",
+    },
+    leadingPoints: {
+      id: playByPlayData?.leaders?.[0].team.id,
+      shortName: playByPlayData?.leaders?.[0].leaders?.[2].leaders?.[0]?.athlete?.shortName || "",
+      displayValue: playByPlayData?.leaders?.[0].leaders?.[2].leaders?.[0]?.displayValue || "",
+    },
+  };
+  const awayLeaders = {
+    leadingGoals: {
+      id: playByPlayData?.leaders?.[1].team.id,
+      shortName: playByPlayData?.leaders?.[1].leaders?.[0].leaders?.[0]?.athlete?.shortName || "",
+      displayValue: playByPlayData?.leaders?.[1].leaders?.[0].leaders?.[0]?.displayValue || "",
+    },
+    leadingAssists: {
+      id: playByPlayData?.leaders?.[1].team.id,
+      shortName: playByPlayData?.leaders?.[1].leaders?.[1].leaders?.[0]?.athlete?.shortName || "",
+      displayValue: playByPlayData?.leaders?.[1].leaders?.[1].leaders?.[0]?.displayValue || "",
+    },
+    leadingPoints: {
+      id: playByPlayData?.leaders?.[1].team.id,
+      shortName: playByPlayData?.leaders?.[1].leaders?.[2].leaders?.[0]?.athlete?.shortName || "",
+      displayValue: playByPlayData?.leaders?.[1].leaders?.[2].leaders?.[0]?.displayValue || "",
+    },
+  };
+
+  return { homeTeam, awayTeam, homeLeaders, awayLeaders };
+}

@@ -18,7 +18,7 @@ const Football = ({ gameId }: { gameId: string }) => {
 
   const markdownArea = `
   ### Last Play
-  > 
+  > ${playByPlayEventData?.plays?.[playByPlayEventData.plays.length - 1].text}
   ---
 
   ### ${boxScore.homeTeam.name} (Home)
