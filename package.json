@@ -139,6 +139,52 @@
       "description": "View live scores and games for your favorite league directly from your menu bar. You must set a favorite league and sport before in order to use the command!",
       "mode": "menu-bar",
       "interval": "15s"
+    },
+    {
+      "name": "player-search",
+      "title": "Player Search",
+      "description": "Browse and view player stats across your favorite leagues",
+      "mode": "view",
+      "arguments": [
+        {
+          "name": "name",
+          "placeholder": "Name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "sport",
+          "type": "dropdown",
+          "placeholder": "Sport",
+          "required": true,
+          "data": [
+            {
+              "title": "Hockey",
+              "value": "hockey"
+            },
+            {
+              "title": "Basketball",
+              "value": "basketball"
+            }
+          ]
+        },
+        {
+          "name": "league",
+          "type": "dropdown",
+          "placeholder": "League",
+          "required": true,
+          "data": [
+            {
+              "title": "NHL",
+              "value": "nhl"
+            },
+            {
+              "title": "NBA",
+              "value": "nba"
+            }
+          ]
+        }
+      ]
     }
   ],
   "preferences": [
