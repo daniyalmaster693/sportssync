@@ -148,41 +148,9 @@
       "arguments": [
         {
           "name": "name",
-          "placeholder": "Name",
+          "placeholder": "Enter Name",
           "type": "text",
           "required": true
-        },
-        {
-          "name": "sport",
-          "type": "dropdown",
-          "placeholder": "Sport",
-          "required": true,
-          "data": [
-            {
-              "title": "Hockey",
-              "value": "hockey"
-            },
-            {
-              "title": "Basketball",
-              "value": "basketball"
-            }
-          ]
-        },
-        {
-          "name": "league",
-          "type": "dropdown",
-          "placeholder": "League",
-          "required": true,
-          "data": [
-            {
-              "title": "NHL",
-              "value": "nhl"
-            },
-            {
-              "title": "NBA",
-              "value": "nba"
-            }
-          ]
         }
       ]
     }
