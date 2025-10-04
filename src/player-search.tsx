@@ -13,6 +13,7 @@ export default function PlayerSearch(props: LaunchProps<{ arguments: Arguments.P
           title={player.displayName}
           icon={player.image?.default || Icon.Person}
           subtitle={player.description || ""}
+          accessories={[{ text: player.subtitle || "" }]}
           actions={
             <ActionPanel>
               <Action
