@@ -1,9 +1,5 @@
 # Sportssync Changelog
 
-## [Fixed Schedule Issues] - {PR_MERGE_DATE}
-
-- Removed date ranges from schedules due to deprecation of parameter by ESPN
-
 ## [Added Windows Support] - 2026-08-10
 
 - Added Windows Support
