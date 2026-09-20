@@ -1,5 +1,4 @@
 import { useFetch } from "@raycast/utils";
-import getPastAndFutureDays from "./getDateRange";
 import sportInfo from "./getSportInfo";
 
 interface Athlete {
